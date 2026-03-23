@@ -8,7 +8,9 @@ const route = useRoute()
 const id = route.params.id as string
 const post = getPost(id)
 
-const meta = computed(() => post?.attributes)
+const meta = computed(() => {
+  return post?.attributes || post?.frontmatter || {}
+})
 
 onMounted(() => {
   const title = meta.value?.title || id
@@ -23,32 +25,32 @@ function formatDate(date: string) {
 
 <template>
   <article class="article-detail">
-    <div v-if="meta?.cover" class="article-cover">
+    <div v-if="meta.cover" class="article-cover">
       <img :src="meta.cover" :alt="meta.title" />
     </div>
     
     <header class="article-header">
-      <h1 class="article-title">{{ meta?.title || id }}</h1>
+      <h1 class="article-title">{{ meta.title || id }}</h1>
       <div class="article-info">
         <span class="info-item">
           <span class="info-icon">📅</span>
-          发布于 {{ formatDate(meta?.date || '') }}
+          发布于 {{ formatDate(meta.date || '') }}
         </span>
-        <span v-if="meta?.updated" class="info-item">
+        <span v-if="meta.updated" class="info-item">
           <span class="info-icon">🔄</span>
           更新于 {{ formatDate(meta.updated) }}
         </span>
-        <span v-if="meta?.readingTime" class="info-item">
+        <span v-if="meta.readingTime" class="info-item">
           <span class="info-icon">⏱️</span>
           预计阅读 {{ meta.readingTime }} 分钟
         </span>
       </div>
       <div class="article-tags">
-        <span v-for="tag in meta?.tags" :key="tag" class="tag">{{ tag }}</span>
+        <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
       </div>
     </header>
     
-    <p v-if="meta?.description" class="article-description">{{ meta.description }}</p>
+    <p v-if="meta.description" class="article-description">{{ meta.description }}</p>
     
     <div class="article-content markdown-body">
       <component :is="post?.default" />
