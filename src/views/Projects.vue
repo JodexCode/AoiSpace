@@ -15,11 +15,9 @@ onMounted(() => {
     </header>
 
     <div class="project-grid">
-      <a
+      <div
         v-for="(project, index) in projects"
         :key="project.id"
-        :href="project.link"
-        target="_blank"
         class="project-card"
         :style="{ animationDelay: `${index * 0.1}s` }"
       >
@@ -32,8 +30,28 @@ onMounted(() => {
           <div class="project-tags">
             <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
+          <div class="project-links">
+            <a
+              v-if="project.previewUrl"
+              :href="project.previewUrl"
+              target="_blank"
+              class="link-btn preview-btn"
+            >
+              <span class="btn-icon">🚀</span>
+              预览
+            </a>
+            <a
+              v-if="project.sourceUrl"
+              :href="project.sourceUrl"
+              target="_blank"
+              class="link-btn source-btn"
+            >
+              <span class="btn-icon">📂</span>
+              源码
+            </a>
+          </div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </template>
@@ -150,6 +168,51 @@ onMounted(() => {
   font-weight: 500;
 }
 
+.project-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.link-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.preview-btn {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  color: white;
+}
+
+.preview-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.source-btn {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.source-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
 @media (max-width: 768px) {
   .page-title {
     font-size: 2rem;
@@ -157,6 +220,14 @@ onMounted(() => {
 
   .project-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-links {
+    flex-direction: column;
+  }
+
+  .link-btn {
+    justify-content: center;
   }
 }
 
