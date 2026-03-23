@@ -159,4 +159,102 @@ onMounted(() => {
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 1440px) {
+  .page-title {
+    font-size: 3rem;
+  }
+
+  .page-desc {
+    font-size: 1.1rem;
+  }
+
+  .page-header {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    border-radius: 24px;
+  }
+
+  .project-image-wrapper {
+    height: 220px;
+  }
+
+  .project-info {
+    padding: 1.75rem;
+  }
+
+  .project-title {
+    font-size: 1.35rem;
+  }
+
+  .project-desc {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.9rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .page-desc {
+    font-size: 1.2rem;
+  }
+
+  .page-header {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .project-card {
+    border-radius: 28px;
+  }
+
+  .project-image-wrapper {
+    height: 260px;
+  }
+
+  .project-info {
+    padding: 2rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .project-tags {
+    gap: 0.75rem;
+  }
+
+  .tag {
+    padding: 0.35rem 1rem;
+    font-size: 0.85rem;
+  }
+}
 </style>

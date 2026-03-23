@@ -21,13 +21,17 @@ function isActive(path: string) {
       <span class="shape shape-1"></span>
       <span class="shape shape-2"></span>
     </div>
-    
+
     <aside class="sidebar">
       <div class="sidebar-bg"></div>
       <div class="sidebar-content">
         <div class="profile">
           <div class="avatar-wrapper">
-            <img :src="siteConfig.avatar" :alt="siteConfig.author" class="avatar" />
+            <img
+              :src="siteConfig.avatar"
+              :alt="siteConfig.author"
+              class="avatar"
+            />
             <div class="avatar-ring"></div>
           </div>
           <h1 class="author-name">{{ siteConfig.author }}</h1>
@@ -48,7 +52,9 @@ function isActive(path: string) {
 
         <div class="theme-toggle-wrapper">
           <button class="theme-toggle" @click="toggleTheme">
-            <span class="toggle-icon">{{ mode === 'light' ? '🌙' : '☀️' }}</span>
+            <span class="toggle-icon">{{
+              mode === 'light' ? '🌙' : '☀️'
+            }}</span>
           </button>
         </div>
 
@@ -89,10 +95,34 @@ function isActive(path: string) {
   animation: float 8s ease-in-out infinite;
 }
 
-.dot-1 { width: 300px; height: 300px; top: -100px; left: -50px; animation-delay: 0s; }
-.dot-2 { width: 200px; height: 200px; top: 50%; right: -50px; animation-delay: 2s; }
-.dot-3 { width: 150px; height: 150px; bottom: -50px; left: 30%; animation-delay: 4s; }
-.dot-4 { width: 100px; height: 100px; top: 30%; left: 50%; animation-delay: 1s; }
+.dot-1 {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -50px;
+  animation-delay: 0s;
+}
+.dot-2 {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  right: -50px;
+  animation-delay: 2s;
+}
+.dot-3 {
+  width: 150px;
+  height: 150px;
+  bottom: -50px;
+  left: 30%;
+  animation-delay: 4s;
+}
+.dot-4 {
+  width: 100px;
+  height: 100px;
+  top: 30%;
+  left: 50%;
+  animation-delay: 1s;
+}
 
 .shape {
   position: absolute;
@@ -119,18 +149,27 @@ function isActive(path: string) {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-30px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .sidebar {
-  width: 30%;
-  min-width: 300px;
+  width: 32%;
+  min-width: 340px;
   position: fixed;
   height: 100vh;
   z-index: 10;
@@ -143,7 +182,7 @@ function isActive(path: string) {
   backdrop-filter: blur(24px);
   border-radius: 24px;
   border: 1px solid var(--border-color);
-  box-shadow: 
+  box-shadow:
     0 8px 32px var(--shadow-color),
     inset 0 0 80px rgba(59, 130, 246, 0.03);
 }
@@ -195,8 +234,12 @@ function isActive(path: string) {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .author-name {
@@ -244,7 +287,11 @@ function isActive(path: string) {
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
   color: white;
   border-color: transparent;
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
@@ -294,16 +341,101 @@ function isActive(path: string) {
 
 .main-content {
   flex: 1;
-  margin-left: 30%;
+  margin-left: 32%;
   min-height: 100vh;
   position: relative;
   background: var(--bg-primary);
 }
 
 .content-wrapper {
-  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
   padding: 3rem;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+    max-width: calc(100% - 4rem);
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-wrapper {
+    max-width: 1000px;
+    padding: 4rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .sidebar {
+    width: 360px;
+    min-width: 360px;
+  }
+
+  .main-content {
+    margin-left: 360px;
+  }
+
+  .content-wrapper {
+    max-width: 1100px;
+    padding: 4.5rem;
+  }
+
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+
+  .author-name {
+    font-size: 1.8rem;
+  }
+
+  .nav-item {
+    padding: 1.1rem 1.4rem;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .sidebar {
+    width: 420px;
+    min-width: 420px;
+  }
+
+  .main-content {
+    margin-left: 420px;
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    padding: 5rem;
+  }
+
+  .floating-decorations .dot-1 {
+    width: 400px;
+    height: 400px;
+  }
+
+  .floating-decorations .dot-2 {
+    width: 280px;
+    height: 280px;
+  }
+
+  .floating-decorations .shape-1 {
+    width: 280px;
+    height: 280px;
+  }
+
+  .floating-decorations .shape-2 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {

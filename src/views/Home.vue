@@ -398,4 +398,149 @@ const intro = introModules['../intro/intro.md']?.default
     font-size: 0.95rem;
   }
 }
+
+@media (min-width: 1440px) {
+  .home {
+    max-width: 1100px;
+  }
+
+  .hero {
+    padding: 4rem 3rem;
+    border-radius: 28px;
+  }
+
+  .title {
+    font-size: 2.6rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .badge {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .stats {
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 2rem;
+  }
+
+  .stat-icon {
+    font-size: 2.2rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .about-card {
+    padding: 2rem;
+    border-radius: 24px;
+  }
+
+  .link-card {
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+  }
+
+  .link-icon {
+    font-size: 2.2rem;
+  }
+
+  .link-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .link-info p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .home {
+    max-width: 1300px;
+  }
+
+  .hero {
+    padding: 5rem 4rem;
+    border-radius: 32px;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+
+  .deco {
+    font-size: 2.5rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .stat-card {
+    padding: 2.5rem;
+    border-radius: 24px;
+  }
+
+  .stat-icon {
+    font-size: 2.8rem;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+  }
+
+  .stat-label {
+    font-size: 1.1rem;
+  }
+
+  .about-card {
+    padding: 2.5rem;
+    border-radius: 28px;
+  }
+
+  .about-card :deep(h2) {
+    font-size: 1.5rem;
+  }
+
+  .about-card :deep(p) {
+    font-size: 1.05rem;
+  }
+
+  .link-card {
+    padding: 2rem 2.5rem;
+    border-radius: 24px;
+  }
+
+  .link-icon {
+    font-size: 2.8rem;
+  }
+
+  .link-info h3 {
+    font-size: 1.4rem;
+  }
+
+  .link-info p {
+    font-size: 1rem;
+  }
+}
 </style>

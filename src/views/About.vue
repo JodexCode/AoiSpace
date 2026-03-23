@@ -186,4 +186,121 @@ onMounted(() => {
     justify-content: center;
   }
 }
+
+@media (min-width: 1440px) {
+  .page-title {
+    font-size: 3rem;
+  }
+
+  .page-desc {
+    font-size: 1.1rem;
+  }
+
+  .page-header {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .about-content {
+    max-width: 700px;
+  }
+
+  .profile-section {
+    padding: 3.5rem 3rem;
+    border-radius: 28px;
+  }
+
+  .avatar {
+    width: 160px;
+    height: 160px;
+    border-width: 4px;
+  }
+
+  .author-name {
+    font-size: 1.9rem;
+  }
+
+  .author-desc {
+    font-size: 1.1rem;
+  }
+
+  .contact-section {
+    padding: 2.5rem;
+    border-radius: 24px;
+  }
+
+  .contact-section h3 {
+    font-size: 1.35rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-link {
+    padding: 0.9rem 1.75rem;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .page-desc {
+    font-size: 1.2rem;
+  }
+
+  .page-header {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .about-content {
+    max-width: 800px;
+  }
+
+  .profile-section {
+    padding: 4rem 4rem;
+    border-radius: 32px;
+  }
+
+  .avatar {
+    width: 180px;
+    height: 180px;
+    border-width: 5px;
+  }
+
+  .author-name {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .author-desc {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .contact-section {
+    padding: 3rem;
+    border-radius: 28px;
+  }
+
+  .contact-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .contact-links {
+    gap: 1.5rem;
+  }
+
+  .contact-link {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 14px;
+  }
+
+  .link-icon {
+    font-size: 1.25rem;
+  }
+}
 </style>

@@ -449,4 +449,181 @@ function formatDate(date: string) {
     gap: 0.5rem;
   }
 }
+
+@media (min-width: 1440px) {
+  .article-title {
+    font-size: 3rem;
+  }
+
+  .article-info {
+    font-size: 1rem;
+    gap: 1.5rem;
+  }
+
+  .tag {
+    padding: 0.35rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .article-description {
+    font-size: 1.2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 14px;
+  }
+
+  .article-content {
+    font-size: 1.05rem;
+  }
+
+  .article-content :deep(h1) {
+    font-size: 2.2rem;
+  }
+
+  .article-content :deep(h2) {
+    font-size: 1.7rem;
+  }
+
+  .article-content :deep(h3) {
+    font-size: 1.35rem;
+  }
+
+  .article-content :deep(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  .article-content :deep(pre) {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .article-toc {
+    width: 260px;
+  }
+
+  .toc-content {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  .toc-title {
+    font-size: 1rem;
+  }
+
+  .toc-item {
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+  }
+}
+
+@media (min-width: 1920px) {
+  .article-cover {
+    margin-bottom: 2.5rem;
+    border-radius: 20px;
+  }
+
+  .article-header {
+    margin-bottom: 2rem;
+  }
+
+  .article-title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-info {
+    font-size: 1.05rem;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-icon {
+    font-size: 1.1rem;
+  }
+
+  .article-tags {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    padding: 0.4rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .article-description {
+    font-size: 1.25rem;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+  }
+
+  .article-content {
+    font-size: 1.1rem;
+    line-height: 2;
+  }
+
+  .article-content :deep(h1) {
+    font-size: 2.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .article-content :deep(h2) {
+    font-size: 1.9rem;
+    margin-top: 2.5rem;
+  }
+
+  .article-content :deep(h3) {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .article-content :deep(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .article-content :deep(pre) {
+    padding: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-content :deep(blockquote) {
+    padding: 0.75rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+  }
+
+  .article-content :deep(img) {
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .article-toc {
+    width: 300px;
+  }
+
+  .toc-content {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .toc-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .toc-nav {
+    gap: 0.5rem;
+  }
+
+  .toc-item {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .toc-item.level-3 {
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+}
 </style>

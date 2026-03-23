@@ -486,4 +486,135 @@ function formatDate(date: string) {
     height: 140px;
   }
 }
+
+@media (min-width: 1440px) {
+  .page-title {
+    font-size: 3rem;
+  }
+
+  .page-desc {
+    font-size: 1.1rem;
+  }
+
+  .filters {
+    padding: 1.25rem 1.5rem;
+    border-radius: 20px;
+    gap: 1rem;
+  }
+
+  .dropdown-trigger {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    min-width: 150px;
+  }
+
+  .clear-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .article-list {
+    gap: 1.5rem;
+  }
+
+  .article-item {
+    padding: 1.75rem;
+    border-radius: 22px;
+  }
+
+  .article-cover {
+    width: 200px;
+    height: 130px;
+    border-radius: 14px;
+  }
+
+  .article-title {
+    font-size: 1.35rem;
+  }
+
+  .article-meta {
+    font-size: 0.9rem;
+    gap: 1rem;
+  }
+
+  .article-desc {
+    font-size: 1rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .tag {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .filters {
+    padding: 1.5rem 2rem;
+    border-radius: 24px;
+    margin-bottom: 2rem;
+  }
+
+  .dropdown-trigger {
+    padding: 0.85rem 1.5rem;
+    font-size: 1.05rem;
+    min-width: 170px;
+  }
+
+  .dropdown-menu {
+    border-radius: 16px;
+  }
+
+  .dropdown-item {
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .article-list {
+    gap: 2rem;
+  }
+
+  .article-item {
+    padding: 2rem;
+    border-radius: 26px;
+  }
+
+  .article-cover {
+    width: 240px;
+    height: 160px;
+    border-radius: 16px;
+  }
+
+  .article-title {
+    font-size: 1.5rem;
+  }
+
+  .article-meta {
+    font-size: 0.95rem;
+    gap: 1.25rem;
+  }
+
+  .article-desc {
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-tags {
+    gap: 0.6rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.85rem;
+    font-size: 0.85rem;
+  }
+}
 </style>
