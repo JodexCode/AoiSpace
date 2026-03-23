@@ -9,7 +9,7 @@ src/posts/local/*
 
 # Local projects
 src/projects/projects.json
-!src/projects/.gitkeep
+!src/projects/template.json
 
 # Logs
 logs
