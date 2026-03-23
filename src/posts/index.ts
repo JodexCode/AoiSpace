@@ -38,7 +38,7 @@ function extractHeadings(markdown: string): HeadingPosition[] {
   let charCount = 0
   
   for (const line of lines) {
-    const match = line.match(/^(#{1,6})\s+(.+)$/)
+    const match = line.match(/^(#{1,3})\s+(.+)$/)
     if (match) {
       headings.push({
         index: headings.length,
