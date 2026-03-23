@@ -16,7 +16,6 @@ src/intro/intro.md
 
 # Privacy configs (copy templates and fill your info)
 src/config/site.json
-src/config/nav.json
 src/config/social-links.json
 
 # Logs

@@ -178,11 +178,15 @@ function getRandomDelay(index: number): string {
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 0.5rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .project-card:hover .project-title {
-  color: var(--accent-color);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: brightness(1.1);
 }
 
 .project-desc {
@@ -235,7 +239,9 @@ function getRandomDelay(index: number): string {
   font-size: 0.85rem;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .preview-btn {
@@ -245,9 +251,36 @@ function getRandomDelay(index: number): string {
   justify-content: center;
 }
 
+.preview-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
 .preview-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--shadow-color);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
+.preview-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.preview-btn:hover .btn-icon {
+  animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 
 .source-btn {
@@ -256,13 +289,50 @@ function getRandomDelay(index: number): string {
   color: var(--text-primary);
 }
 
+.source-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 .source-btn:hover {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+}
+
+.source-btn:hover::before {
+  opacity: 1;
+}
+
+.source-btn:hover .btn-icon {
+  animation: rotate 0.6s ease;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .btn-icon {
   font-size: 1rem;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.link-btn span:last-child {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.2s ease;
+}
+
+.source-btn:hover span:last-child {
+  opacity: 1 !important;
 }
 
 @media (max-width: 768px) {

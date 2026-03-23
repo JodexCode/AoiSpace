@@ -346,6 +346,19 @@ function isActive(path: string) {
   transition: opacity 0.3s ease;
 }
 
+.nav-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 4px;
+  height: 60%;
+  background: var(--accent-gradient);
+  border-radius: 0 4px 4px 0;
+  transition: transform 0.3s ease;
+}
+
 .nav-item:hover {
   background: var(--bg-glass);
   border-color: var(--border-color);
@@ -356,11 +369,25 @@ function isActive(path: string) {
   opacity: 0.1;
 }
 
+.nav-item:hover::after {
+  transform: translateY(-50%) scaleY(1);
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px var(--accent-color));
+}
+
 .nav-item.active {
   background: var(--accent-gradient);
   color: white;
   border-color: transparent;
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+}
+
+.nav-item.active::after {
+  background: white;
+  transform: translateY(-50%) scaleY(1);
 }
 
 .nav-item.active .nav-icon svg {
@@ -375,6 +402,7 @@ function isActive(path: string) {
   justify-content: center;
   position: relative;
   z-index: 1;
+  transition: all 0.3s ease;
 }
 
 .nav-icon svg {
@@ -401,10 +429,37 @@ function isActive(path: string) {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.theme-toggle:hover::before {
+  opacity: 0.6;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
 }
 
 .toggle-icon {
   font-size: 1.3rem;
+  transition: transform 0.4s ease;
+}
+
+.theme-toggle:hover .toggle-icon {
+  transform: rotate(180deg);
 }
 
 .footer {

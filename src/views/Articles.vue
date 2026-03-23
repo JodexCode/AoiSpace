@@ -319,6 +319,8 @@ function getRandomDelay(index: number): string {
   border-radius: 20px;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 10;
 }
 
 .glass-btn {
@@ -351,12 +353,25 @@ function getRandomDelay(index: number): string {
 
 .search-container.focused {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 0 20px rgba(139, 92, 246, 0.2);
 }
 
 .search-icon {
   font-size: 1rem;
   opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.search-container.focused .search-icon {
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px var(--accent-color));
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.2); }
 }
 
 .search-input {
@@ -391,6 +406,7 @@ function getRandomDelay(index: number): string {
 .search-clear:hover {
   background: var(--accent-color);
   color: white;
+  transform: rotate(90deg) scale(1.1);
 }
 
 .search-results {
@@ -400,9 +416,9 @@ function getRandomDelay(index: number): string {
   right: 0;
   max-height: 300px;
   overflow-y: auto;
-  background: var(--card-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
   border-radius: 14px;
   box-shadow: 0 8px 32px var(--shadow-color);
@@ -428,8 +444,21 @@ function getRandomDelay(index: number): string {
 .search-result-item {
   padding: 0.85rem 1rem;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.2s ease;
   border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+.search-result-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--accent-gradient);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
 }
 
 .search-result-item:last-child {
@@ -438,6 +467,11 @@ function getRandomDelay(index: number): string {
 
 .search-result-item:hover {
   background: var(--hover-bg);
+  padding-left: 1.2rem;
+}
+
+.search-result-item:hover::before {
+  transform: scaleY(1);
 }
 
 .result-title {
@@ -445,6 +479,11 @@ function getRandomDelay(index: number): string {
   color: var(--text-primary);
   font-size: 0.95rem;
   font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.search-result-item:hover .result-title {
+  color: var(--accent-color);
 }
 
 .result-context {
@@ -483,16 +522,18 @@ function getRandomDelay(index: number): string {
 }
 
 .dropdown-trigger:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-color);
 }
 
-.custom-dropdown.open .dropdown-trigger {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+.dropdown-trigger:hover .trigger-icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px var(--accent-color));
 }
 
 .trigger-icon {
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .trigger-text {
@@ -502,7 +543,12 @@ function getRandomDelay(index: number): string {
 
 .trigger-arrow {
   font-size: 0.7rem;
-  transition: transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-dropdown.open .dropdown-trigger {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 4px 16px var(--shadow-color);
 }
 
 .custom-dropdown.open .trigger-arrow {
@@ -514,9 +560,9 @@ function getRandomDelay(index: number): string {
   top: calc(100% + 6px);
   left: 0;
   min-width: 100%;
-  background: var(--card-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
   border-radius: 12px;
   box-shadow: 0 8px 32px var(--shadow-color);
@@ -556,12 +602,32 @@ function getRandomDelay(index: number): string {
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.clear-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
 .clear-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px var(--shadow-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.clear-btn:hover::before {
+  transform: translateX(100%);
 }
 
 .article-masonry {
@@ -651,11 +717,12 @@ function getRandomDelay(index: number): string {
   color: var(--text-primary);
   margin: 0 0 0.5rem;
   line-height: 1.4;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .article-card:hover .card-title {
   color: var(--accent-color);
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
 }
 
 .card-desc {

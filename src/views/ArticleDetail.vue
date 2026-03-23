@@ -278,11 +278,66 @@ function formatDate(date: string) {
 
 .article-content :deep(h1),
 .article-content :deep(h2),
-.article-content :deep(h3) {
+.article-content :deep(h3),
+.article-content :deep(h4) {
+  position: relative;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: var(--text-primary);
   font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-content :deep(h1)::before,
+.article-content :deep(h2)::before,
+.article-content :deep(h3)::before,
+.article-content :deep(h4)::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 4px;
+  height: 80%;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.article-content :deep(h1):hover,
+.article-content :deep(h2):hover,
+.article-content :deep(h3):hover,
+.article-content :deep(h4):hover {
+  transform: translateX(0.5rem);
+  text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+.article-content :deep(h1):hover::before,
+.article-content :deep(h2):hover::before,
+.article-content :deep(h3):hover::before,
+.article-content :deep(h4):hover::before {
+  transform: translateY(-50%) scaleY(1);
+}
+
+.article-content :deep(h1)::after,
+.article-content :deep(h2)::after,
+.article-content :deep(h3)::after,
+.article-content :deep(h4)::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  border-radius: 1px;
+  transition: width 0.4s ease;
+}
+
+.article-content :deep(h1):hover::after,
+.article-content :deep(h2):hover::after,
+.article-content :deep(h3):hover::after,
+.article-content :deep(h4):hover::after {
+  width: 100%;
 }
 
 .article-content :deep(h1) {
@@ -295,13 +350,39 @@ function formatDate(date: string) {
   background-clip: text;
 }
 
+.article-content :deep(h1):hover {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: brightness(1.2);
+}
+
 .article-content :deep(h2) {
   font-size: 1.4rem;
-  color: var(--accent-color);
+  color: var(--heading-h2);
+}
+
+.article-content :deep(h2):hover {
+  color: var(--heading-h1);
 }
 
 .article-content :deep(h3) {
   font-size: 1.15rem;
+  color: var(--heading-h3);
+}
+
+.article-content :deep(h3):hover {
+  color: var(--heading-h2);
+}
+
+.article-content :deep(h4) {
+  font-size: 1rem;
+  color: var(--heading-h4);
+}
+
+.article-content :deep(h4):hover {
+  color: var(--heading-h3);
 }
 
 .article-content :deep(p) {

@@ -196,6 +196,37 @@ const intro = introModules['../intro/intro.md']?.default
   font-size: 0.9rem;
   color: var(--text-primary);
   box-shadow: 2px 2px 8px var(--shadow-color);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.badge::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.badge:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 4px 4px 20px var(--shadow-color), 0 0 30px rgba(139, 92, 246, 0.3);
+  border-color: var(--accent-color);
+}
+
+.badge:hover::before {
+  transform: translateX(100%);
 }
 
 .stats {
@@ -223,6 +254,11 @@ const intro = introModules['../intro/intro.md']?.default
   box-shadow: 0 16px 48px var(--shadow-color);
 }
 
+.stat-card:hover .stat-icon {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 0 10px var(--accent-color));
+}
+
 .stat-glow {
   position: absolute;
   inset: 0;
@@ -239,6 +275,7 @@ const intro = introModules['../intro/intro.md']?.default
 .stat-icon {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-number {
@@ -248,6 +285,12 @@ const intro = introModules['../intro/intro.md']?.default
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-number {
+  filter: brightness(1.2);
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
 }
 
 .stat-label {
@@ -330,18 +373,40 @@ const intro = introModules['../intro/intro.md']?.default
   overflow: hidden;
 }
 
+.link-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--accent-gradient);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
 .link-card:hover {
   transform: translateX(8px);
   border-color: var(--accent-color);
   box-shadow: 0 8px 32px var(--shadow-color);
 }
 
+.link-card:hover::before {
+  transform: scaleY(1);
+}
+
 .link-card:hover .link-arrow {
-  transform: translateX(4px);
+  transform: translateX(8px) scale(1.2);
+  color: var(--accent-color);
 }
 
 .link-card:hover .card-glow {
   opacity: 0.05;
+}
+
+.link-card:hover .link-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--accent-color));
 }
 
 .card-glow {
@@ -355,6 +420,7 @@ const intro = introModules['../intro/intro.md']?.default
 
 .link-icon {
   font-size: 1.8rem;
+  transition: all 0.3s ease;
 }
 
 .link-info {
@@ -365,6 +431,11 @@ const intro = introModules['../intro/intro.md']?.default
   font-size: 1.05rem;
   color: var(--text-primary);
   margin: 0 0 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.link-card:hover .link-info h3 {
+  color: var(--accent-color);
 }
 
 .link-info p {
@@ -375,8 +446,8 @@ const intro = introModules['../intro/intro.md']?.default
 
 .link-arrow {
   font-size: 1.2rem;
-  color: var(--accent-color);
-  transition: transform 0.3s ease;
+  color: var(--text-secondary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 768px) {

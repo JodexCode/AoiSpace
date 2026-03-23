@@ -22,6 +22,10 @@ import MainLayout from './components/MainLayout.vue'
   --hover-bg: rgba(59, 130, 246, 0.1);
   --shadow-color: rgba(59, 130, 246, 0.2);
   --card-bg: rgba(255, 255, 255, 0.7);
+  --heading-h1: #7c3aed;
+  --heading-h2: #3b82f6;
+  --heading-h3: #06b6d4;
+  --heading-h4: #64748b;
 }
 
 * {
@@ -48,8 +52,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {

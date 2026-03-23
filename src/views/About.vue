@@ -205,6 +205,31 @@ onMounted(() => {
   margin: 0 0 1.25rem;
   color: var(--text-primary);
   font-size: 1.2rem;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.contact-section h3::before {
+  content: '';
+  position: absolute;
+  left: -0.8rem;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 70%;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.contact-section h3:hover {
+  color: var(--accent-color);
+  transform: translateX(0.5rem);
+}
+
+.contact-section h3:hover::before {
+  transform: translateY(-50%) scaleY(1);
 }
 
 .contact-links {
@@ -223,12 +248,42 @@ onMounted(() => {
   border-radius: 12px;
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
 .contact-link:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px var(--shadow-color);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
+.contact-link:hover::before {
+  transform: translateX(100%);
+}
+
+.contact-link:hover .link-icon {
+  animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
 }
 
 .contact-link.has-color {
@@ -241,6 +296,7 @@ onMounted(() => {
 
 .link-icon {
   font-size: 1.1rem;
+  transition: transform 0.3s ease;
 }
 
 .link-icon-img {
@@ -263,6 +319,31 @@ onMounted(() => {
   margin: 0 0 1.25rem;
   color: var(--text-primary);
   font-size: 1.2rem;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.project-section h3::before {
+  content: '';
+  position: absolute;
+  left: -0.8rem;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 70%;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.project-section h3:hover {
+  color: var(--accent-color);
+  transform: translateX(0.5rem);
+}
+
+.project-section h3:hover::before {
+  transform: translateY(-50%) scaleY(1);
 }
 
 .project-desc {
@@ -282,6 +363,11 @@ onMounted(() => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
+  transition: filter 0.3s ease;
+}
+
+.project-desc strong:hover {
+  filter: brightness(1.2);
 }
 
 .project-links {
@@ -301,14 +387,49 @@ onMounted(() => {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .project-link:hover {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--shadow-color);
+  border-color: transparent;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
+.project-link:hover::before {
+  opacity: 1;
+}
+
+.project-link:hover .link-icon {
+  animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.project-link .link-icon {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.project-link span:last-child {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
