@@ -14,6 +14,9 @@ src/projects/projects.json
 # Local intro
 src/intro/intro.md
 
+# Social links (privacy)
+src/config/social-links.json
+
 # Logs
 logs
 *.log

@@ -1,5 +1,5 @@
 import type { SiteConfig, ThemeConfig, NavConfig, SocialLink } from './types'
-import socialLinksData from './social-links.json'
+import socialLinksData from './social-links-template.json'
 
 function getEnv(key: string, fallback: string): string {
   return import.meta.env[key] || fallback
