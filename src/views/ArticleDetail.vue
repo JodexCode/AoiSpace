@@ -320,7 +320,7 @@ function formatDate(date: string) {
   top: 2rem;
   width: 220px;
   flex-shrink: 0;
-  max-height: calc(100vh - 4rem);
+  max-height: calc(100vh - 6rem);
   overflow-y: auto;
   transition: width 0.3s ease;
 }
