@@ -10,8 +10,7 @@ src/config/
 ├── types.ts                   # TypeScript 类型定义
 ├── site.json                  # 站点信息（gitignore）
 ├── site-template.json         # 站点信息模板
-├── nav.json                   # 导航配置（gitignore）
-├── nav-template.json         # 导航配置模板
+├── nav.json                   # 导航配置
 ├── social-links.json          # 社交链接（gitignore）
 ├── social-links-template.json # 社交链接模板
 └── README.md                  # 本文档
@@ -23,19 +22,17 @@ src/config/
 
    ```bash
    cp src/config/site-template.json src/config/site.json
-   cp src/config/nav-template.json src/config/nav.json
    cp src/config/social-links-template.json src/config/social-links.json
    ```
 
 2. **修改真实配置文件**
 
-   编辑 `site.json`、`nav.json`、`social-links.json`，填入你的信息。
+   编辑 `site.json`、`social-links.json`，填入你的信息。
 
 3. **提交时确保真实配置文件在 gitignore 中**
 
    以下文件已被 `.gitignore` 忽略，请勿提交：
    - `src/config/site.json`
-   - `src/config/nav.json`
    - `src/config/social-links.json`
 
 ---

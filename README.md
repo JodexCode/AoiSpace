@@ -42,7 +42,7 @@ cp src/config/social-links-template.json src/config/social-links.json
 
 # 编辑配置文件
 # - src/config/site.json       # 站点信息
-# - src/config/nav.json       # 导航配置（可选）
+# - src/config/nav.json        # 导航配置
 # - src/config/social-links.json # 社交链接
 ```
 
@@ -99,19 +99,6 @@ bun preview
   "avatar": "/avatar.png",
   "description": "记录技术探索与生活点滴",
   "icp": "京ICP备xxxxxxxx号"
-}
-```
-
-### 导航配置 (nav.json)
-
-```json
-{
-  "items": [
-    { "text": "首页", "path": "/" },
-    { "text": "文章", "path": "/articles" },
-    { "text": "作品", "path": "/projects" },
-    { "text": "关于", "path": "/about" }
-  ]
 }
 ```
 
@@ -214,7 +201,6 @@ MIT License
 
 - [Vue.js](https://vuejs.org/) - 渐进式 JavaScript 框架
 - [Vite](https://vitejs.dev/) - 下一代前端构建工具
-- [Vitesse](https://github.com/antfu/vitesse) - Vite 项目模板
 
 ---
 
