@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { siteConfig } from '../config'
 import { posts } from '../posts'
 
@@ -9,6 +9,8 @@ onMounted(() => {
 
 const selectedTag = ref('')
 const selectedYear = ref('')
+const tagDropdownOpen = ref(false)
+const yearDropdownOpen = ref(false)
 
 const allTags = computed(() => {
   const tags = new Set<string>()
@@ -34,10 +36,45 @@ const filteredPosts = computed(() => {
   })
 })
 
+const selectedTagLabel = computed(() => selectedTag.value || '全部标签')
+const selectedYearLabel = computed(() => selectedYear.value ? `${selectedYear.value} 年` : '全部时间')
+
+function toggleTagDropdown() {
+  tagDropdownOpen.value = !tagDropdownOpen.value
+  yearDropdownOpen.value = false
+}
+
+function toggleYearDropdown() {
+  yearDropdownOpen.value = !yearDropdownOpen.value
+  tagDropdownOpen.value = false
+}
+
+function selectTag(tag: string) {
+  selectedTag.value = tag
+  tagDropdownOpen.value = false
+}
+
+function selectYear(year: string) {
+  selectedYear.value = year
+  yearDropdownOpen.value = false
+}
+
 function clearFilters() {
   selectedTag.value = ''
   selectedYear.value = ''
 }
+
+function closeDropdowns(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (!target.closest('.custom-dropdown')) {
+    tagDropdownOpen.value = false
+    yearDropdownOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', closeDropdowns)
+})
 
 function formatDate(date: string) {
   if (!date) return ''
@@ -53,22 +90,40 @@ function formatDate(date: string) {
     </header>
 
     <section class="filters">
-      <div class="filter-group">
-        <label class="filter-label">标签筛选</label>
-        <select v-model="selectedTag" class="filter-select">
-          <option value="">全部标签</option>
-          <option v-for="tag in allTags" :key="tag" :value="tag">{{ tag }}</option>
-        </select>
+      <div class="custom-dropdown" :class="{ open: tagDropdownOpen }">
+        <button class="dropdown-trigger" @click.stop="toggleTagDropdown">
+          <span class="trigger-icon">🏷️</span>
+          <span class="trigger-text">{{ selectedTagLabel }}</span>
+          <span class="trigger-arrow">▼</span>
+        </button>
+        <div v-if="tagDropdownOpen" class="dropdown-menu">
+          <button class="dropdown-item" :class="{ active: !selectedTag }" @click="selectTag('')">
+            全部标签
+          </button>
+          <button v-for="tag in allTags" :key="tag" class="dropdown-item" :class="{ active: selectedTag === tag }" @click="selectTag(tag)">
+            {{ tag }}
+          </button>
+        </div>
       </div>
-      <div class="filter-group">
-        <label class="filter-label">时间筛选</label>
-        <select v-model="selectedYear" class="filter-select">
-          <option value="">全部时间</option>
-          <option v-for="year in allYears" :key="year" :value="year">{{ year }} 年</option>
-        </select>
+
+      <div class="custom-dropdown" :class="{ open: yearDropdownOpen }">
+        <button class="dropdown-trigger" @click.stop="toggleYearDropdown">
+          <span class="trigger-icon">📅</span>
+          <span class="trigger-text">{{ selectedYearLabel }}</span>
+          <span class="trigger-arrow">▼</span>
+        </button>
+        <div v-if="yearDropdownOpen" class="dropdown-menu">
+          <button class="dropdown-item" :class="{ active: !selectedYear }" @click="selectYear('')">
+            全部时间
+          </button>
+          <button v-for="year in allYears" :key="year" class="dropdown-item" :class="{ active: selectedYear === year }" @click="selectYear(year)">
+            {{ year }} 年
+          </button>
+        </div>
       </div>
+
       <button v-if="selectedTag || selectedYear" class="clear-btn" @click="clearFilters">
-        清除筛选
+        ✕ 清除筛选
       </button>
     </section>
 
@@ -138,9 +193,9 @@ function formatDate(date: string) {
 
 .filters {
   display: flex;
-  align-items: flex-end;
-  gap: 1rem;
-  padding: 1.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
   background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
@@ -149,48 +204,115 @@ function formatDate(date: string) {
   flex-wrap: wrap;
 }
 
-.filter-group {
+.custom-dropdown {
+  position: relative;
+}
+
+.dropdown-trigger {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.filter-label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.filter-select {
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.6rem 1rem;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--text-primary);
   font-size: 0.9rem;
-  min-width: 140px;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
+  min-width: 130px;
 }
 
-.filter-select:focus {
-  outline: none;
+.dropdown-trigger:hover {
   border-color: var(--accent-color);
 }
 
-.clear-btn, .reset-btn {
+.custom-dropdown.open .dropdown-trigger {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.trigger-icon {
+  font-size: 1rem;
+}
+
+.trigger-text {
+  flex: 1;
+  text-align: left;
+}
+
+.trigger-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.custom-dropdown.open .trigger-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  z-index: 100;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: var(--hover-bg);
+}
+
+.dropdown-item.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+.clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.6rem 1rem;
   background: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.clear-btn:hover, .reset-btn:hover {
+.clear-btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
 }
@@ -309,6 +431,22 @@ function formatDate(date: string) {
   margin-bottom: 1rem;
 }
 
+.reset-btn {
+  padding: 0.6rem 1.25rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover {
+  opacity: 0.9;
+}
+
 @media (max-width: 768px) {
   .page-title {
     font-size: 2rem;
@@ -319,12 +457,22 @@ function formatDate(date: string) {
     align-items: stretch;
   }
 
-  .filter-select {
+  .custom-dropdown {
+    width: 100%;
+  }
+
+  .dropdown-trigger {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dropdown-menu {
     width: 100%;
   }
 
   .clear-btn {
     width: 100%;
+    justify-content: center;
   }
 
   .article-item {
