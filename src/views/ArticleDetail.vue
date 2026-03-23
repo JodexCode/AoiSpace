@@ -228,20 +228,19 @@ function formatDate(date: string) {
 .article-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .hand-drawn-tag {
   position: relative;
-  padding: 0.25rem 0.75rem;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 50px;
   font-size: 0.8rem;
   color: var(--accent-color);
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 2px 2px 0 var(--border-color);
 }
 
 .hand-drawn-tag:hover {
@@ -249,7 +248,7 @@ function formatDate(date: string) {
   color: white;
   border-color: transparent;
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 .article-description {
