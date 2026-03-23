@@ -1,4 +1,4 @@
-# Environment variables
+# Environment variables (deprecated, use JSON configs)
 .env
 .env.local
 .env.*.local
@@ -14,7 +14,9 @@ src/projects/projects.json
 # Local intro
 src/intro/intro.md
 
-# Social links (privacy)
+# Privacy configs (copy templates and fill your info)
+src/config/site.json
+src/config/nav.json
 src/config/social-links.json
 
 # Logs

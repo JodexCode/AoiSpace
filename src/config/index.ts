@@ -1,31 +1,18 @@
 import type { SiteConfig, ThemeConfig, NavConfig, SocialLink } from './types'
-import socialLinksData from './social-links-template.json'
-
-function getEnv(key: string, fallback: string): string {
-  return import.meta.env[key] || fallback
-}
+import siteData from './site.json'
+import navData from './nav.json'
+import socialLinksData from './social-links.json'
 
 export const siteConfig: SiteConfig = {
-  title: getEnv('VITE_SITE_TITLE', '每天睡25小时的博客'),
-  author: getEnv('VITE_SITE_AUTHOR', '每天睡25小时'),
-  avatar: getEnv('VITE_SITE_AVATAR', '/avatar.png'),
-  description: getEnv('VITE_SITE_DESCRIPTION', '记录技术探索与生活点滴的个人博客'),
-  icp: getEnv('VITE_SITE_ICP', ''),
+  ...siteData,
   socialLinks: socialLinksData as SocialLink[]
 }
+
+export const navConfig: NavConfig = navData
 
 export const themeConfig: ThemeConfig = {
   primaryColor: '#7c3aed',
   codeTheme: 'github'
-}
-
-export const navConfig: NavConfig = {
-  items: [
-    { text: '首页', path: '/' },
-    { text: '文章', path: '/articles' },
-    { text: '作品', path: '/projects' },
-    { text: '关于', path: '/about' }
-  ]
 }
 
 export { projects } from '../projects'

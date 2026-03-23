@@ -7,10 +7,10 @@
 - **二次元美学**：空气感渐变背景 + 磨砂玻璃效果 + 浮动粒子动画
 - **亮暗主题**：一键切换，自动记忆偏好
 - **响应式设计**：适配从手机到 4K 的各种屏幕
-- **文章系统**：Markdown 写作、标签筛选、全文搜索
+- **文章系统**：Markdown 写作、标签筛选，全文搜索
 - **瀑布流布局**：卡片式文章列表，交错入场动画
 - **手绘风格**：手绘风标签、悬停动效
-- **隐私友好**：敏感配置通过 `.env` 管理，本地文件 gitignore
+- **隐私友好**：敏感配置通过 JSON 文件管理，gitignore 保护
 
 ## 🚀 快速开始
 
@@ -31,6 +31,22 @@ npm install
 # 或使用 pnpm
 pnpm install
 ```
+
+### 配置
+
+```bash
+# 复制配置模板文件
+cp src/config/site-template.json src/config/site.json
+cp src/config/nav-template.json src/config/nav.json
+cp src/config/social-links-template.json src/config/social-links.json
+
+# 编辑配置文件
+# - src/config/site.json       # 站点信息
+# - src/config/nav.json       # 导航配置
+# - src/config/social-links.json # 社交链接
+```
+
+详细配置说明请查看 [配置指南](src/config/README.md)。
 
 ### 开发
 
@@ -54,8 +70,11 @@ bun preview
 
 ```
 ├── src/
-│   ├── config/          # 站点配置（标题、作者、导航等）
-│   ├── posts/           # 文章目录（Markdown 文件）
+│   ├── config/          # 配置目录
+│   │   ├── *.json       # 真实配置（gitignore）
+│   │   ├── *-template.json  # 配置模板
+│   │   └── README.md    # 配置说明
+│   ├── posts/           # 文章目录
 │   │   └── local/      # 本地文章（gitignore）
 │   ├── projects/        # 项目配置
 │   ├── intro/           # 首页介绍（gitignore）
@@ -63,21 +82,12 @@ bun preview
 │   ├── components/      # 组件
 │   └── views/          # 页面视图
 ├── public/              # 静态资源
-├── .env                 # 环境变量（gitignore）
-└── .env.example         # 环境变量示例
+└── README.md
 ```
 
 ## ⚙️ 配置
 
-### 环境变量
-
-复制 `.env.example` 为 `.env`，填入你的配置：
-
-```bash
-cp .env.example .env
-```
-
-配置项：
+详细配置说明请查看 [配置指南](src/config/README.md)。
 
 | 变量 | 说明 | 示例 |
 |------|------|------|

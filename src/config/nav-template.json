@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "text": "首页", "path": "/" },
+    { "text": "文章", "path": "/articles" },
+    { "text": "作品", "path": "/projects" },
+    { "text": "关于", "path": "/about" }
+  ]
+}
