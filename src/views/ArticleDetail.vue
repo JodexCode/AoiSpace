@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { siteConfig } from '../config'
 import { getPost } from '../posts'
@@ -7,6 +7,9 @@ import { getPost } from '../posts'
 const route = useRoute()
 const id = route.params.id as string
 const post = getPost(id)
+
+const tocVisible = ref(true)
+const activeHeading = ref('')
 
 const meta = computed(() => {
   if (!post) return {}
@@ -21,7 +24,39 @@ const meta = computed(() => {
   }
 })
 
-onMounted(() => {
+const toc = computed(() => {
+  if (!post?.default) return []
+  const contentEl = document.querySelector('.article-content')
+  if (!contentEl) return []
+  
+  const headings: { id: string; text: string; level: number }[] = []
+  const headingElements = contentEl.querySelectorAll('h1, h2, h3')
+  
+  headingElements.forEach((el, index) => {
+    const text = el.textContent?.trim() || ''
+    const level = parseInt(el.tagName[1])
+    const id = `heading-${index}`
+    el.id = id
+    headings.push({ id, text, level })
+  })
+  
+  return headings
+})
+
+function scrollToHeading(id: string) {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    activeHeading.value = id
+  }
+}
+
+function toggleToc() {
+  tocVisible.value = !tocVisible.value
+}
+
+onMounted(async () => {
+  await nextTick()
   const title = meta.value?.title || id
   document.title = `${title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
@@ -37,46 +72,75 @@ function formatDate(date: string) {
 </script>
 
 <template>
-  <article class="article-detail">
-    <div v-if="meta.cover" class="article-cover">
-      <img :src="meta.cover" :alt="meta.title" />
-    </div>
-
-    <header class="article-header">
-      <h1 class="article-title">{{ meta.title || id }}</h1>
-      <div class="article-info">
-        <span class="info-item">
-          <span class="info-icon">📅</span>
-          发布于 {{ formatDate(meta.date || '') }}
-        </span>
-        <span v-if="meta.updated" class="info-item">
-          <span class="info-icon">🔄</span>
-          更新于 {{ formatDate(meta.updated) }}
-        </span>
-        <span v-if="meta.readingTime" class="info-item">
-          <span class="info-icon">⏱️</span>
-          预计阅读 {{ meta.readingTime }} 分钟
-        </span>
+  <div class="article-layout">
+    <article class="article-detail">
+      <div v-if="meta.cover" class="article-cover">
+        <img :src="meta.cover" :alt="meta.title" />
       </div>
-      <div class="article-tags">
-        <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
+
+      <header class="article-header">
+        <h1 class="article-title">{{ meta.title || id }}</h1>
+        <div class="article-info">
+          <span class="info-item">
+            <span class="info-icon">📅</span>
+            发布于 {{ formatDate(meta.date || '') }}
+          </span>
+          <span v-if="meta.updated" class="info-item">
+            <span class="info-icon">🔄</span>
+            更新于 {{ formatDate(meta.updated) }}
+          </span>
+          <span v-if="meta.readingTime" class="info-item">
+            <span class="info-icon">⏱️</span>
+            预计阅读 {{ meta.readingTime }} 分钟
+          </span>
+        </div>
+        <div class="article-tags">
+          <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
+        </div>
+      </header>
+
+      <p v-if="meta.description" class="article-description">
+        {{ meta.description }}
+      </p>
+
+      <div class="article-content markdown-body">
+        <component :is="post?.default" />
       </div>
-    </header>
+    </article>
 
-    <p v-if="meta.description" class="article-description">
-      {{ meta.description }}
-    </p>
-
-    <div class="article-content markdown-body">
-      <component :is="post?.default" />
-    </div>
-  </article>
+    <aside v-if="toc.length > 0" class="article-toc" :class="{ collapsed: !tocVisible }">
+      <button class="toc-toggle" @click="toggleToc" :title="tocVisible ? '隐藏目录' : '显示目录'">
+        <span class="toggle-icon">{{ tocVisible ? '▶' : '◀' }}</span>
+      </button>
+      <div v-show="tocVisible" class="toc-content">
+        <h3 class="toc-title">目录</h3>
+        <nav class="toc-nav">
+          <a
+            v-for="heading in toc"
+            :key="heading.id"
+            :href="`#${heading.id}`"
+            class="toc-item"
+            :class="[`level-${heading.level}`, { active: activeHeading === heading.id }]"
+            @click.prevent="scrollToHeading(heading.id)"
+          >
+            {{ heading.text }}
+          </a>
+        </nav>
+      </div>
+    </aside>
+  </div>
 </template>
 
 <style scoped>
+.article-layout {
+  display: flex;
+  gap: 2rem;
+  position: relative;
+}
+
 .article-detail {
-  max-width: 800px;
-  margin: 0 auto;
+  flex: 1;
+  min-width: 0;
 }
 
 .article-cover {
@@ -130,11 +194,7 @@ function formatDate(date: string) {
 
 .tag {
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(
-    135deg,
-    var(--accent-color),
-    var(--accent-secondary)
-  );
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   border-radius: 50px;
   font-size: 0.8rem;
   color: white;
@@ -163,6 +223,20 @@ function formatDate(date: string) {
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: var(--text-primary);
+}
+
+.article-content :deep(h1) {
+  font-size: 1.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.article-content :deep(h2) {
+  font-size: 1.4rem;
+}
+
+.article-content :deep(h3) {
+  font-size: 1.15rem;
 }
 
 .article-content :deep(p) {
@@ -210,6 +284,130 @@ function formatDate(date: string) {
   border-left: 4px solid var(--accent-color);
   background: var(--bg-secondary);
   color: var(--text-secondary);
+}
+
+.article-toc {
+  position: sticky;
+  top: 2rem;
+  width: 220px;
+  flex-shrink: 0;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  transition: width 0.3s ease;
+}
+
+.article-toc.collapsed {
+  width: 28px;
+}
+
+.toc-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.toc-toggle:hover {
+  background: var(--hover-bg);
+  border-color: var(--accent-color);
+}
+
+.toggle-icon {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.toc-content {
+  margin-left: 36px;
+  padding: 1rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.toc-title {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.toc-item {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.3rem 0;
+  transition: color 0.2s;
+  line-height: 1.4;
+}
+
+.toc-item:hover {
+  color: var(--accent-color);
+}
+
+.toc-item.active {
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.toc-item.level-1 {
+  padding-left: 0;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.toc-item.level-2 {
+  padding-left: 0.5rem;
+}
+
+.toc-item.level-3 {
+  padding-left: 1rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+  .article-layout {
+    flex-direction: column;
+  }
+  
+  .article-toc {
+    position: relative;
+    top: 0;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 1.5rem;
+  }
+  
+  .article-toc.collapsed {
+    width: 100%;
+    height: 36px;
+    overflow: hidden;
+  }
+  
+  .toc-content {
+    margin-left: 0;
+  }
+  
+  .toc-toggle {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
