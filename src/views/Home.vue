@@ -4,7 +4,7 @@ import { siteConfig } from '../config'
 import { getPostCount } from '../posts'
 import { projects } from '../config'
 
-onMounted(async () => {
+onMounted(() => {
   document.title = `${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
 
@@ -18,46 +18,94 @@ const intro = introModules['../intro/intro.md']?.default
 <template>
   <div class="home">
     <section class="hero">
-      <h1 class="title">{{ siteConfig.title }}</h1>
-      <p class="subtitle">{{ siteConfig.description }}</p>
-      <div class="hero-tags">
-        <span class="tag">博客</span>
-        <span class="tag">Vue</span>
-        <span class="tag">技术</span>
+      <div class="hero-content">
+        <h1 class="title">欢迎来到 {{ siteConfig.title }}</h1>
+        <p class="subtitle">{{ siteConfig.description }}</p>
+        <div class="hero-badges">
+          <span class="badge">
+            <span class="badge-icon">✨</span>
+            二次元
+          </span>
+          <span class="badge">
+            <span class="badge-icon">🚀</span>
+            技术
+          </span>
+          <span class="badge">
+            <span class="badge-icon">💖</span>
+            热爱
+          </span>
+        </div>
+      </div>
+      <div class="hero-decoration">
+        <span class="deco deco-1">✦</span>
+        <span class="deco deco-2">✧</span>
+        <span class="deco deco-3">✦</span>
       </div>
     </section>
 
     <section class="stats">
-      <div class="stat-item">
+      <RouterLink to="/articles" class="stat-card">
+        <span class="stat-icon">📝</span>
         <span class="stat-number">{{ postCount }}</span>
         <span class="stat-label">文章</span>
-      </div>
-      <div class="stat-item">
+      </RouterLink>
+      <RouterLink to="/projects" class="stat-card">
+        <span class="stat-icon">🎨</span>
         <span class="stat-number">{{ projectCount }}</span>
         <span class="stat-label">作品</span>
-      </div>
+      </RouterLink>
+      <RouterLink to="/about" class="stat-card">
+        <span class="stat-icon">👤</span>
+        <span class="stat-number">?</span>
+        <span class="stat-label">关于</span>
+      </RouterLink>
     </section>
 
-    <section v-if="intro" class="welcome-card">
-      <component :is="intro" />
+    <section class="about-section">
+      <h2 class="section-title">
+        <span class="title-icon">💫</span>
+        关于我
+      </h2>
+      <div v-if="intro" class="about-card">
+        <component :is="intro" />
+      </div>
+      <div v-else class="about-card empty">
+        <p>暂无介绍</p>
+        <RouterLink to="/about" class="add-link">添加介绍 →</RouterLink>
+      </div>
     </section>
 
     <section class="quick-links">
-      <RouterLink to="/articles" class="quick-link">
-        <span class="link-icon">📝</span>
-        <span class="link-text">浏览文章</span>
-        <span class="link-arrow">→</span>
-      </RouterLink>
-      <RouterLink to="/projects" class="quick-link">
-        <span class="link-icon">🎨</span>
-        <span class="link-text">看看作品</span>
-        <span class="link-arrow">→</span>
-      </RouterLink>
-      <RouterLink to="/about" class="quick-link">
-        <span class="link-icon">💫</span>
-        <span class="link-text">关于我</span>
-        <span class="link-arrow">→</span>
-      </RouterLink>
+      <h2 class="section-title">
+        <span class="title-icon">🧭</span>
+        快速导航
+      </h2>
+      <div class="links-grid">
+        <RouterLink to="/articles" class="link-card">
+          <span class="link-icon">📚</span>
+          <div class="link-info">
+            <h3>浏览文章</h3>
+            <p>探索技术文章和教程</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </RouterLink>
+        <RouterLink to="/projects" class="link-card">
+          <span class="link-icon">🎯</span>
+          <div class="link-info">
+            <h3>看看作品</h3>
+            <p>了解我的开源项目</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </RouterLink>
+        <RouterLink to="/about" class="link-card">
+          <span class="link-icon">🤝</span>
+          <div class="link-info">
+            <h3>联系我</h3>
+            <p>获取联系方式</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </RouterLink>
+      </div>
     </section>
   </div>
 </template>
@@ -65,6 +113,8 @@ const intro = introModules['../intro/intro.md']?.default
 <style scoped>
 .home {
   animation: fadeIn 0.6s ease-out;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 @keyframes fadeIn {
@@ -73,63 +123,116 @@ const intro = introModules['../intro/intro.md']?.default
 }
 
 .hero {
+  position: relative;
   text-align: center;
-  padding: 2rem 0 3rem;
+  padding: 3rem 2rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.deco {
+  position: absolute;
+  color: var(--accent-color);
+  opacity: 0.2;
+  animation: float 6s ease-in-out infinite;
+}
+
+.deco-1 { top: 10%; left: 10%; font-size: 2rem; }
+.deco-2 { top: 20%; right: 15%; font-size: 1.5rem; animation-delay: 1s; }
+.deco-3 { bottom: 15%; right: 10%; font-size: 1.8rem; animation-delay: 2s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .title {
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary), #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 1rem;
-  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
 }
 
 .subtitle {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
-.hero-tags {
+.hero-badges {
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
-.tag {
-  padding: 0.4rem 1rem;
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
   background: var(--bg-glass);
-  backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: 50px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-primary);
 }
 
+.badge-icon {
+  font-size: 1rem;
+}
+
 .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
+  flex-direction: column;
+  align-items: center;
   padding: 1.5rem;
   background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  margin-bottom: 2rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.stat-item {
-  text-align: center;
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-color);
+  box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.stat-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .stat-number {
-  display: block;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   -webkit-background-clip: text;
@@ -138,92 +241,161 @@ const intro = introModules['../intro/intro.md']?.default
 }
 
 .stat-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
-.welcome-card {
-  padding: 2rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  margin-bottom: 2rem;
-  box-shadow: 0 8px 32px var(--shadow-color);
-}
-
-.welcome-card :deep(h2) {
-  font-size: 1.5rem;
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
-.welcome-card :deep(p) {
+.title-icon {
+  font-size: 1.2rem;
+}
+
+.about-section {
+  margin-bottom: 1.5rem;
+}
+
+.about-card {
+  padding: 1.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+.about-card :deep(h2) {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.about-card :deep(p) {
   color: var(--text-secondary);
   line-height: 1.8;
 }
 
-.quick-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2.5rem;
+.about-card.empty {
+  text-align: center;
+  padding: 2rem;
 }
 
-.quick-link {
+.about-card.empty p {
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.add-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.add-link:hover {
+  text-decoration: underline;
+}
+
+.quick-links {
+  margin-bottom: 1.5rem;
+}
+
+.links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.link-card {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.25rem;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
   background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.quick-link:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px var(--shadow-color);
+.link-card:hover {
+  transform: translateX(8px);
   border-color: var(--accent-color);
+  box-shadow: 0 4px 16px var(--shadow-color);
 }
 
-.quick-link:hover .link-arrow {
+.link-card:hover .link-arrow {
   transform: translateX(4px);
 }
 
 .link-icon {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
-.link-text {
+.link-info {
   flex: 1;
-  font-weight: 500;
+}
+
+.link-info h3 {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.link-info p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .link-arrow {
+  font-size: 1.2rem;
   color: var(--accent-color);
   transition: transform 0.3s ease;
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .stats {
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
     padding: 1rem;
   }
 
-  .stat-number {
-    font-size: 1.8rem;
+  .stat-icon {
+    margin-bottom: 0;
+    font-size: 1.4rem;
   }
 
-  .quick-links {
-    grid-template-columns: 1fr;
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .link-card {
+    padding: 1rem;
+  }
+
+  .link-icon {
+    font-size: 1.4rem;
+  }
+
+  .link-info h3 {
+    font-size: 0.95rem;
   }
 }
 </style>
