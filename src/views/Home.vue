@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { siteConfig } from '../config'
+import { getPostCount } from '../posts'
+import { projects } from '../config'
 
-onMounted(() => {
+onMounted(async () => {
   document.title = `${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
+
+const postCount = getPostCount()
+const projectCount = projects.length
+
+const introModules = import.meta.glob('../intro/*.md', { eager: true }) as Record<string, { default?: unknown }>
+const intro = introModules['../intro/intro.md']?.default
 </script>
 
 <template>
@@ -19,9 +27,19 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="welcome-card">
-      <h2>欢迎来到我的小窝!</h2>
-      <p>这里是我的个人博客，记录着生活中的点点滴滴。喜欢探索新技术，分享有趣的内容。</p>
+    <section class="stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ postCount }}</span>
+        <span class="stat-label">文章</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ projectCount }}</span>
+        <span class="stat-label">作品</span>
+      </div>
+    </section>
+
+    <section v-if="intro" class="welcome-card">
+      <component :is="intro" />
     </section>
 
     <section class="quick-links">
@@ -40,21 +58,6 @@ onMounted(() => {
         <span class="link-text">关于我</span>
         <span class="link-arrow">→</span>
       </RouterLink>
-    </section>
-
-    <section class="stats">
-      <div class="stat-item">
-        <span class="stat-number">∞</span>
-        <span class="stat-label">可能</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">∞</span>
-        <span class="stat-label">探索</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">∞</span>
-        <span class="stat-label">热爱</span>
-      </div>
     </section>
   </div>
 </template>
@@ -108,6 +111,37 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 .welcome-card {
   padding: 2rem;
   background: var(--card-bg);
@@ -118,13 +152,13 @@ onMounted(() => {
   box-shadow: 0 8px 32px var(--shadow-color);
 }
 
-.welcome-card h2 {
+.welcome-card :deep(h2) {
   font-size: 1.5rem;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
-.welcome-card p {
+.welcome-card :deep(p) {
   color: var(--text-secondary);
   line-height: 1.8;
 }
@@ -172,36 +206,6 @@ onMounted(() => {
 .link-arrow {
   color: var(--accent-color);
   transition: transform 0.3s ease;
-}
-
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  padding: 1.5rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
 }
 
 @media (max-width: 768px) {

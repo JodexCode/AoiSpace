@@ -11,6 +11,9 @@ src/posts/local/*
 src/projects/projects.json
 !src/projects/template.json
 
+# Local intro
+src/intro/intro.md
+
 # Logs
 logs
 *.log
