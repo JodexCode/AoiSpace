@@ -73,13 +73,8 @@ function handleSearch() {
   }
 }
 
-function goToArticle(id: string, headingIndex?: number) {
-  const query: Record<string, string> = {}
-  if (searchQuery.value.trim() && headingIndex !== undefined && headingIndex >= 0) {
-    query.q = searchQuery.value.trim()
-    query.heading = headingIndex.toString()
-  }
-  router.push({ path: `/articles/${id}`, query })
+function goToArticle(id: string) {
+  router.push(`/articles/${id}`)
   searchQuery.value = ''
   showSearchResults.value = false
   searchInputFocused.value = false
@@ -91,25 +86,13 @@ function highlightMatch(text: string, query: string): string {
   return text.replace(regex, '<mark>$1</mark>')
 }
 
-function getMatchContext(post: PostWithContent, query: string): { text: string; headingIndex: number } {
+function getMatchContext(post: PostWithContent, query: string): string {
   const content = post.rawContent || post.description || ''
   const lowerContent = content.toLowerCase()
   const lowerQuery = query.toLowerCase()
   const index = lowerContent.indexOf(lowerQuery)
   
-  if (index === -1) return { text: post.description || '', headingIndex: -1 }
-  
-  let headingIndex = 0
-  if (post.headings && post.headings.length > 0) {
-    for (let i = post.headings.length - 1; i >= 0; i--) {
-      const headingText = post.headings[i].text.toLowerCase()
-      const headingPosInContent = lowerContent.indexOf(headingText)
-      if (headingPosInContent >= 0 && headingPosInContent <= index) {
-        headingIndex = i
-        break
-      }
-    }
-  }
+  if (index === -1) return post.description || ''
   
   const start = Math.max(0, index - 30)
   const end = Math.min(content.length, index + query.length + 50)
@@ -118,7 +101,7 @@ function getMatchContext(post: PostWithContent, query: string): { text: string; 
   if (start > 0) context = '...' + context
   if (end < content.length) context = context + '...'
   
-  return { text: context, headingIndex }
+  return context
 }
 
 function toggleTagDropdown() {
@@ -205,10 +188,10 @@ function formatDate(date: string) {
             v-for="result in searchResults"
             :key="result.id"
             class="search-result-item"
-            @click="goToArticle(result.id, getMatchContext(result, searchQuery).headingIndex)"
+            @click="goToArticle(result.id)"
           >
             <h4 class="result-title" v-html="highlightMatch(result.title, searchQuery)"></h4>
-            <p class="result-context" v-html="highlightMatch(getMatchContext(result, searchQuery).text, searchQuery)"></p>
+            <p class="result-context" v-html="highlightMatch(getMatchContext(result, searchQuery), searchQuery)"></p>
           </div>
         </div>
         <div v-if="showSearchResults && searchResults.length === 0 && searchQuery" class="search-results empty">
