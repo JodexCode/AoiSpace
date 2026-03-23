@@ -1,4 +1,4 @@
-import type { SiteConfig, ThemeConfig, NavConfig, Project } from './types'
+import type { SiteConfig, ThemeConfig, NavConfig } from './types'
 
 function getEnv(key: string, fallback: string): string {
   return import.meta.env[key] || fallback
@@ -32,24 +32,7 @@ export const navConfig: NavConfig = {
   ]
 }
 
-export const projects: Project[] = [
-  {
-    id: '1',
-    title: 'Project One',
-    description: 'A cool project',
-    image: '/projects/project1.png',
-    link: 'https://example.com',
-    tags: ['Vue', 'TypeScript']
-  },
-  {
-    id: '2',
-    title: 'Project Two',
-    description: 'Another awesome project',
-    image: '/projects/project2.png',
-    link: 'https://example2.com',
-    tags: ['React', 'Node.js']
-  }
-]
+export { projects } from '../projects'
 
 export const lightTheme = {
   '--bg-primary': 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%)',

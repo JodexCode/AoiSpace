@@ -7,6 +7,10 @@
 src/posts/local/*
 !src/posts/local/.gitkeep
 
+# Local projects
+src/projects/projects.json
+!src/projects/.gitkeep
+
 # Logs
 logs
 *.log
