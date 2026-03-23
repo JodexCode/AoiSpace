@@ -1,20 +1,21 @@
-# 放置你的隐私文章
+# 文章目录
 
-将你的文章（.md 文件）放在这个目录下，它们会被自动加载。
+将你的文章（.md 文件）放在 `local/` 目录下，它们会被自动加载并显示。
 
-## 使用方法
+## 撰写文章
 
-1. 复制 `src/posts/template.md` 作为模板
-2. 重命名并修改内容
-3. 确保文件顶部有 frontmatter：
+1. 在 `local/` 目录创建新的 `.md` 文件
+2. 文件顶部添加 frontmatter：
 
 ```yaml
 ---
-title: 你的标题
+title: 文章标题
 date: 2024-01-01
 tags: [标签1, 标签2]
-description: 简介
+description: 文章简介
 ---
 ```
 
-**注意**：此目录已被 git 忽略，不会提交到仓库。
+3. 使用 Markdown 编写正文
+
+**注意**：`local/` 目录已加入 gitignore，提交时会自动忽略。
