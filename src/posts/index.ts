@@ -4,17 +4,19 @@ const modules = import.meta.glob('./*.md', { eager: true }) as Record<string, { 
 const localModules = import.meta.glob('./local/*.md', { eager: true }) as Record<string, { attributes?: Partial<PostMeta>; default?: string }>
 
 function parseModules(modules: Record<string, { attributes?: Partial<PostMeta>; default?: string }>) {
-  return Object.entries(modules).map(([path, module]) => {
-    const id = path.replace(/^\.\//, '').replace(/\.md$/, '')
-    return {
-      id,
-      title: module.attributes?.title || id,
-      date: module.attributes?.date || '',
-      tags: module.attributes?.tags || [],
-      description: module.attributes?.description || '',
-      default: module.default
-    }
-  })
+  return Object.entries(modules)
+    .filter(([path]) => !path.includes('README'))
+    .map(([path, module]) => {
+      const id = path.replace(/^\.\//, '').replace(/\.md$/, '')
+      return {
+        id,
+        title: module.attributes?.title || id,
+        date: module.attributes?.date || '',
+        tags: module.attributes?.tags || [],
+        description: module.attributes?.description || '',
+        default: module.default
+      }
+    })
 }
 
 export const posts: PostMeta[] = [
