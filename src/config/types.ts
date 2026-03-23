@@ -9,6 +9,7 @@ export interface SiteConfig {
   socialLinks?: {
     github?: string
     email?: string
+    bilibili?: string
     twitter?: string
   }
 }

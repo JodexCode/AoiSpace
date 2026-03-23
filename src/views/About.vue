@@ -34,9 +34,29 @@ onMounted(() => {
             <span class="link-icon">🐙</span>
             GitHub
           </a>
+          <a v-if="siteConfig.socialLinks?.bilibili" :href="siteConfig.socialLinks.bilibili" target="_blank" class="contact-link bilibili">
+            <span class="link-icon">📺</span>
+            Bilibili
+          </a>
           <a v-if="siteConfig.socialLinks?.email" :href="`mailto:${siteConfig.socialLinks.email}`" class="contact-link">
             <span class="link-icon">✉️</span>
             Email
+          </a>
+        </div>
+      </section>
+
+      <section class="project-section glass-card">
+        <h3>关于本站</h3>
+        <p class="project-desc">
+          本站点由 <strong>AoiSpace / 碧蓝空间</strong> 强力驱动 —— 一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite 构建。
+        </p>
+        <p class="project-desc">
+          特性包括：磨砂玻璃美学、响应式设计、亮暗主题切换、文章搜索与筛选、瀑布流布局等。
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/JodexCode/AoiSpace" target="_blank" class="project-link">
+            <span class="link-icon">🐙</span>
+            访问项目
           </a>
         </div>
       </section>
@@ -209,8 +229,73 @@ onMounted(() => {
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
+.contact-link.bilibili {
+  background: linear-gradient(135deg, #fb7299, #ffa8c5);
+}
+
+.contact-link.bilibili:hover {
+  box-shadow: 0 8px 24px rgba(251, 114, 153, 0.4);
+}
+
 .link-icon {
   font-size: 1.1rem;
+}
+
+.project-section {
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+.project-section h3 {
+  margin: 0 0 1.25rem;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+}
+
+.project-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+.project-desc:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+.project-desc strong {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.project-link:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-color);
 }
 
 @media (max-width: 768px) {
@@ -236,6 +321,14 @@ onMounted(() => {
   }
 
   .contact-link {
+    justify-content: center;
+  }
+
+  .project-links {
+    flex-direction: column;
+  }
+
+  .project-link {
     justify-content: center;
   }
 }
@@ -283,6 +376,25 @@ onMounted(() => {
   }
 
   .contact-link {
+    padding: 0.9rem 1.75rem;
+    font-size: 1.05rem;
+  }
+
+  .project-section {
+    padding: 2.5rem;
+    border-radius: 24px;
+  }
+
+  .project-section h3 {
+    font-size: 1.35rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-desc {
+    font-size: 1rem;
+  }
+
+  .project-link {
     padding: 0.9rem 1.75rem;
     font-size: 1.05rem;
   }
