@@ -649,7 +649,7 @@ function getRandomDelay(index: number): string {
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   line-height: 1.4;
   transition: color 0.3s ease;
 }
@@ -662,7 +662,7 @@ function getRandomDelay(index: number): string {
   color: var(--text-secondary);
   font-size: 0.85rem;
   line-height: 1.6;
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -674,26 +674,27 @@ function getRandomDelay(index: number): string {
   gap: 1rem;
   color: var(--text-secondary);
   font-size: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .hand-drawn-tag {
   position: relative;
-  padding: 0.25rem 0.75rem;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 50px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--accent-color);
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 2px 2px 0 var(--border-color);
 }
 
 .hand-drawn-tag:hover {
@@ -701,7 +702,7 @@ function getRandomDelay(index: number): string {
   color: white;
   border-color: transparent;
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 .empty-state {
@@ -815,11 +816,23 @@ function getRandomDelay(index: number): string {
   }
 
   .card-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
   }
 
   .card-desc {
     font-size: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .card-meta {
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .hand-drawn-tag {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.75rem;
   }
 }
 </style>
