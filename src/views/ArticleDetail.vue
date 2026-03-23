@@ -9,7 +9,16 @@ const id = route.params.id as string
 const post = getPost(id)
 
 const meta = computed(() => {
-  return post?.attributes || post?.frontmatter || {}
+  if (!post) return {}
+  return {
+    title: (post as any).title || id,
+    date: (post as any).date || '',
+    updated: (post as any).updated,
+    tags: (post as any).tags || [],
+    description: (post as any).description || '',
+    cover: (post as any).cover,
+    readingTime: (post as any).readingTime
+  }
 })
 
 onMounted(() => {
@@ -19,7 +28,11 @@ onMounted(() => {
 
 function formatDate(date: string) {
   if (!date) return ''
-  return new Date(date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+  return new Date(date).toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
 }
 </script>
 
@@ -28,7 +41,7 @@ function formatDate(date: string) {
     <div v-if="meta.cover" class="article-cover">
       <img :src="meta.cover" :alt="meta.title" />
     </div>
-    
+
     <header class="article-header">
       <h1 class="article-title">{{ meta.title || id }}</h1>
       <div class="article-info">
@@ -49,9 +62,11 @@ function formatDate(date: string) {
         <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
       </div>
     </header>
-    
-    <p v-if="meta.description" class="article-description">{{ meta.description }}</p>
-    
+
+    <p v-if="meta.description" class="article-description">
+      {{ meta.description }}
+    </p>
+
     <div class="article-content markdown-body">
       <component :is="post?.default" />
     </div>
@@ -115,7 +130,11 @@ function formatDate(date: string) {
 
 .tag {
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
   border-radius: 50px;
   font-size: 0.8rem;
   color: white;
@@ -197,7 +216,7 @@ function formatDate(date: string) {
   .article-title {
     font-size: 1.8rem;
   }
-  
+
   .article-info {
     flex-direction: column;
     gap: 0.5rem;
