@@ -4,9 +4,8 @@
 .env.*.local
 
 # Local content (articles)
-src/posts/local/
-!src/posts/local/README.md
-!src/posts/README.md
+src/posts/local/*
+!src/posts/local/.gitkeep
 
 # Logs
 logs
