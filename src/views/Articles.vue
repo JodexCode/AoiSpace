@@ -6,6 +6,11 @@ import { posts } from '../posts'
 onMounted(() => {
   document.title = `文章 - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
+
+function formatDate(date: string) {
+  if (!date) return ''
+  return new Date(date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
+}
 </script>
 
 <template>
@@ -23,15 +28,20 @@ onMounted(() => {
         class="article-item"
         :style="{ animationDelay: `${index * 0.1}s` }"
       >
-        <h2 class="article-title">{{ post.title }}</h2>
-        <div class="article-meta">
-          <span class="date">{{ post.date }}</span>
-          <div class="tags">
+        <div v-if="post.cover" class="article-cover">
+          <img :src="post.cover" :alt="post.title" />
+        </div>
+        <div class="article-content">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <div class="article-meta">
+            <span class="date">📅 {{ formatDate(post.date) }}</span>
+            <span v-if="post.readingTime" class="reading-time">⏱️ {{ post.readingTime }} 分钟</span>
+          </div>
+          <p v-if="post.description" class="article-desc">{{ post.description }}</p>
+          <div v-if="post.tags?.length" class="article-tags">
             <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
         </div>
-        <p class="article-desc">{{ post.description }}</p>
-        <span class="read-more">阅读更多 →</span>
       </RouterLink>
     </div>
 
@@ -80,15 +90,15 @@ onMounted(() => {
 }
 
 .article-item {
-  position: relative;
-  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
   background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: 20px;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
   animation: slideUp 0.5s ease-out forwards;
   opacity: 0;
 }
@@ -99,62 +109,72 @@ onMounted(() => {
 }
 
 .article-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: 0 12px 40px var(--shadow-color);
   border-color: var(--accent-color);
 }
 
+.article-cover {
+  flex-shrink: 0;
+  width: 180px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.article-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-content {
+  flex: 1;
+  min-width: 0;
+}
+
 .article-title {
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   color: var(--text-primary);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
 .article-meta {
   display: flex;
-  align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
-.date {
-  font-size: 0.85rem;
+.reading-time {
   color: var(--text-secondary);
 }
 
-.tags {
+.article-desc {
+  margin: 0 0 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-tags {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .tag {
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
   border-radius: 50px;
   font-size: 0.75rem;
   color: white;
   font-weight: 500;
-}
-
-.article-desc {
-  margin: 0 0 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-.read-more {
-  display: inline-block;
-  color: var(--accent-color);
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-}
-
-.article-item:hover .read-more {
-  transform: translateX(4px);
 }
 
 .empty-state {
@@ -180,17 +200,16 @@ onMounted(() => {
   }
 
   .article-item {
-    padding: 1.5rem;
+    flex-direction: column;
+  }
+
+  .article-cover {
+    width: 100%;
+    height: 160px;
   }
 
   .article-title {
-    font-size: 1.2rem;
-  }
-
-  .article-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    font-size: 1.15rem;
   }
 }
 </style>

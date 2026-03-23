@@ -22,8 +22,11 @@ export interface PostMeta {
   id: string
   title: string
   date: string
+  updated?: string
   tags?: string[]
   description?: string
+  cover?: string
+  readingTime?: number
 }
 
 export interface Project {
