@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { projects } from '../config'
+import { projects, siteConfig } from '../config'
 
 onMounted(() => {
   document.title = `作品 - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`

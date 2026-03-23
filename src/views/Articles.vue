@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { siteConfig } from '../config'
 import type { PostMeta } from '../config/types'
 
 const posts = ref<PostMeta[]>([])
