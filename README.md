@@ -7,9 +7,10 @@
 - **二次元美学**：空气感渐变背景 + 磨砂玻璃效果 + 浮动粒子动画
 - **亮暗主题**：一键切换，自动记忆偏好
 - **响应式设计**：适配从手机到 4K 的各种屏幕
-- **文章系统**：Markdown 写作、标签筛选，全文搜索
+- **文章系统**：Markdown 写作、标签筛选、全文搜索
 - **瀑布流布局**：卡片式文章列表，交错入场动画
 - **手绘风格**：手绘风标签、悬停动效
+- **花哨动效**：全站悬停交互动效，标题渐变扫线、按钮闪光扫过、图标弹跳旋转
 - **隐私友好**：敏感配置通过 JSON 文件管理，gitignore 保护
 
 ## 🚀 快速开始
@@ -37,12 +38,11 @@ pnpm install
 ```bash
 # 复制配置模板文件
 cp src/config/site-template.json src/config/site.json
-cp src/config/nav-template.json src/config/nav.json
 cp src/config/social-links-template.json src/config/social-links.json
 
 # 编辑配置文件
 # - src/config/site.json       # 站点信息
-# - src/config/nav.json       # 导航配置
+# - src/config/nav.json       # 导航配置（可选）
 # - src/config/social-links.json # 社交链接
 ```
 
@@ -80,7 +80,8 @@ bun preview
 │   ├── intro/           # 首页介绍（gitignore）
 │   ├── composables/     # 组合式函数
 │   ├── components/      # 组件
-│   └── views/          # 页面视图
+│   ├── views/          # 页面视图
+│   └── router/         # 路由配置
 ├── public/              # 静态资源
 └── README.md
 ```
@@ -89,17 +90,45 @@ bun preview
 
 详细配置说明请查看 [配置指南](src/config/README.md)。
 
-| 变量 | 说明 | 示例 |
-|------|------|------|
-| `VITE_SITE_TITLE` | 网站标题 | `碧蓝空间` |
-| `VITE_SITE_AUTHOR` | 作者名称 | `每天睡25小时` |
-| `VITE_SITE_AVATAR` | 头像地址 | `/avatar.png` |
-| `VITE_SITE_DESCRIPTION` | 网站描述 | `记录技术探索与生活点滴` |
-| `VITE_SITE_ICP` | ICP备案号 | `京ICP备xxxxxxxx号` |
-| `VITE_SITE_GITHUB` | GitHub 地址 | `https://github.com/xxx` |
-| `VITE_SITE_EMAIL` | 邮箱地址 | `xxx@example.com` |
+### 站点配置 (site.json)
 
-### 文章写作
+```json
+{
+  "title": "碧蓝空间",
+  "author": "每天睡25小时",
+  "avatar": "/avatar.png",
+  "description": "记录技术探索与生活点滴",
+  "icp": "京ICP备xxxxxxxx号"
+}
+```
+
+### 导航配置 (nav.json)
+
+```json
+{
+  "items": [
+    { "text": "首页", "path": "/" },
+    { "text": "文章", "path": "/articles" },
+    { "text": "作品", "path": "/projects" },
+    { "text": "关于", "path": "/about" }
+  ]
+}
+```
+
+### 社交链接配置 (social-links.json)
+
+```json
+[
+  {
+    "name": "GitHub",
+    "url": "https://github.com/xxx",
+    "icon": "🐙",
+    "iconType": "emoji"
+  }
+]
+```
+
+## 📝 文章写作
 
 在 `src/posts/local/` 目录下创建 Markdown 文件：
 
@@ -163,21 +192,6 @@ Frontmatter 字段：
 export const themeConfig: ThemeConfig = {
   primaryColor: '#7c3aed',  // 主色调
   codeTheme: 'github'       // 代码高亮主题
-}
-```
-
-### 导航栏
-
-编辑 `src/config/index.ts` 中的 `navConfig`：
-
-```typescript
-export const navConfig: NavConfig = {
-  items: [
-    { text: '首页', path: '/' },
-    { text: '文章', path: '/articles' },
-    { text: '作品', path: '/projects' },
-    { text: '关于', path: '/about' }
-  ]
 }
 ```
 
