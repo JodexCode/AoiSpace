@@ -1,8 +1,9 @@
 import type { PostMeta } from '../config/types'
 
-const modules = import.meta.glob('./local/*.md', { eager: true }) as Record<string, { attributes?: Partial<PostMeta>; default?: string }>
+const modules = import.meta.glob('./local/*.md', { eager: true }) as Record<string, { attributes?: Partial<PostMeta>; default?: unknown }>
 
-function calculateReadingTime(content: string): number {
+function calculateReadingTime(content: unknown): number {
+  if (typeof content !== 'string') return 0
   const text = content.replace(/[#*`\[\]()]/g, '')
   const words = text.trim().split(/\s+/).length
   return Math.ceil(words / 200)
@@ -11,7 +12,6 @@ function calculateReadingTime(content: string): number {
 export const posts: PostMeta[] = Object.entries(modules)
   .map(([path, module]) => {
     const id = path.replace(/^\.\/local\//, '').replace(/\.md$/, '')
-    const content = module.default || ''
     return {
       id,
       title: module.attributes?.title || id,
@@ -20,7 +20,7 @@ export const posts: PostMeta[] = Object.entries(modules)
       tags: module.attributes?.tags || [],
       description: module.attributes?.description || '',
       cover: module.attributes?.cover,
-      readingTime: module.attributes?.readingTime || calculateReadingTime(content)
+      readingTime: module.attributes?.readingTime || calculateReadingTime(module.default)
     }
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
