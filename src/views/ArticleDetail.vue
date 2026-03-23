@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
+import { siteConfig } from '../config'
 
 const route = useRoute()
 const content = ref('')
@@ -12,7 +13,7 @@ const md = new MarkdownIt()
 onMounted(async () => {
   const id = route.params.id as string
   
-  document.title = `${id} - 每天睡25小时的个人博客 - 由 AoiSpace / 碧蓝空间驱动`
+  document.title = `${id} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
   
   try {
     const response = await fetch(`/posts/${id}.md`)

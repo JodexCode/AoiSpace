@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { siteConfig } from '../config'
 
 onMounted(() => {
-  document.title = `${siteConfig.author}的个人博客 - 由 AoiSpace / 碧蓝空间驱动`
+  document.title = `${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
 </script>
 

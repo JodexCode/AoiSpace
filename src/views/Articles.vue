@@ -6,7 +6,7 @@ const posts = ref<PostMeta[]>([])
 const loading = ref(true)
 
 onMounted(async () => {
-  document.title = `文章 - 每天睡25小时的个人博客 - 由 AoiSpace / 碧蓝空间驱动`
+  document.title = `文章 - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
   
   try {
     const response = await fetch('/posts.json')

@@ -1,10 +1,10 @@
 import type { SiteConfig, ThemeConfig, NavConfig, Project } from './types'
 
 export const siteConfig: SiteConfig = {
-  title: 'My Blog',
-  author: 'Your Name',
+  title: '每天睡25小时的博客',
+  author: '每天睡25小时',
   avatar: '/avatar.png',
-  description: 'A personal blog powered by technology',
+  description: '记录技术探索与生活点滴的个人博客',
   icp: '京ICP备xxxxxxxx号',
   github: 'https://github.com/yourname',
   email: 'hello@example.com',
