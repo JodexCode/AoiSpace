@@ -202,6 +202,8 @@ function formatDate(date: string) {
   border-radius: 16px;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .custom-dropdown {
@@ -259,7 +261,7 @@ function formatDate(date: string) {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: 0 8px 24px var(--shadow-color);
-  z-index: 100;
+  z-index: 1000;
   overflow: hidden;
   animation: dropdownFadeIn 0.2s ease-out;
 }
