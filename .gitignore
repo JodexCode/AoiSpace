@@ -3,6 +3,10 @@
 .env.local
 .env.*.local
 
+# Local content (articles)
+src/posts/local/*.md
+!src/posts/local/README.md
+
 # Logs
 logs
 *.log
