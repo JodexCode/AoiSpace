@@ -357,18 +357,20 @@ function formatDate(date: string) {
   flex-shrink: 0;
   max-height: 500px;
   border-radius: 16px;
-  overflow-y: auto;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .article-toc.collapsed {
-  width: 40px;
+  width: 44px;
+  height: 44px;
+  max-height: 44px;
 }
 
 .toc-toggle {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+  top: 8px;
+  left: 8px;
   width: 28px;
   height: 28px;
   display: flex;
@@ -382,6 +384,11 @@ function formatDate(date: string) {
   cursor: pointer;
   transition: all 0.2s;
   z-index: 10;
+}
+
+.article-toc.collapsed .toc-toggle {
+  top: 8px;
+  left: 8px;
 }
 
 .toc-toggle:hover {
@@ -458,12 +465,13 @@ function formatDate(date: string) {
     top: 0;
     width: 100%;
     max-height: none;
+    overflow: visible;
   }
 
   .article-toc.collapsed {
     width: 100%;
-    height: 40px;
-    overflow: hidden;
+    height: auto;
+    max-height: none;
   }
 
   .toc-toggle {
