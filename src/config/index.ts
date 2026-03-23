@@ -1,4 +1,5 @@
-import type { SiteConfig, ThemeConfig, NavConfig } from './types'
+import type { SiteConfig, ThemeConfig, NavConfig, SocialLink } from './types'
+import socialLinksData from './social-links.json'
 
 function getEnv(key: string, fallback: string): string {
   return import.meta.env[key] || fallback
@@ -10,12 +11,7 @@ export const siteConfig: SiteConfig = {
   avatar: getEnv('VITE_SITE_AVATAR', '/avatar.png'),
   description: getEnv('VITE_SITE_DESCRIPTION', '记录技术探索与生活点滴的个人博客'),
   icp: getEnv('VITE_SITE_ICP', ''),
-  github: getEnv('VITE_SITE_GITHUB', ''),
-  email: getEnv('VITE_SITE_EMAIL', ''),
-  socialLinks: {
-    github: getEnv('VITE_SITE_GITHUB', ''),
-    email: getEnv('VITE_SITE_EMAIL', '')
-  }
+  socialLinks: socialLinksData as SocialLink[]
 }
 
 export const themeConfig: ThemeConfig = {

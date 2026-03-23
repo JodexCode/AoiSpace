@@ -30,17 +30,19 @@ onMounted(() => {
       <section class="contact-section glass-card">
         <h3>联系方式</h3>
         <div class="contact-links">
-          <a v-if="siteConfig.socialLinks?.github" :href="siteConfig.socialLinks.github" target="_blank" class="contact-link">
-            <span class="link-icon">🐙</span>
-            GitHub
-          </a>
-          <a v-if="siteConfig.socialLinks?.bilibili" :href="siteConfig.socialLinks.bilibili" target="_blank" class="contact-link bilibili">
-            <span class="link-icon">📺</span>
-            Bilibili
-          </a>
-          <a v-if="siteConfig.socialLinks?.email" :href="`mailto:${siteConfig.socialLinks.email}`" class="contact-link">
-            <span class="link-icon">✉️</span>
-            Email
+          <a
+            v-for="link in siteConfig.socialLinks"
+            :key="link.name"
+            :href="link.url"
+            :target="link.url.startsWith('http') ? '_blank' : '_self'"
+            class="contact-link"
+            :class="{ 'has-color': link.color }"
+            :style="link.color ? { background: link.color } : {}"
+          >
+            <img v-if="link.iconType === 'image'" :src="link.icon" :alt="link.name" class="link-icon-img" />
+            <span v-else-if="link.iconType === 'text'" class="link-icon-text">{{ link.icon }}</span>
+            <span v-else class="link-icon">{{ link.icon }}</span>
+            {{ link.name }}
           </a>
         </div>
       </section>
@@ -229,16 +231,27 @@ onMounted(() => {
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
-.contact-link.bilibili {
-  background: linear-gradient(135deg, #fb7299, #ffa8c5);
+.contact-link.has-color {
+  color: white;
 }
 
-.contact-link.bilibili:hover {
-  box-shadow: 0 8px 24px rgba(251, 114, 153, 0.4);
+.contact-link:not(.has-color):hover {
+  background: var(--accent-gradient);
 }
 
 .link-icon {
   font-size: 1.1rem;
+}
+
+.link-icon-img {
+  width: 1.1rem;
+  height: 1.1rem;
+  object-fit: contain;
+}
+
+.link-icon-text {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .project-section {

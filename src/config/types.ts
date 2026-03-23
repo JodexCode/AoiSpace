@@ -1,17 +1,18 @@
+export interface SocialLink {
+  name: string
+  url: string
+  icon: string
+  iconType?: 'emoji' | 'text' | 'image'
+  color?: string
+}
+
 export interface SiteConfig {
   title: string
   author: string
   avatar: string
   description?: string
   icp?: string
-  github?: string
-  email?: string
-  socialLinks?: {
-    github?: string
-    email?: string
-    bilibili?: string
-    twitter?: string
-  }
+  socialLinks?: SocialLink[]
 }
 
 export interface ThemeConfig {
