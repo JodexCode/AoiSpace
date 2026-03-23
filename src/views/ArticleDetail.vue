@@ -355,8 +355,7 @@ function formatDate(date: string) {
 }
 
 .toc-wrapper {
-  position: sticky;
-  top: 1.5rem;
+  position: relative;
   flex-shrink: 0;
 }
 
@@ -460,8 +459,6 @@ function formatDate(date: string) {
   }
 
   .toc-wrapper {
-    position: relative;
-    top: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
