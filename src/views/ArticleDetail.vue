@@ -1,48 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import MarkdownIt from 'markdown-it'
 import { siteConfig } from '../config'
+import { getPost } from '../posts'
 
 const route = useRoute()
-const content = ref('')
-const meta = ref({ title: '', date: '', tags: [] as string[] })
+const id = route.params.id as string
+const post = getPost(id)
 
-const md = new MarkdownIt()
+const content = computed(() => post?.default || '')
+const meta = computed(() => ({
+  title: post?.attributes?.title || id,
+  date: post?.attributes?.date || '',
+  tags: post?.attributes?.tags || []
+}))
 
-onMounted(async () => {
-  const id = route.params.id as string
-  
-  document.title = `${id} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
-  
-  try {
-    const response = await fetch(`/posts/${id}.md`)
-    if (!response.ok) {
-      content.value = '<p>Article not found</p>'
-      return
-    }
-    
-    const text = await response.text()
-    const parts = text.split('---')
-    
-    if (parts.length >= 3) {
-      const frontmatter = parts[1]
-      content.value = md.render(parts.slice(2).join('---'))
-      
-      frontmatter.split('\n').forEach(line => {
-        const [key, ...valueParts] = line.split(':')
-        const value = valueParts.join(':').trim()
-        if (key === 'title') meta.value.title = value
-        if (key === 'date') meta.value.date = value
-        if (key === 'tags') meta.value.tags = value.replace(/[\[\]]/g, '').split(',').map(t => t.trim())
-      })
-    } else {
-      content.value = md.render(text)
-      meta.value.title = id
-    }
-  } catch (e) {
-    content.value = '<p>Article not found</p>'
-  }
+onMounted(() => {
+  document.title = `${meta.value.title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
 </script>
 

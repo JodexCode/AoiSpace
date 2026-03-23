@@ -1,22 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { siteConfig } from '../config'
-import type { PostMeta } from '../config/types'
+import { posts } from '../posts'
 
-const posts = ref<PostMeta[]>([])
-const loading = ref(true)
-
-onMounted(async () => {
+onMounted(() => {
   document.title = `文章 - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
-  
-  try {
-    const response = await fetch('/posts.json')
-    posts.value = await response.json()
-  } catch (e) {
-    console.error('Failed to load posts:', e)
-  } finally {
-    loading.value = false
-  }
 })
 </script>
 
@@ -24,16 +12,10 @@ onMounted(async () => {
   <div class="articles">
     <header class="page-header">
       <h1 class="page-title">文章</h1>
-      <p class="page-desc">记录生活，分享技术</p>
+      <p class="page-desc">共 {{ posts.length }} 篇文章</p>
     </header>
 
-    <div v-if="loading" class="loading">
-      <span class="loading-dot"></span>
-      <span class="loading-dot"></span>
-      <span class="loading-dot"></span>
-    </div>
-
-    <div v-else class="article-list">
+    <div class="article-list">
       <RouterLink
         v-for="(post, index) in posts"
         :key="post.id"
@@ -53,7 +35,7 @@ onMounted(async () => {
       </RouterLink>
     </div>
 
-    <div v-if="!loading && posts.length === 0" class="empty-state">
+    <div v-if="posts.length === 0" class="empty-state">
       <span class="empty-icon">📭</span>
       <p>暂无文章</p>
     </div>
@@ -89,29 +71,6 @@ onMounted(async () => {
 .page-desc {
   color: var(--text-secondary);
   font-size: 1rem;
-}
-
-.loading {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 3rem;
-}
-
-.loading-dot {
-  width: 12px;
-  height: 12px;
-  background: var(--accent-color);
-  border-radius: 50%;
-  animation: bounce 1.4s ease-in-out infinite;
-}
-
-.loading-dot:nth-child(2) { animation-delay: 0.2s; }
-.loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
 }
 
 .article-list {
