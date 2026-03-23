@@ -101,18 +101,11 @@ function getMatchContext(post: PostWithContent, query: string): { text: string; 
   
   let headingIndex = 0
   if (post.headings && post.headings.length > 0) {
-    const headingPositions: { index: number; pos: number }[] = []
-    
-    for (const heading of post.headings) {
-      const pos = content.toLowerCase().indexOf(heading.text.toLowerCase())
-      if (pos >= 0) {
-        headingPositions.push({ index: heading.index, pos })
-      }
-    }
-    
-    for (let i = headingPositions.length - 1; i >= 0; i--) {
-      if (headingPositions[i].pos <= index) {
-        headingIndex = headingPositions[i].index
+    for (let i = post.headings.length - 1; i >= 0; i--) {
+      const headingText = post.headings[i].text.toLowerCase()
+      const headingPosInContent = lowerContent.indexOf(headingText)
+      if (headingPosInContent >= 0 && headingPosInContent <= index) {
+        headingIndex = i
         break
       }
     }
