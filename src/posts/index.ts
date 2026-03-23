@@ -9,9 +9,16 @@ function calculateReadingTime(content: unknown): number {
   return Math.ceil(words / 200)
 }
 
-export const posts: PostMeta[] = Object.entries(modules)
+export interface PostWithContent extends PostMeta {
+  rawContent?: string
+}
+
+export const posts: PostWithContent[] = Object.entries(modules)
   .map(([path, module]) => {
     const id = path.replace(/^\.\/local\//, '').replace(/\.md$/, '')
+    const rawContent = typeof module.default === 'string' 
+      ? module.default.replace(/<[^>]*>/g, '').replace(/[#*`\[\]()_\-]/g, ' ').trim()
+      : ''
     return {
       id,
       title: module.title || id,
@@ -20,7 +27,8 @@ export const posts: PostMeta[] = Object.entries(modules)
       tags: module.tags || [],
       description: module.description || '',
       cover: module.cover,
-      readingTime: module.readingTime || calculateReadingTime(module.default)
+      readingTime: module.readingTime || calculateReadingTime(module.default),
+      rawContent
     }
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

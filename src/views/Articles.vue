@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { siteConfig } from '../config'
-import { posts } from '../posts'
+import { posts, type PostWithContent } from '../posts'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 onMounted(() => {
   document.title = `文章 - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
@@ -11,6 +14,11 @@ const selectedTag = ref('')
 const selectedYear = ref('')
 const tagDropdownOpen = ref(false)
 const yearDropdownOpen = ref(false)
+const searchQuery = ref('')
+const searchInputFocused = ref(false)
+
+const searchResults = ref<PostWithContent[]>([])
+const showSearchResults = ref(false)
 
 const allTags = computed(() => {
   const tags = new Set<string>()
@@ -29,7 +37,18 @@ const allYears = computed(() => {
 })
 
 const filteredPosts = computed(() => {
-  return posts.filter(post => {
+  let result = posts
+
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase()
+    result = result.filter(post =>
+      post.title.toLowerCase().includes(query) ||
+      (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
+      (post.description && post.description.toLowerCase().includes(query))
+    )
+  }
+
+  return result.filter(post => {
     const matchTag = !selectedTag.value || post.tags?.includes(selectedTag.value)
     const matchYear = !selectedYear.value || (post.date && new Date(post.date).getFullYear().toString() === selectedYear.value)
     return matchTag && matchYear
@@ -38,6 +57,52 @@ const filteredPosts = computed(() => {
 
 const selectedTagLabel = computed(() => selectedTag.value || '全部标签')
 const selectedYearLabel = computed(() => selectedYear.value ? `${selectedYear.value} 年` : '全部时间')
+
+function handleSearch() {
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase()
+    searchResults.value = posts.filter(post =>
+      post.title.toLowerCase().includes(query) ||
+      (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
+      (post.description && post.description.toLowerCase().includes(query))
+    )
+    showSearchResults.value = true
+  } else {
+    searchResults.value = []
+    showSearchResults.value = false
+  }
+}
+
+function goToArticle(id: string) {
+  router.push(`/articles/${id}`)
+  searchQuery.value = ''
+  showSearchResults.value = false
+  searchInputFocused.value = false
+}
+
+function highlightMatch(text: string, query: string): string {
+  if (!query.trim()) return text
+  const regex = new RegExp(`(${query})`, 'gi')
+  return text.replace(regex, '<mark>$1</mark>')
+}
+
+function getMatchContext(post: PostWithContent, query: string): string {
+  const content = post.rawContent || post.description || ''
+  const lowerContent = content.toLowerCase()
+  const lowerQuery = query.toLowerCase()
+  const index = lowerContent.indexOf(lowerQuery)
+  
+  if (index === -1) return post.description || ''
+  
+  const start = Math.max(0, index - 30)
+  const end = Math.min(content.length, index + query.length + 50)
+  let context = content.slice(start, end)
+  
+  if (start > 0) context = '...' + context
+  if (end < content.length) context = context + '...'
+  
+  return context
+}
 
 function toggleTagDropdown() {
   tagDropdownOpen.value = !tagDropdownOpen.value
@@ -72,8 +137,16 @@ function closeDropdowns(e: MouseEvent) {
   }
 }
 
+function closeSearchResults(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (!target.closest('.search-container')) {
+    showSearchResults.value = false
+  }
+}
+
 onMounted(() => {
   document.addEventListener('click', closeDropdowns)
+  document.addEventListener('click', closeSearchResults)
 })
 
 function formatDate(date: string) {
@@ -86,10 +159,46 @@ function formatDate(date: string) {
   <div class="articles">
     <header class="page-header">
       <h1 class="page-title">文章</h1>
-      <p class="page-desc">共 {{ filteredPosts.length }} 篇文章{{ filteredPosts.length !== posts.length ? `（共 ${posts.length} 篇）` : '' }}</p>
+      <p class="page-desc">
+        <template v-if="searchQuery">
+          搜索到 {{ filteredPosts.length }} 篇相关文章（共 {{ posts.length }} 篇）
+        </template>
+        <template v-else>
+          共 {{ filteredPosts.length }} 篇文章{{ filteredPosts.length !== posts.length ? `（共 ${posts.length} 篇）` : '' }}
+        </template>
+      </p>
     </header>
 
     <section class="filters">
+      <div class="search-container" :class="{ focused: searchInputFocused }">
+        <span class="search-icon">🔍</span>
+        <input
+          v-model="searchQuery"
+          type="text"
+          class="search-input"
+          placeholder="搜索文章标题或内容..."
+          @focus="searchInputFocused = true; handleSearch()"
+          @input="handleSearch"
+        />
+        <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''; showSearchResults = false">
+          ✕
+        </button>
+        <div v-if="showSearchResults && searchResults.length > 0" class="search-results">
+          <div
+            v-for="result in searchResults"
+            :key="result.id"
+            class="search-result-item"
+            @click="goToArticle(result.id)"
+          >
+            <h4 class="result-title" v-html="highlightMatch(result.title, searchQuery)"></h4>
+            <p class="result-context" v-html="highlightMatch(getMatchContext(result, searchQuery), searchQuery)"></p>
+          </div>
+        </div>
+        <div v-if="showSearchResults && searchResults.length === 0 && searchQuery" class="search-results empty">
+          <p>没有找到匹配的文章</p>
+        </div>
+      </div>
+
       <div class="custom-dropdown" :class="{ open: tagDropdownOpen }">
         <button class="dropdown-trigger" @click.stop="toggleTagDropdown">
           <span class="trigger-icon">🏷️</span>
@@ -319,6 +428,126 @@ function formatDate(date: string) {
   transform: translateY(-1px);
 }
 
+.search-container {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.search-container.focused {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.search-icon {
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--border-color);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.search-clear:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  z-index: 1000;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+.search-results.empty {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.search-results.empty p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.search-result-item {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: var(--hover-bg);
+}
+
+.result-title {
+  margin: 0 0 0.3rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.result-context {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.search-results :deep(mark) {
+  background: rgba(59, 130, 246, 0.3);
+  color: var(--accent-color);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
 .article-list {
   display: flex;
   flex-direction: column;
@@ -459,6 +688,11 @@ function formatDate(date: string) {
     align-items: stretch;
   }
 
+  .search-container {
+    width: 100%;
+    min-width: unset;
+  }
+
   .custom-dropdown {
     width: 100%;
   }
@@ -475,6 +709,10 @@ function formatDate(date: string) {
   .clear-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .search-results {
+    max-height: 250px;
   }
 
   .article-item {
