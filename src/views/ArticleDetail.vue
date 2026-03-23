@@ -355,14 +355,16 @@ function formatDate(date: string) {
   top: 1.5rem;
   width: 240px;
   flex-shrink: 0;
+  height: fit-content;
+  max-height: 500px;
   border-radius: 16px;
-  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .article-toc.collapsed {
   width: 44px;
-  height: 44px;
+  max-height: 44px;
+  overflow: hidden;
 }
 
 .toc-toggle {
@@ -392,8 +394,8 @@ function formatDate(date: string) {
 .toc-content {
   margin-left: 0;
   padding: 3rem 1rem 1rem;
-  max-height: 420px;
   overflow-y: auto;
+  max-height: 450px;
 }
 
 .toc-toggle:hover {
@@ -480,8 +482,6 @@ function formatDate(date: string) {
 
   .toc-content {
     padding: 1rem;
-    max-height: none;
-    overflow-y: visible;
   }
 }
 
