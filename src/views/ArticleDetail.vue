@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { siteConfig } from '../config'
 import { getPost } from '../posts'
@@ -10,6 +10,7 @@ const post = getPost(id)
 
 const tocVisible = ref(true)
 const activeHeading = ref('')
+const toc = ref<{ id: string; text: string; level: number }[]>([])
 
 const meta = computed(() => {
   if (!post) return {}
@@ -24,30 +25,39 @@ const meta = computed(() => {
   }
 })
 
-const toc = computed(() => {
-  if (!post?.default) return []
-  const contentEl = document.querySelector('.article-content')
-  if (!contentEl) return []
+function extractToc() {
+  if (!post?.default) {
+    toc.value = []
+    return
+  }
   
-  const headings: { id: string; text: string; level: number }[] = []
-  const headingElements = contentEl.querySelectorAll('h1, h2, h3')
-  
-  headingElements.forEach((el, index) => {
-    const text = el.textContent?.trim() || ''
-    const level = parseInt(el.tagName[1])
-    const id = `heading-${index}`
-    el.id = id
-    headings.push({ id, text, level })
+  nextTick(() => {
+    const contentEl = document.querySelector('.article-content')
+    if (!contentEl) {
+      toc.value = []
+      return
+    }
+    
+    const headings: { id: string; text: string; level: number }[] = []
+    const headingElements = contentEl.querySelectorAll('h1, h2, h3')
+    
+    headingElements.forEach((el, index) => {
+      const text = el.textContent?.trim() || ''
+      const level = parseInt(el.tagName[1])
+      const headingId = `heading-${index}`
+      el.id = headingId
+      headings.push({ id: headingId, text, level })
+    })
+    
+    toc.value = headings
   })
-  
-  return headings
-})
+}
 
-function scrollToHeading(id: string) {
-  const el = document.getElementById(id)
+function scrollToHeading(targetId: string) {
+  const el = document.getElementById(targetId)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    activeHeading.value = id
+    activeHeading.value = targetId
   }
 }
 
@@ -55,10 +65,14 @@ function toggleToc() {
   tocVisible.value = !tocVisible.value
 }
 
-onMounted(async () => {
-  await nextTick()
+onMounted(() => {
   const title = meta.value?.title || id
   document.title = `${title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
+  setTimeout(extractToc, 200)
+})
+
+watch(() => route.params.id, () => {
+  setTimeout(extractToc, 200)
 })
 
 function formatDate(date: string) {
@@ -108,8 +122,16 @@ function formatDate(date: string) {
       </div>
     </article>
 
-    <aside v-if="toc.length > 0" class="article-toc" :class="{ collapsed: !tocVisible }">
-      <button class="toc-toggle" @click="toggleToc" :title="tocVisible ? '隐藏目录' : '显示目录'">
+    <aside
+      v-if="toc.length > 0"
+      class="article-toc"
+      :class="{ collapsed: !tocVisible }"
+    >
+      <button
+        class="toc-toggle"
+        @click="toggleToc"
+        :title="tocVisible ? '隐藏目录' : '显示目录'"
+      >
         <span class="toggle-icon">{{ tocVisible ? '▶' : '◀' }}</span>
       </button>
       <div v-show="tocVisible" class="toc-content">
@@ -120,7 +142,10 @@ function formatDate(date: string) {
             :key="heading.id"
             :href="`#${heading.id}`"
             class="toc-item"
-            :class="[`level-${heading.level}`, { active: activeHeading === heading.id }]"
+            :class="[
+              `level-${heading.level}`,
+              { active: activeHeading === heading.id },
+            ]"
             @click.prevent="scrollToHeading(heading.id)"
           >
             {{ heading.text }}
@@ -194,7 +219,11 @@ function formatDate(date: string) {
 
 .tag {
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
   border-radius: 50px;
   font-size: 0.8rem;
   color: white;
@@ -386,7 +415,7 @@ function formatDate(date: string) {
   .article-layout {
     flex-direction: column;
   }
-  
+
   .article-toc {
     position: relative;
     top: 0;
@@ -394,17 +423,17 @@ function formatDate(date: string) {
     max-height: none;
     margin-bottom: 1.5rem;
   }
-  
+
   .article-toc.collapsed {
     width: 100%;
     height: 36px;
     overflow: hidden;
   }
-  
+
   .toc-content {
     margin-left: 0;
   }
-  
+
   .toc-toggle {
     display: none;
   }
