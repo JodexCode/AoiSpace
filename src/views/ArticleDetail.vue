@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { siteConfig } from '../config'
 import { getPost } from '../posts'
@@ -8,28 +8,24 @@ const route = useRoute()
 const id = route.params.id as string
 const post = getPost(id)
 
-const content = computed(() => post?.default || '')
-const meta = computed(() => ({
-  title: post?.attributes?.title || id,
-  date: post?.attributes?.date || '',
-  tags: post?.attributes?.tags || []
-}))
-
 onMounted(() => {
-  document.title = `${meta.value.title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
+  const title = post?.attributes?.title || id
+  document.title = `${title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
 })
 </script>
 
 <template>
   <article class="article-detail">
     <header class="article-header">
-      <h1 class="article-title">{{ meta.title }}</h1>
+      <h1 class="article-title">{{ post?.attributes?.title || id }}</h1>
       <div class="article-meta">
-        <span class="date">{{ meta.date }}</span>
-        <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
+        <span class="date">{{ post?.attributes?.date }}</span>
+        <span v-for="tag in post?.attributes?.tags" :key="tag" class="tag">{{ tag }}</span>
       </div>
     </header>
-    <div class="article-content markdown-body" v-html="content"></div>
+    <div class="article-content markdown-body">
+      <component :is="post?.default" />
+    </div>
   </article>
 </template>
 
