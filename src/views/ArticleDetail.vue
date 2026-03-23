@@ -88,7 +88,7 @@ function formatDate(date: string) {
 <template>
   <div class="article-layout">
     <article class="article-detail">
-      <div v-if="meta.cover" class="article-cover">
+      <div v-if="meta.cover" class="article-cover glass-card">
         <img :src="meta.cover" :alt="meta.title" />
       </div>
 
@@ -109,22 +109,22 @@ function formatDate(date: string) {
           </span>
         </div>
         <div class="article-tags">
-          <span v-for="tag in meta.tags" :key="tag" class="tag">{{ tag }}</span>
+          <span v-for="tag in meta.tags" :key="tag" class="tag hand-drawn-tag">{{ tag }}</span>
         </div>
       </header>
 
-      <p v-if="meta.description" class="article-description">
-        {{ meta.description }}
-      </p>
+      <div v-if="meta.description" class="article-description glass-card">
+        <p>{{ meta.description }}</p>
+      </div>
 
-      <div class="article-content markdown-body">
+      <div class="article-content markdown-body glass-card">
         <component :is="post?.default" />
       </div>
     </article>
 
     <aside
       v-if="toc.length > 0"
-      class="article-toc"
+      class="article-toc glass-card"
       :class="{ collapsed: !tocVisible }"
     >
       <button
@@ -159,8 +159,16 @@ function formatDate(date: string) {
 <style scoped>
 .article-layout {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   position: relative;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px var(--shadow-color);
 }
 
 .article-detail {
@@ -170,7 +178,7 @@ function formatDate(date: string) {
 
 .article-cover {
   margin-bottom: 2rem;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -179,6 +187,7 @@ function formatDate(date: string) {
   height: auto;
   max-height: 400px;
   object-fit: cover;
+  display: block;
 }
 
 .article-header {
@@ -187,9 +196,14 @@ function formatDate(date: string) {
 
 .article-title {
   font-size: 2.5rem;
+  font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 1rem;
   line-height: 1.3;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .article-info {
@@ -217,31 +231,44 @@ function formatDate(date: string) {
   gap: 0.5rem;
 }
 
-.tag {
+.hand-drawn-tag {
+  position: relative;
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(
-    135deg,
-    var(--accent-color),
-    var(--accent-secondary)
-  );
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
   border-radius: 50px;
   font-size: 0.8rem;
-  color: white;
+  color: var(--accent-color);
   font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 0 var(--border-color);
+}
+
+.hand-drawn-tag:hover {
+  background: var(--accent-gradient);
+  color: white;
+  border-color: transparent;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--accent-color);
 }
 
 .article-description {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  padding: 1rem 1.25rem;
-  background: var(--bg-secondary);
-  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
   border-left: 4px solid var(--accent-color);
   margin-bottom: 2rem;
 }
 
+.article-description p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
 .article-content {
+  padding: 2rem;
+  border-radius: 20px;
   line-height: 1.8;
   color: var(--text-primary);
 }
@@ -252,16 +279,22 @@ function formatDate(date: string) {
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .article-content :deep(h1) {
   font-size: 1.8rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .article-content :deep(h2) {
   font-size: 1.4rem;
+  color: var(--accent-color);
 }
 
 .article-content :deep(h3) {
@@ -283,9 +316,10 @@ function formatDate(date: string) {
 .article-content :deep(pre) {
   padding: 1rem;
   background: var(--code-bg);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow-x: auto;
   margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
 }
 
 .article-content :deep(pre code) {
@@ -304,41 +338,46 @@ function formatDate(date: string) {
 
 .article-content :deep(img) {
   max-width: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
+  margin: 1rem 0;
 }
 
 .article-content :deep(blockquote) {
   margin: 1rem 0;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border-left: 4px solid var(--accent-color);
-  background: var(--bg-secondary);
+  background: var(--hover-bg);
+  border-radius: 0 12px 12px 0;
   color: var(--text-secondary);
 }
 
 .article-toc {
   position: sticky;
-  top: 2rem;
-  width: 220px;
+  top: 1.5rem;
+  width: 240px;
   flex-shrink: 0;
   max-height: 500px;
+  border-radius: 16px;
   overflow-y: auto;
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .article-toc.collapsed {
-  width: 28px;
+  width: 40px;
 }
 
 .toc-toggle {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0.75rem;
+  left: 0.75rem;
   width: 28px;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--card-bg);
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   cursor: pointer;
@@ -347,7 +386,7 @@ function formatDate(date: string) {
 }
 
 .toc-toggle:hover {
-  background: var(--hover-bg);
+  background: var(--bg-glass-hover);
   border-color: var(--accent-color);
 }
 
@@ -357,12 +396,8 @@ function formatDate(date: string) {
 }
 
 .toc-content {
-  margin-left: 36px;
-  padding: 1rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+  margin-left: 0;
+  padding: 3rem 1rem 1rem;
 }
 
 .toc-title {
@@ -382,32 +417,35 @@ function formatDate(date: string) {
   font-size: 0.85rem;
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 0.3rem 0;
-  transition: color 0.2s;
+  padding: 0.4rem 0;
+  transition: all 0.2s;
   line-height: 1.4;
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
 }
 
 .toc-item:hover {
   color: var(--accent-color);
+  border-left-color: var(--accent-color);
 }
 
 .toc-item.active {
   color: var(--accent-color);
   font-weight: 500;
+  border-left-color: var(--accent-color);
 }
 
 .toc-item.level-1 {
-  padding-left: 0;
   font-weight: 500;
   color: var(--text-primary);
 }
 
 .toc-item.level-2 {
-  padding-left: 0.5rem;
+  padding-left: 1rem;
 }
 
 .toc-item.level-3 {
-  padding-left: 1rem;
+  padding-left: 1.5rem;
   font-size: 0.8rem;
 }
 
@@ -421,21 +459,20 @@ function formatDate(date: string) {
     top: 0;
     width: 100%;
     max-height: none;
-    margin-bottom: 1.5rem;
   }
 
   .article-toc.collapsed {
     width: 100%;
-    height: 36px;
+    height: 40px;
     overflow: hidden;
-  }
-
-  .toc-content {
-    margin-left: 0;
   }
 
   .toc-toggle {
     display: none;
+  }
+
+  .toc-content {
+    padding: 1rem;
   }
 }
 
@@ -448,182 +485,10 @@ function formatDate(date: string) {
     flex-direction: column;
     gap: 0.5rem;
   }
-}
-
-@media (min-width: 1440px) {
-  .article-title {
-    font-size: 3rem;
-  }
-
-  .article-info {
-    font-size: 1rem;
-    gap: 1.5rem;
-  }
-
-  .tag {
-    padding: 0.35rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .article-description {
-    font-size: 1.2rem;
-    padding: 1.25rem 1.5rem;
-    border-radius: 14px;
-  }
 
   .article-content {
-    font-size: 1.05rem;
-  }
-
-  .article-content :deep(h1) {
-    font-size: 2.2rem;
-  }
-
-  .article-content :deep(h2) {
-    font-size: 1.7rem;
-  }
-
-  .article-content :deep(h3) {
-    font-size: 1.35rem;
-  }
-
-  .article-content :deep(p) {
-    margin-bottom: 1.25rem;
-  }
-
-  .article-content :deep(pre) {
     padding: 1.25rem;
-    border-radius: 12px;
-  }
-
-  .article-toc {
-    width: 260px;
-  }
-
-  .toc-content {
-    padding: 1.25rem;
-    border-radius: 14px;
-  }
-
-  .toc-title {
-    font-size: 1rem;
-  }
-
-  .toc-item {
-    font-size: 0.95rem;
-    padding: 0.4rem 0;
-  }
-}
-
-@media (min-width: 1920px) {
-  .article-cover {
-    margin-bottom: 2.5rem;
-    border-radius: 20px;
-  }
-
-  .article-header {
-    margin-bottom: 2rem;
-  }
-
-  .article-title {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .article-info {
-    font-size: 1.05rem;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .info-icon {
-    font-size: 1.1rem;
-  }
-
-  .article-tags {
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .tag {
-    padding: 0.4rem 1.1rem;
-    font-size: 0.95rem;
-  }
-
-  .article-description {
-    font-size: 1.25rem;
-    padding: 1.5rem 2rem;
     border-radius: 16px;
-    margin-bottom: 2.5rem;
-  }
-
-  .article-content {
-    font-size: 1.1rem;
-    line-height: 2;
-  }
-
-  .article-content :deep(h1) {
-    font-size: 2.5rem;
-    padding-top: 1.5rem;
-  }
-
-  .article-content :deep(h2) {
-    font-size: 1.9rem;
-    margin-top: 2.5rem;
-  }
-
-  .article-content :deep(h3) {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .article-content :deep(p) {
-    margin-bottom: 1.5rem;
-  }
-
-  .article-content :deep(pre) {
-    padding: 1.5rem;
-    border-radius: 14px;
-    margin-bottom: 1.5rem;
-  }
-
-  .article-content :deep(blockquote) {
-    padding: 0.75rem 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 12px;
-  }
-
-  .article-content :deep(img) {
-    border-radius: 12px;
-    margin: 1.5rem 0;
-  }
-
-  .article-toc {
-    width: 300px;
-  }
-
-  .toc-content {
-    padding: 1.5rem;
-    border-radius: 16px;
-  }
-
-  .toc-title {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-
-  .toc-nav {
-    gap: 0.5rem;
-  }
-
-  .toc-item {
-    font-size: 1rem;
-    padding: 0.5rem 0;
-  }
-
-  .toc-item.level-3 {
-    padding-left: 1.25rem;
-    font-size: 0.9rem;
   }
 }
 </style>

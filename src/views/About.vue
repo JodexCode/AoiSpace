@@ -15,15 +15,19 @@ onMounted(() => {
     </header>
 
     <div class="about-content">
-      <div class="profile-section">
-        <div class="avatar-wrapper">
+      <div class="profile-section glass-card">
+        <div class="avatar-container">
+          <div class="avatar-glow"></div>
           <img :src="siteConfig.avatar" :alt="siteConfig.author" class="avatar" />
+          <div class="avatar-sparkle">
+            <span></span><span></span><span></span><span></span>
+          </div>
         </div>
         <h2 class="author-name">{{ siteConfig.author }}</h2>
         <p class="author-desc">{{ siteConfig.description }}</p>
       </div>
 
-      <section class="contact-section">
+      <section class="contact-section glass-card">
         <h3>联系方式</h3>
         <div class="contact-links">
           <a v-if="siteConfig.socialLinks?.github" :href="siteConfig.socialLinks.github" target="_blank" class="contact-link">
@@ -50,31 +54,39 @@ onMounted(() => {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px var(--shadow-color);
+}
+
 .page-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
 }
 
 .page-title {
   font-size: 2.5rem;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.5rem;
 }
 
 .page-desc {
   color: var(--text-secondary);
   font-size: 1rem;
+  margin: 0;
 }
 
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -82,26 +94,70 @@ onMounted(() => {
 .profile-section {
   text-align: center;
   padding: 3rem 2rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
   border-radius: 24px;
-  box-shadow: 0 8px 32px var(--shadow-color);
 }
 
-.avatar-wrapper {
+.avatar-container {
+  position: relative;
   display: inline-block;
   margin-bottom: 1.5rem;
-  position: relative;
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -15px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.4;
+  z-index: 0;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
 
 .avatar {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--accent-color);
-  box-shadow: 0 8px 24px var(--shadow-color);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.avatar:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.avatar-sparkle {
+  position: absolute;
+  inset: -10px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.avatar-sparkle span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.avatar-sparkle span:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
+.avatar-sparkle span:nth-child(2) { top: 50%; right: 0; animation-delay: 0.5s; }
+.avatar-sparkle span:nth-child(3) { bottom: 0; left: 50%; animation-delay: 1s; }
+.avatar-sparkle span:nth-child(4) { top: 50%; left: 0; animation-delay: 1.5s; }
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
 .author-name {
@@ -120,9 +176,6 @@ onMounted(() => {
 
 .contact-section {
   padding: 2rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
   border-radius: 20px;
 }
 
@@ -143,7 +196,7 @@ onMounted(() => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  background: var(--accent-gradient);
   color: white;
   border-radius: 12px;
   text-decoration: none;
@@ -170,8 +223,8 @@ onMounted(() => {
   }
 
   .avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
   }
 
   .author-name {
@@ -192,17 +245,13 @@ onMounted(() => {
     font-size: 3rem;
   }
 
-  .page-desc {
-    font-size: 1.1rem;
-  }
-
   .page-header {
-    margin-bottom: 3.5rem;
-    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
   }
 
   .about-content {
     max-width: 700px;
+    gap: 2rem;
   }
 
   .profile-section {
@@ -211,9 +260,8 @@ onMounted(() => {
   }
 
   .avatar {
-    width: 160px;
-    height: 160px;
-    border-width: 4px;
+    width: 140px;
+    height: 140px;
   }
 
   .author-name {
@@ -237,70 +285,6 @@ onMounted(() => {
   .contact-link {
     padding: 0.9rem 1.75rem;
     font-size: 1.05rem;
-  }
-}
-
-@media (min-width: 1920px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-
-  .page-desc {
-    font-size: 1.2rem;
-  }
-
-  .page-header {
-    margin-bottom: 4rem;
-    padding-bottom: 3rem;
-  }
-
-  .about-content {
-    max-width: 800px;
-  }
-
-  .profile-section {
-    padding: 4rem 4rem;
-    border-radius: 32px;
-  }
-
-  .avatar {
-    width: 180px;
-    height: 180px;
-    border-width: 5px;
-  }
-
-  .author-name {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-  }
-
-  .author-desc {
-    font-size: 1.2rem;
-    line-height: 1.8;
-  }
-
-  .contact-section {
-    padding: 3rem;
-    border-radius: 28px;
-  }
-
-  .contact-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .contact-links {
-    gap: 1.5rem;
-  }
-
-  .contact-link {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    border-radius: 14px;
-  }
-
-  .link-icon {
-    font-size: 1.25rem;
   }
 }
 </style>
