@@ -355,17 +355,14 @@ function formatDate(date: string) {
   top: 1.5rem;
   width: 240px;
   flex-shrink: 0;
-  max-height: calc(100vh - 4rem);
   border-radius: 16px;
-  overflow-y: auto;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .article-toc.collapsed {
   width: 44px;
-  max-width: 44px;
-  max-height: 44px;
-  overflow: hidden;
+  height: 44px;
 }
 
 .toc-toggle {
@@ -392,6 +389,13 @@ function formatDate(date: string) {
   left: 8px;
 }
 
+.toc-content {
+  margin-left: 0;
+  padding: 3rem 1rem 1rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
 .toc-toggle:hover {
   background: var(--bg-glass-hover);
   border-color: var(--accent-color);
@@ -400,10 +404,6 @@ function formatDate(date: string) {
 .toggle-icon {
   font-size: 0.7rem;
   color: var(--text-secondary);
-}
-
-.toc-content {
-  padding: 0.75rem;
 }
 
 .toc-title {
@@ -480,6 +480,8 @@ function formatDate(date: string) {
 
   .toc-content {
     padding: 1rem;
+    max-height: none;
+    overflow-y: visible;
   }
 }
 
