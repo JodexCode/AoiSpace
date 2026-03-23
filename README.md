@@ -1,5 +1,7 @@
 # AoiSpace / 碧蓝空间
 
+> ⚠️ **项目处于早期开发阶段**，API 和配置格式可能会有较大改动，生产环境使用请注意风险。
+
 一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite 构建。
 
 ## ✨ 特性
@@ -135,7 +137,7 @@ cover: /posts/images/cover.jpg
 这里是文章正文...
 ```
 
-Frontmatter 字段：
+### Frontmatter 字段
 
 | 字段 | 必填 | 说明 |
 |------|------|------|
@@ -147,7 +149,7 @@ Frontmatter 字段：
 | `readingTime` | 否 | 阅读时长（分钟） |
 | `updated` | 否 | 更新日期 |
 
-### 项目配置
+## 💼 项目配置
 
 编辑 `src/projects/projects.json`：
 
@@ -165,7 +167,7 @@ Frontmatter 字段：
 ]
 ```
 
-### 首页介绍
+## 👤 首页介绍
 
 编辑 `src/intro/intro.md`，内容会显示在首页「关于我」区域。
 
