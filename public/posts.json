@@ -1,0 +1,16 @@
+[
+  {
+    "id": "welcome",
+    "title": "Welcome to My Blog",
+    "date": "2024-01-01",
+    "tags": ["Vue", "TypeScript"],
+    "description": "This is the first article on my blog"
+  },
+  {
+    "id": "getting-started",
+    "title": "Getting Started with Vite",
+    "date": "2024-01-15",
+    "tags": ["Vite", "Frontend"],
+    "description": "Learn how to build fast web apps with Vite"
+  }
+]
