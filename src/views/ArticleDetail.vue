@@ -12,6 +12,9 @@ const tocVisible = ref(true)
 const activeHeading = ref('')
 const toc = ref<{ id: string; text: string; level: number }[]>([])
 
+const searchQuery = computed(() => route.query.q as string || '')
+const searchHeading = computed(() => route.query.heading ? parseInt(route.query.heading as string) : undefined)
+
 const meta = computed(() => {
   if (!post) return {}
   return {
@@ -50,7 +53,24 @@ function extractToc() {
     })
     
     toc.value = headings
+    scrollToSearchMatch()
   })
+}
+
+function scrollToSearchMatch() {
+  const headingIndex = searchHeading.value
+  if (headingIndex === undefined || !searchQuery.value || toc.value.length === 0) return
+  
+  const targetHeading = toc.value[headingIndex]
+  if (targetHeading) {
+    setTimeout(() => {
+      const el = document.getElementById(targetHeading.id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        activeHeading.value = targetHeading.id
+      }
+    }, 300)
+  }
 }
 
 function scrollToHeading(targetId: string) {

@@ -21,14 +21,42 @@ function extractTextContent(markdown: string): string {
     .trim()
 }
 
+export interface HeadingPosition {
+  index: number
+  text: string
+  charPos: number
+}
+
 export interface PostWithContent extends PostMeta {
   rawContent?: string
+  headings?: HeadingPosition[]
+}
+
+function extractHeadings(markdown: string): HeadingPosition[] {
+  const headings: HeadingPosition[] = []
+  const lines = markdown.split('\n')
+  let charCount = 0
+  
+  for (const line of lines) {
+    const match = line.match(/^(#{1,6})\s+(.+)$/)
+    if (match) {
+      headings.push({
+        index: headings.length,
+        text: match[2].trim(),
+        charPos: charCount
+      })
+    }
+    charCount += line.length + 1
+  }
+  
+  return headings
 }
 
 export const posts: PostWithContent[] = Object.entries(modules)
   .map(([path, module]) => {
     const id = path.replace(/^\.\/local\//, '').replace(/\.md$/, '')
     const rawContent = rawModules[path] ? extractTextContent(rawModules[path]) : ''
+    const headings = rawModules[path] ? extractHeadings(rawModules[path]) : []
     return {
       id,
       title: module.title || id,
@@ -38,7 +66,8 @@ export const posts: PostWithContent[] = Object.entries(modules)
       description: module.description || '',
       cover: module.cover,
       readingTime: module.readingTime || calculateReadingTime(module.default),
-      rawContent
+      rawContent,
+      headings
     }
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
