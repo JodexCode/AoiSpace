@@ -124,33 +124,37 @@ function formatDate(date: string) {
 
     <aside
       v-if="toc.length > 0"
-      class="article-toc glass-card"
-      :class="{ collapsed: !tocVisible }"
+      class="toc-wrapper"
     >
       <button
-        class="toc-toggle"
+        class="toc-toggle glass-card"
         @click="toggleToc"
         :title="tocVisible ? '隐藏目录' : '显示目录'"
       >
-        <span class="toggle-icon">{{ tocVisible ? '▶' : '◀' }}</span>
+        <span class="toggle-icon">{{ tocVisible ? '◀' : '▶' }}</span>
       </button>
-      <div v-show="tocVisible" class="toc-content">
-        <h3 class="toc-title">目录</h3>
-        <nav class="toc-nav">
-          <a
-            v-for="heading in toc"
-            :key="heading.id"
-            :href="`#${heading.id}`"
-            class="toc-item"
-            :class="[
-              `level-${heading.level}`,
-              { active: activeHeading === heading.id },
-            ]"
-            @click.prevent="scrollToHeading(heading.id)"
-          >
-            {{ heading.text }}
-          </a>
-        </nav>
+      <div
+        class="article-toc glass-card"
+        :class="{ collapsed: !tocVisible }"
+      >
+        <div class="toc-content">
+          <h3 class="toc-title">目录</h3>
+          <nav class="toc-nav">
+            <a
+              v-for="heading in toc"
+              :key="heading.id"
+              :href="`#${heading.id}`"
+              class="toc-item"
+              :class="[
+                `level-${heading.level}`,
+                { active: activeHeading === heading.id },
+              ]"
+              @click.prevent="scrollToHeading(heading.id)"
+            >
+              {{ heading.text }}
+            </a>
+          </nav>
+        </div>
       </div>
     </aside>
   </div>
@@ -350,62 +354,55 @@ function formatDate(date: string) {
   color: var(--text-secondary);
 }
 
-.article-toc {
+.toc-wrapper {
   position: sticky;
   top: 1.5rem;
-  width: 240px;
   flex-shrink: 0;
+}
+
+.toc-toggle {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.toc-toggle:hover {
+  transform: scale(1.05);
+}
+
+.toggle-icon {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.article-toc {
+  width: 240px;
   height: fit-content;
   max-height: 500px;
   border-radius: 16px;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .article-toc.collapsed {
-  width: 44px;
-  max-height: 44px;
+  width: 0;
+  height: 0;
+  max-height: 0;
+  opacity: 0;
   overflow: hidden;
 }
 
-.toc-toggle {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  z-index: 10;
-}
-
-.article-toc.collapsed .toc-toggle {
-  top: 8px;
-  left: 8px;
-}
-
 .toc-content {
-  margin-left: 0;
-  padding: 3rem 1rem 1rem;
+  padding: 1rem;
   overflow-y: auto;
   max-height: 450px;
-}
-
-.toc-toggle:hover {
-  background: var(--bg-glass-hover);
-  border-color: var(--accent-color);
-}
-
-.toggle-icon {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
 }
 
 .toc-title {
@@ -462,26 +459,35 @@ function formatDate(date: string) {
     flex-direction: column;
   }
 
-  .article-toc {
+  .toc-wrapper {
     position: relative;
     top: 0;
-    width: 100%;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .article-toc.collapsed {
-    width: 100%;
-    height: auto;
-    max-height: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .toc-toggle {
     display: none;
   }
 
+  .article-toc {
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .article-toc.collapsed {
+    width: 0;
+    height: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+
   .toc-content {
     padding: 1rem;
+    max-height: none;
   }
 }
 
