@@ -1,16 +1,20 @@
 import type { SiteConfig, ThemeConfig, NavConfig, Project } from './types'
 
+function getEnv(key: string, fallback: string): string {
+  return import.meta.env[key] || fallback
+}
+
 export const siteConfig: SiteConfig = {
-  title: '每天睡25小时的博客',
-  author: '每天睡25小时',
-  avatar: '/avatar.png',
-  description: '记录技术探索与生活点滴的个人博客',
-  icp: '京ICP备xxxxxxxx号',
-  github: 'https://github.com/yourname',
-  email: 'hello@example.com',
+  title: getEnv('VITE_SITE_TITLE', '每天睡25小时的博客'),
+  author: getEnv('VITE_SITE_AUTHOR', '每天睡25小时'),
+  avatar: getEnv('VITE_SITE_AVATAR', '/avatar.png'),
+  description: getEnv('VITE_SITE_DESCRIPTION', '记录技术探索与生活点滴的个人博客'),
+  icp: getEnv('VITE_SITE_ICP', ''),
+  github: getEnv('VITE_SITE_GITHUB', ''),
+  email: getEnv('VITE_SITE_EMAIL', ''),
   socialLinks: {
-    github: 'https://github.com/yourname',
-    email: 'hello@example.com'
+    github: getEnv('VITE_SITE_GITHUB', ''),
+    email: getEnv('VITE_SITE_EMAIL', '')
   }
 }
 
