@@ -35,7 +35,11 @@ export const lightTheme = {
   '--card-border': 'rgba(255, 255, 255, 0.6)',
   '--glass-blur': 'blur(16px)',
   '--particle-color': 'rgba(139, 92, 246, 0.3)',
-  '--glow-color': 'rgba(236, 72, 153, 0.2)'
+  '--glow-color': 'rgba(236, 72, 153, 0.2)',
+  '--input-bg': 'rgba(255, 255, 255, 0.5)',
+  '--input-border': 'rgba(139, 92, 246, 0.15)',
+  '--gradient-start': 'rgba(139, 92, 246, 0.12)',
+  '--gradient-end': 'rgba(236, 72, 153, 0.08)'
 }
 
 export const darkTheme = {
@@ -56,5 +60,9 @@ export const darkTheme = {
   '--card-border': 'rgba(255, 255, 255, 0.08)',
   '--glass-blur': 'blur(20px)',
   '--particle-color': 'rgba(167, 139, 250, 0.4)',
-  '--glow-color': 'rgba(236, 72, 153, 0.3)'
+  '--glow-color': 'rgba(236, 72, 153, 0.3)',
+  '--input-bg': 'rgba(15, 23, 42, 0.5)',
+  '--input-border': 'rgba(167, 139, 250, 0.2)',
+  '--gradient-start': 'rgba(167, 139, 250, 0.15)',
+  '--gradient-end': 'rgba(236, 72, 153, 0.1)'
 }

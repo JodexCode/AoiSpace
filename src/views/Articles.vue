@@ -313,8 +313,8 @@ function getRandomDelay(index: number): string {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 20px;
   margin-bottom: 2rem;
   flex-wrap: wrap;
@@ -342,22 +342,22 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(139, 92, 246, 0.15);
+  background: var(--input-bg);
+  border: 2px solid var(--input-border);
   border-radius: 50px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-container:hover:not(.focused) {
-  background: rgba(255, 255, 255, 0.7);
-  border-color: rgba(139, 92, 246, 0.3);
+  background: var(--bg-glass-hover, var(--input-bg));
+  border-color: var(--gradient-start);
   transform: translateY(-1px);
 }
 
 .search-container.focused {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--card-bg);
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15), 0 4px 20px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 0 4px var(--gradient-start), 0 4px 20px var(--glow-color);
   transform: translateY(-2px);
 }
 
@@ -525,8 +525,8 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(139, 92, 246, 0.15);
+  background: var(--input-bg);
+  border: 2px solid var(--input-border);
   border-radius: 50px;
   color: var(--text-primary);
   font-size: 0.9rem;
@@ -535,10 +535,10 @@ function getRandomDelay(index: number): string {
 }
 
 .dropdown-trigger:hover {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(139, 92, 246, 0.35);
+  background: var(--bg-glass-hover, var(--input-bg));
+  border-color: var(--gradient-start);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 4px 16px var(--glow-color);
 }
 
 .dropdown-trigger:hover .trigger-icon {

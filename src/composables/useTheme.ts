@@ -1,4 +1,4 @@
-import { reactive, watch } from 'vue'
+import { reactive, watch, computed } from 'vue'
 import { lightTheme, darkTheme } from '../config'
 
 export type ThemeMode = 'light' | 'dark'
@@ -36,8 +36,10 @@ export function useTheme() {
     { immediate: true }
   )
 
+  const mode = computed(() => state.mode)
+
   return {
-    mode: state.mode,
+    mode,
     themeVars: state.themeVars,
     toggleTheme,
     setTheme

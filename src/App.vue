@@ -28,9 +28,11 @@ import MainLayout from './components/MainLayout.vue'
   --heading-h4: #64748b;
   --gradient-purple: #8b5cf6;
   --gradient-pink: #ec4899;
-  --gradient-start: rgba(139, 92, 246, var(--opacity, 1));
-  --gradient-end: rgba(236, 72, 153, var(--opacity, 1));
   --glow-color: rgba(139, 92, 246, 0.4);
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: rgba(139, 92, 246, 0.15);
+  --gradient-start: rgba(139, 92, 246, 0.12);
+  --gradient-end: rgba(236, 72, 153, 0.08);
 }
 
 * {
