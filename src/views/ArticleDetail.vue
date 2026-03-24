@@ -22,7 +22,7 @@ const meta = computed(() => {
     tags: (post as any).tags || [],
     description: (post as any).description || '',
     cover: (post as any).cover,
-    readingTime: (post as any).readingTime,
+    readingTime: (post as any).readingTime
   }
 })
 
@@ -162,7 +162,7 @@ watch(
       extractToc()
       addCopyButtons()
     }, 200)
-  },
+  }
 )
 
 function formatDate(date: string) {
@@ -170,17 +170,14 @@ function formatDate(date: string) {
   return new Date(date).toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric',
+    day: 'numeric'
   })
 }
 </script>
 
 <template>
   <div class="article-layout">
-    <article
-      class="article-detail"
-      :class="{ 'with-toc': tocVisible && toc.length > 0 }"
-    >
+    <article class="article-detail" :class="{ 'with-toc': tocVisible && toc.length > 0 }">
       <div v-if="meta.cover" class="article-cover glass-card">
         <img :src="meta.cover" :alt="meta.title" />
       </div>
@@ -202,12 +199,7 @@ function formatDate(date: string) {
           </span>
         </div>
         <div class="article-tags">
-          <span
-            v-for="tag in meta.tags"
-            :key="tag"
-            class="tag hand-drawn-tag"
-            >{{ tag }}</span
-          >
+          <span v-for="tag in meta.tags" :key="tag" class="tag hand-drawn-tag">{{ tag }}</span>
         </div>
       </header>
 
@@ -220,11 +212,7 @@ function formatDate(date: string) {
       </div>
     </article>
     <Teleport to="body">
-      <aside
-        v-if="toc.length > 0"
-        class="toc-wrapper"
-        :style="{ top: `${tocTop}rem` }"
-      >
+      <aside v-if="toc.length > 0" class="toc-wrapper" :style="{ top: `${tocTop}rem` }">
         <button
           class="toc-toggle glass-card"
           @click="toggleToc"
@@ -241,10 +229,7 @@ function formatDate(date: string) {
                 :key="heading.id"
                 :href="`#${heading.id}`"
                 class="toc-item"
-                :class="[
-                  `level-${heading.level}`,
-                  { active: activeHeading === heading.id },
-                ]"
+                :class="[`level-${heading.level}`, { active: activeHeading === heading.id }]"
                 @click.prevent="scrollToHeading(heading.id)"
               >
                 {{ heading.text }}
@@ -340,11 +325,7 @@ function formatDate(date: string) {
 .hand-drawn-tag {
   position: relative;
   padding: 0.2rem 0.6rem;
-  background: linear-gradient(
-    135deg,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   border: 1px solid var(--gradient-start);
   border-radius: 50px;
   font-size: 0.8rem;
@@ -518,11 +499,7 @@ function formatDate(date: string) {
   left: 0;
   right: 0;
   height: 40px;
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.15),
-    rgba(236, 72, 153, 0.1)
-  );
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
   border-bottom: 1px solid var(--card-border);
   z-index: 1;
 }

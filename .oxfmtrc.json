@@ -1,0 +1,17 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "canvas": {
+    "useTabs": false,
+    "indentWidth": 2,
+    "printWidth": 120
+  },
+  "languages": {
+    "vue": {
+      "indentScriptAndStyle": false
+    }
+  }
+}

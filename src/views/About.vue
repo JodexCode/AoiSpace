@@ -18,14 +18,8 @@ onMounted(() => {
       <div class="profile-section glass-card">
         <div class="avatar-container">
           <div class="avatar-glow"></div>
-          <img
-            :src="siteConfig.avatar"
-            :alt="siteConfig.author"
-            class="avatar"
-          />
-          <div class="avatar-sparkle">
-            <span></span><span></span><span></span><span></span>
-          </div>
+          <img :src="siteConfig.avatar" :alt="siteConfig.author" class="avatar" />
+          <div class="avatar-sparkle"><span></span><span></span><span></span><span></span></div>
         </div>
         <h2 class="author-name">{{ siteConfig.author }}</h2>
         <p class="author-desc">{{ siteConfig.description }}</p>
@@ -49,9 +43,7 @@ onMounted(() => {
               :alt="link.name"
               class="link-icon-img"
             />
-            <span v-else-if="link.iconType === 'text'" class="link-icon-text">{{
-              link.icon
-            }}</span>
+            <span v-else-if="link.iconType === 'text'" class="link-icon-text">{{ link.icon }}</span>
             <span v-else class="link-icon">{{ link.icon }}</span>
             {{ link.name }}
           </a>
@@ -62,18 +54,13 @@ onMounted(() => {
         <h3>关于本站</h3>
         <p class="project-desc">
           本站点由 <strong>AoiSpace / 碧蓝空间</strong> 强力驱动 ——
-          一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite
-          构建。
+          一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite 构建。
         </p>
         <p class="project-desc">
           特性包括：磨砂玻璃美学、响应式设计、亮暗主题切换、文章搜索与筛选、瀑布流布局等。
         </p>
         <div class="project-links">
-          <a
-            href="https://github.com/JodexCode/AoiSpace"
-            target="_blank"
-            class="project-link"
-          >
+          <a href="https://github.com/JodexCode/AoiSpace" target="_blank" class="project-link">
             <span class="link-icon">🐙</span>
             <span>访问项目</span>
           </a>

@@ -18,7 +18,8 @@ export const themeConfig: ThemeConfig = {
 export { projects } from '../projects'
 
 export const lightTheme = {
-  '--bg-primary': 'linear-gradient(135deg, rgba(168, 139, 250, 0.15) 0%, rgba(56, 189, 248, 0.1) 25%, rgba(251, 207, 232, 0.12) 50%, rgba(134, 239, 172, 0.08) 75%, rgba(96, 165, 250, 0.1) 100%)',
+  '--bg-primary':
+    'linear-gradient(135deg, rgba(168, 139, 250, 0.15) 0%, rgba(56, 189, 248, 0.1) 25%, rgba(251, 207, 232, 0.12) 50%, rgba(134, 239, 172, 0.08) 75%, rgba(96, 165, 250, 0.1) 100%)',
   '--bg-secondary': 'rgba(255, 255, 255, 0.4)',
   '--bg-glass': 'rgba(255, 255, 255, 0.25)',
   '--bg-glass-hover': 'rgba(255, 255, 255, 0.4)',
@@ -43,7 +44,8 @@ export const lightTheme = {
 }
 
 export const darkTheme = {
-  '--bg-primary': 'linear-gradient(135deg, rgba(88, 28, 135, 0.4) 0%, rgba(15, 23, 42, 0.6) 25%, rgba(30, 41, 59, 0.5) 50%, rgba(59, 130, 246, 0.15) 75%, rgba(236, 72, 153, 0.1) 100%)',
+  '--bg-primary':
+    'linear-gradient(135deg, rgba(88, 28, 135, 0.4) 0%, rgba(15, 23, 42, 0.6) 25%, rgba(30, 41, 59, 0.5) 50%, rgba(59, 130, 246, 0.15) 75%, rgba(236, 72, 153, 0.1) 100%)',
   '--bg-secondary': 'rgba(30, 41, 59, 0.5)',
   '--bg-glass': 'rgba(30, 41, 59, 0.4)',
   '--bg-glass-hover': 'rgba(50, 61, 80, 0.5)',

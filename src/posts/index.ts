@@ -1,7 +1,11 @@
 import type { PostMeta } from '../config/types'
 
 const modules = import.meta.glob('./local/*.md', { eager: true }) as Record<string, any>
-const rawModules = import.meta.glob('./local/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const rawModules = import.meta.glob('./local/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>
 
 function calculateReadingTime(content: unknown): number {
   if (typeof content !== 'string') return 0
@@ -36,7 +40,7 @@ function extractHeadings(markdown: string): HeadingPosition[] {
   const headings: HeadingPosition[] = []
   const lines = markdown.split('\n')
   let charCount = 0
-  
+
   for (const line of lines) {
     const match = line.match(/^(#{1,3})\s+(.+)$/)
     if (match) {
@@ -48,7 +52,7 @@ function extractHeadings(markdown: string): HeadingPosition[] {
     }
     charCount += line.length + 1
   }
-  
+
   return headings
 }
 

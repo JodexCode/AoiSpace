@@ -11,7 +11,9 @@ onMounted(() => {
 const postCount = getPostCount()
 const projectCount = projects.length
 
-const introModules = import.meta.glob('../intro/*.md', { eager: true }) as Record<string, { default?: unknown }>
+const introModules = import.meta.glob('../intro/*.md', {
+  eager: true
+}) as Record<string, { default?: unknown }>
 const intro = introModules['../intro/intro.md']?.default
 </script>
 
@@ -113,8 +115,14 @@ const intro = introModules['../intro/intro.md']?.default
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .glass-card {
@@ -149,13 +157,36 @@ const intro = introModules['../intro/intro.md']?.default
   animation: float 6s ease-in-out infinite;
 }
 
-.deco-1 { width: 200px; height: 200px; top: -80px; left: -60px; animation-delay: 0s; }
-.deco-2 { width: 150px; height: 150px; top: 20%; right: -40px; animation-delay: 1s; }
-.deco-3 { width: 120px; height: 120px; bottom: -40px; left: 40%; animation-delay: 2s; }
+.deco-1 {
+  width: 200px;
+  height: 200px;
+  top: -80px;
+  left: -60px;
+  animation-delay: 0s;
+}
+.deco-2 {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  right: -40px;
+  animation-delay: 1s;
+}
+.deco-3 {
+  width: 120px;
+  height: 120px;
+  bottom: -40px;
+  left: 40%;
+  animation-delay: 2s;
+}
 
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(10deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
 }
 
 .hero-content {
@@ -221,7 +252,9 @@ const intro = introModules['../intro/intro.md']?.default
 
 .badge:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 4px 4px 20px var(--shadow-color), 0 0 30px var(--glow-color);
+  box-shadow:
+    4px 4px 20px var(--shadow-color),
+    0 0 30px var(--glow-color);
   border-color: var(--accent-color);
 }
 

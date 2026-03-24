@@ -1,12 +1,36 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "vue", "unicorn"],
   "rules": {
-    "no-console": "off",
-    "no-debugger": "warn",
-    "no-unused-vars": "warn"
+    "no-debugger": "error",
+    "no-console": ["warn", { "allow": ["error", "warn"] }],
+
+    /* TypeScript 相关 */
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+
+    /* Vue 相关 */
+    "vue/multi-word-component-names": "off",
+    "vue/no-v-html": "off",
+
+    /* 最佳实践 */
+    "unicorn/filename-case": ["error", { "case": "kebabCase" }],
+    "no-restricted-globals": ["error", "event"]
   },
-  "settings": {
-    "jsx": true,
-    "vue": true
-  }
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "no-unused-vars": "off",
+        "unicorn/filename-case": ["error", { "case": "pascalCase" }]
+      }
+    },
+    {
+      "files": ["**/composables/*.ts"],
+      "rules": {
+        "unicorn/filename-case": ["error", { "case": "camelCase" }]
+      }
+    }
+  ]
 }

@@ -41,30 +41,36 @@ const filteredPosts = computed(() => {
 
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase()
-    result = result.filter(post =>
-      post.title.toLowerCase().includes(query) ||
-      (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
-      (post.description && post.description.toLowerCase().includes(query))
+    result = result.filter(
+      post =>
+        post.title.toLowerCase().includes(query) ||
+        (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
+        (post.description && post.description.toLowerCase().includes(query))
     )
   }
 
   return result.filter(post => {
     const matchTag = !selectedTag.value || post.tags?.includes(selectedTag.value)
-    const matchYear = !selectedYear.value || (post.date && new Date(post.date).getFullYear().toString() === selectedYear.value)
+    const matchYear =
+      !selectedYear.value ||
+      (post.date && new Date(post.date).getFullYear().toString() === selectedYear.value)
     return matchTag && matchYear
   })
 })
 
 const selectedTagLabel = computed(() => selectedTag.value || '全部标签')
-const selectedYearLabel = computed(() => selectedYear.value ? `${selectedYear.value} 年` : '全部时间')
+const selectedYearLabel = computed(() =>
+  selectedYear.value ? `${selectedYear.value} 年` : '全部时间'
+)
 
 function handleSearch() {
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase()
-    searchResults.value = posts.filter(post =>
-      post.title.toLowerCase().includes(query) ||
-      (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
-      (post.description && post.description.toLowerCase().includes(query))
+    searchResults.value = posts.filter(
+      post =>
+        post.title.toLowerCase().includes(query) ||
+        (post.rawContent && post.rawContent.toLowerCase().includes(query)) ||
+        (post.description && post.description.toLowerCase().includes(query))
     )
     showSearchResults.value = true
   } else {
@@ -91,16 +97,16 @@ function getMatchContext(post: PostWithContent, query: string): string {
   const lowerContent = content.toLowerCase()
   const lowerQuery = query.toLowerCase()
   const index = lowerContent.indexOf(lowerQuery)
-  
+
   if (index === -1) return post.description || ''
-  
+
   const start = Math.max(0, index - 30)
   const end = Math.min(content.length, index + query.length + 50)
   let context = content.slice(start, end)
-  
+
   if (start > 0) context = '...' + context
   if (end < content.length) context = context + '...'
-  
+
   return context
 }
 
@@ -151,7 +157,11 @@ onMounted(() => {
 
 function formatDate(date: string) {
   if (!date) return ''
-  return new Date(date).toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
+  return new Date(date).toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
 }
 
 function getRandomDelay(index: number): string {
@@ -167,9 +177,7 @@ function getRandomDelay(index: number): string {
         <template v-if="searchQuery">
           搜索到 {{ filteredPosts.length }} 篇相关文章（共 {{ posts.length }} 篇）
         </template>
-        <template v-else>
-          共 {{ filteredPosts.length }} 篇文章
-        </template>
+        <template v-else> 共 {{ filteredPosts.length }} 篇文章 </template>
       </p>
     </header>
 
@@ -181,11 +189,21 @@ function getRandomDelay(index: number): string {
           type="text"
           class="search-input"
           placeholder="搜索文章..."
-          @focus="searchInputFocused = true; handleSearch()"
+          @focus="
+            searchInputFocused = true
+            handleSearch()
+          "
           @blur="searchInputFocused = false"
           @input="handleSearch"
         />
-        <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''; showSearchResults = false">
+        <button
+          v-if="searchQuery"
+          class="search-clear"
+          @click="
+            searchQuery = ''
+            showSearchResults = false
+          "
+        >
           ✕
         </button>
         <div v-if="showSearchResults && searchResults.length > 0" class="search-results">
@@ -196,10 +214,16 @@ function getRandomDelay(index: number): string {
             @click="goToArticle(result.id)"
           >
             <h4 class="result-title" v-html="highlightMatch(result.title, searchQuery)"></h4>
-            <p class="result-context" v-html="highlightMatch(getMatchContext(result, searchQuery), searchQuery)"></p>
+            <p
+              class="result-context"
+              v-html="highlightMatch(getMatchContext(result, searchQuery), searchQuery)"
+            ></p>
           </div>
         </div>
-        <div v-if="showSearchResults && searchResults.length === 0 && searchQuery" class="search-results empty">
+        <div
+          v-if="showSearchResults && searchResults.length === 0 && searchQuery"
+          class="search-results empty"
+        >
           <p>没有找到匹配的文章</p>
         </div>
       </div>
@@ -215,7 +239,13 @@ function getRandomDelay(index: number): string {
             <button class="dropdown-item" :class="{ active: !selectedTag }" @click="selectTag('')">
               全部标签
             </button>
-            <button v-for="tag in allTags" :key="tag" class="dropdown-item" :class="{ active: selectedTag === tag }" @click="selectTag(tag)">
+            <button
+              v-for="tag in allTags"
+              :key="tag"
+              class="dropdown-item"
+              :class="{ active: selectedTag === tag }"
+              @click="selectTag(tag)"
+            >
               {{ tag }}
             </button>
           </div>
@@ -228,16 +258,33 @@ function getRandomDelay(index: number): string {
             <span class="trigger-arrow">▼</span>
           </button>
           <div v-if="yearDropdownOpen" class="dropdown-menu">
-            <button class="dropdown-item" :class="{ active: !selectedYear }" @click="selectYear('')">
+            <button
+              class="dropdown-item"
+              :class="{ active: !selectedYear }"
+              @click="selectYear('')"
+            >
               全部时间
             </button>
-            <button v-for="year in allYears" :key="year" class="dropdown-item" :class="{ active: selectedYear === year }" @click="selectYear(year)">
+            <button
+              v-for="year in allYears"
+              :key="year"
+              class="dropdown-item"
+              :class="{ active: selectedYear === year }"
+              @click="selectYear(year)"
+            >
               {{ year }} 年
             </button>
           </div>
         </div>
 
-        <button v-if="selectedTag || selectedYear || searchQuery" class="clear-btn" @click="clearFilters(); searchQuery = ''">
+        <button
+          v-if="selectedTag || selectedYear || searchQuery"
+          class="clear-btn"
+          @click="
+            clearFilters()
+            searchQuery = ''
+          "
+        >
           ✕
         </button>
       </div>
@@ -273,7 +320,15 @@ function getRandomDelay(index: number): string {
     <div v-if="filteredPosts.length === 0" class="empty-state">
       <span class="empty-icon">🔍</span>
       <p>没有找到匹配的文章</p>
-      <button class="reset-btn" @click="clearFilters(); searchQuery = ''">重置筛选</button>
+      <button
+        class="reset-btn"
+        @click="
+          clearFilters()
+          searchQuery = ''
+        "
+      >
+        重置筛选
+      </button>
     </div>
   </div>
 </template>
@@ -284,8 +339,12 @@ function getRandomDelay(index: number): string {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .page-header {
@@ -357,7 +416,9 @@ function getRandomDelay(index: number): string {
 .search-container.focused {
   background: var(--card-bg);
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 4px var(--gradient-start), 0 4px 20px var(--glow-color);
+  box-shadow:
+    0 0 0 4px var(--gradient-start),
+    0 4px 20px var(--glow-color);
   transform: translateY(-2px);
 }
 
@@ -380,8 +441,13 @@ function getRandomDelay(index: number): string {
 }
 
 @keyframes iconBounce {
-  0%, 100% { transform: scale(1.15); }
-  50% { transform: scale(1.25); }
+  0%,
+  100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.25);
+  }
 }
 
 .search-input {
@@ -437,8 +503,14 @@ function getRandomDelay(index: number): string {
 }
 
 @keyframes dropdownFadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .search-results.empty {
@@ -563,7 +635,9 @@ function getRandomDelay(index: number): string {
 
 .custom-dropdown.open .dropdown-trigger {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px var(--gradient-start), 0 4px 16px var(--shadow-color);
+  box-shadow:
+    0 0 0 3px var(--gradient-start),
+    0 4px 16px var(--shadow-color);
 }
 
 .custom-dropdown.open .trigger-arrow {
@@ -679,9 +753,15 @@ function getRandomDelay(index: number): string {
   border-color: var(--accent-color);
 }
 
-.article-card:nth-child(3n+1) { animation-delay: 0s; }
-.article-card:nth-child(3n+2) { animation-delay: 0.1s; }
-.article-card:nth-child(3n) { animation-delay: 0.2s; }
+.article-card:nth-child(3n + 1) {
+  animation-delay: 0s;
+}
+.article-card:nth-child(3n + 2) {
+  animation-delay: 0.1s;
+}
+.article-card:nth-child(3n) {
+  animation-delay: 0.2s;
+}
 
 .card-glow {
   position: absolute;

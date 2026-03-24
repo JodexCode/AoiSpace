@@ -10,7 +10,7 @@ import MainLayout from './components/MainLayout.vue'
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
 @import 'highlight.js/styles/github.css';
 
-:root:not([data-theme="dark"]) .hljs {
+:root:not([data-theme='dark']) .hljs {
   display: block;
   overflow-x: auto;
   padding: 1em;
@@ -18,7 +18,7 @@ import MainLayout from './components/MainLayout.vue'
   color: #24292e;
 }
 
-:root[data-theme="dark"] .hljs {
+:root[data-theme='dark'] .hljs {
   display: block;
   overflow-x: auto;
   padding: 1em;
@@ -26,37 +26,37 @@ import MainLayout from './components/MainLayout.vue'
   color: #c9d1d9;
 }
 
-:root[data-theme="dark"] .hljs-keyword,
-:root[data-theme="dark"] .hljs-selector-tag,
-:root[data-theme="dark"] .hljs-literal,
-:root[data-theme="dark"] .hljs-section,
-:root[data-theme="dark"] .hljs-link {
+:root[data-theme='dark'] .hljs-keyword,
+:root[data-theme='dark'] .hljs-selector-tag,
+:root[data-theme='dark'] .hljs-literal,
+:root[data-theme='dark'] .hljs-section,
+:root[data-theme='dark'] .hljs-link {
   color: #ff7b72;
 }
 
-:root[data-theme="dark"] .hljs-string,
-:root[data-theme="dark"] .hljs-title,
-:root[data-theme="dark"] .hljs-name,
-:root[data-theme="dark"] .hljs-type,
-:root[data-theme="dark"] .hljs-attribute,
-:root[data-theme="dark"] .hljs-symbol,
-:root[data-theme="dark"] .hljs-bullet,
-:root[data-theme="dark"] .hljs-addition,
-:root[data-theme="dark"] .hljs-variable,
-:root[data-theme="dark"] .hljs-template-tag,
-:root[data-theme="dark"] .hljs-template-variable {
+:root[data-theme='dark'] .hljs-string,
+:root[data-theme='dark'] .hljs-title,
+:root[data-theme='dark'] .hljs-name,
+:root[data-theme='dark'] .hljs-type,
+:root[data-theme='dark'] .hljs-attribute,
+:root[data-theme='dark'] .hljs-symbol,
+:root[data-theme='dark'] .hljs-bullet,
+:root[data-theme='dark'] .hljs-addition,
+:root[data-theme='dark'] .hljs-variable,
+:root[data-theme='dark'] .hljs-template-tag,
+:root[data-theme='dark'] .hljs-template-variable {
   color: #a5d6ff;
 }
 
-:root[data-theme="dark"] .hljs-comment,
-:root[data-theme="dark"] .hljs-quote,
-:root[data-theme="dark"] .hljs-deletion,
-:root[data-theme="dark"] .hljs-meta {
+:root[data-theme='dark'] .hljs-comment,
+:root[data-theme='dark'] .hljs-quote,
+:root[data-theme='dark'] .hljs-deletion,
+:root[data-theme='dark'] .hljs-meta {
   color: #8b949e;
 }
 
-:root[data-theme="dark"] .hljs-function .hljs-title,
-:root[data-theme="dark"] .hljs-title.function_ {
+:root[data-theme='dark'] .hljs-function .hljs-title,
+:root[data-theme='dark'] .hljs-title.function_ {
   color: #d2a8ff;
 }
 
@@ -97,7 +97,12 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Noto Sans SC',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.7;

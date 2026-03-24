@@ -20,9 +20,19 @@ function isActive(path: string) {
       <div class="gradient-orb orb-4"></div>
       <div class="noise-overlay"></div>
     </div>
-    
+
     <div class="floating-particles">
-      <span v-for="i in 20" :key="i" class="particle" :style="{ '--delay': `${i * 0.5}s`, '--x': `${Math.random() * 100}%`, '--y': `${Math.random() * 100}%`, '--size': `${Math.random() * 6 + 2}px` }"></span>
+      <span
+        v-for="i in 20"
+        :key="i"
+        class="particle"
+        :style="{
+          '--delay': `${i * 0.5}s`,
+          '--x': `${Math.random() * 100}%`,
+          '--y': `${Math.random() * 100}%`,
+          '--size': `${Math.random() * 6 + 2}px`
+        }"
+      ></span>
     </div>
 
     <aside class="sidebar">
@@ -31,9 +41,7 @@ function isActive(path: string) {
           <div class="avatar-container">
             <div class="avatar-glow"></div>
             <img :src="siteConfig.avatar" :alt="siteConfig.author" class="avatar" />
-            <div class="avatar-sparkle">
-              <span></span><span></span><span></span><span></span>
-            </div>
+            <div class="avatar-sparkle"><span></span><span></span><span></span><span></span></div>
           </div>
           <h1 class="author-name">{{ siteConfig.author }}</h1>
           <p class="description">{{ siteConfig.description }}</p>
@@ -49,10 +57,44 @@ function isActive(path: string) {
             :style="{ '--i': index }"
           >
             <span class="nav-icon">
-              <svg v-if="item.path === '/'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-              <svg v-else-if="item.path === '/articles'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              <svg v-else-if="item.path === '/projects'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-              <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              <svg
+                v-if="item.path === '/'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9,22 9,12 15,12 15,22" />
+              </svg>
+              <svg
+                v-else-if="item.path === '/articles'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14,2 14,8 20,8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+              <svg
+                v-else-if="item.path === '/projects'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+              </svg>
             </span>
             <span class="nav-text">{{ item.text }}</span>
           </RouterLink>
@@ -85,10 +127,44 @@ function isActive(path: string) {
         :class="{ active: isActive(item.path) }"
       >
         <span class="mobile-nav-icon">
-          <svg v-if="item.path === '/'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-          <svg v-else-if="item.path === '/articles'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <svg v-else-if="item.path === '/projects'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <svg
+            v-if="item.path === '/'"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9,22 9,12 15,12 15,22" />
+          </svg>
+          <svg
+            v-else-if="item.path === '/articles'"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14,2 14,8 20,8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+          </svg>
+          <svg
+            v-else-if="item.path === '/projects'"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+            />
+          </svg>
+          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
         </span>
         <span class="mobile-nav-text">{{ item.text }}</span>
       </RouterLink>
@@ -159,10 +235,19 @@ function isActive(path: string) {
 }
 
 @keyframes float-orb {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -30px) scale(1.05); }
-  50% { transform: translate(-20px, 20px) scale(0.95); }
-  75% { transform: translate(20px, 30px) scale(1.02); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 30px) scale(1.02);
+  }
 }
 
 .noise-overlay {
@@ -195,16 +280,21 @@ function isActive(path: string) {
 }
 
 @keyframes float-particle {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: 0;
   }
-  10% { opacity: 0.6; }
-  50% { 
+  10% {
+    opacity: 0.6;
+  }
+  50% {
     transform: translateY(-100px) translateX(50px);
     opacity: 0.4;
   }
-  90% { opacity: 0.6; }
+  90% {
+    opacity: 0.6;
+  }
 }
 
 .glass-card {
@@ -212,7 +302,7 @@ function isActive(path: string) {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--card-border);
-  box-shadow: 
+  box-shadow:
     0 8px 32px var(--shadow-color),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
@@ -271,8 +361,15 @@ function isActive(path: string) {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
 }
 
 .avatar {
@@ -306,14 +403,37 @@ function isActive(path: string) {
   animation: sparkle 2s ease-in-out infinite;
 }
 
-.avatar-sparkle span:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
-.avatar-sparkle span:nth-child(2) { top: 50%; right: 0; animation-delay: 0.5s; }
-.avatar-sparkle span:nth-child(3) { bottom: 0; left: 50%; animation-delay: 1s; }
-.avatar-sparkle span:nth-child(4) { top: 50%; left: 0; animation-delay: 1.5s; }
+.avatar-sparkle span:nth-child(1) {
+  top: 0;
+  left: 50%;
+  animation-delay: 0s;
+}
+.avatar-sparkle span:nth-child(2) {
+  top: 50%;
+  right: 0;
+  animation-delay: 0.5s;
+}
+.avatar-sparkle span:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  animation-delay: 1s;
+}
+.avatar-sparkle span:nth-child(4) {
+  top: 50%;
+  left: 0;
+  animation-delay: 1.5s;
+}
 
 @keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 1; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .author-name {

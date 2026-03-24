@@ -41,13 +41,13 @@ src/config/
 
 ### 站点信息 `site.json`
 
-| 字段 | 类型 | 说明 | 示例 |
-|------|------|------|------|
-| `title` | string | 网站标题 | `碧蓝空间` |
-| `author` | string | 作者名称 | `每天睡25小时` |
-| `avatar` | string | 头像路径（public 目录下） | `/avatar.png` |
-| `description` | string | 网站描述 | `记录技术探索与生活点滴` |
-| `icp` | string | ICP 备案号 | `京ICP备xxxxxxxx号` |
+| 字段          | 类型   | 说明                      | 示例                     |
+| ------------- | ------ | ------------------------- | ------------------------ |
+| `title`       | string | 网站标题                  | `碧蓝空间`               |
+| `author`      | string | 作者名称                  | `每天睡25小时`           |
+| `avatar`      | string | 头像路径（public 目录下） | `/avatar.png`            |
+| `description` | string | 网站描述                  | `记录技术探索与生活点滴` |
+| `icp`         | string | ICP 备案号                | `京ICP备xxxxxxxx号`      |
 
 ```json
 {
@@ -61,15 +61,15 @@ src/config/
 
 ### 导航配置 `nav.json`
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
+| 字段    | 类型      | 说明       |
+| ------- | --------- | ---------- |
 | `items` | NavItem[] | 导航项数组 |
 
 NavItem 结构：
 
-| 字段 | 类型 | 说明 | 示例 |
-|------|------|------|------|
-| `text` | string | 显示文字 | `文章` |
+| 字段   | 类型   | 说明     | 示例        |
+| ------ | ------ | -------- | ----------- |
+| `text` | string | 显示文字 | `文章`      |
 | `path` | string | 路由路径 | `/articles` |
 
 ```json
@@ -85,15 +85,16 @@ NavItem 结构：
 
 ### 社交链接 `social-links.json`
 
-| 字段 | 类型 | 说明 | 示例 |
-|------|------|------|------|
-| `name` | string | 显示名称 | `GitHub` |
-| `url` | string | 链接地址 | `https://github.com/xxx` |
-| `icon` | string | 图标内容 | `🐙` |
-| `iconType` | string | 图标类型 | `emoji` / `text` / `image` |
-| `color` | string | 自定义背景色（可选） | `linear-gradient(...)` |
+| 字段       | 类型   | 说明                 | 示例                       |
+| ---------- | ------ | -------------------- | -------------------------- |
+| `name`     | string | 显示名称             | `GitHub`                   |
+| `url`      | string | 链接地址             | `https://github.com/xxx`   |
+| `icon`     | string | 图标内容             | `🐙`                       |
+| `iconType` | string | 图标类型             | `emoji` / `text` / `image` |
+| `color`    | string | 自定义背景色（可选） | `linear-gradient(...)`     |
 
 **iconType 类型：**
+
 - `emoji`（默认）：使用 emoji 作为图标
 - `text`：使用文字作为图标
 - `image`：使用图片 URL 作为图标
