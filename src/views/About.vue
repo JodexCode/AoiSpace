@@ -18,7 +18,11 @@ onMounted(() => {
       <div class="profile-section glass-card">
         <div class="avatar-container">
           <div class="avatar-glow"></div>
-          <img :src="siteConfig.avatar" :alt="siteConfig.author" class="avatar" />
+          <img
+            :src="siteConfig.avatar"
+            :alt="siteConfig.author"
+            class="avatar"
+          />
           <div class="avatar-sparkle">
             <span></span><span></span><span></span><span></span>
           </div>
@@ -39,8 +43,15 @@ onMounted(() => {
             :class="{ 'has-color': link.color }"
             :style="link.color ? { background: link.color } : {}"
           >
-            <img v-if="link.iconType === 'image'" :src="link.icon" :alt="link.name" class="link-icon-img" />
-            <span v-else-if="link.iconType === 'text'" class="link-icon-text">{{ link.icon }}</span>
+            <img
+              v-if="link.iconType === 'image'"
+              :src="link.icon"
+              :alt="link.name"
+              class="link-icon-img"
+            />
+            <span v-else-if="link.iconType === 'text'" class="link-icon-text">{{
+              link.icon
+            }}</span>
             <span v-else class="link-icon">{{ link.icon }}</span>
             {{ link.name }}
           </a>
@@ -50,15 +61,21 @@ onMounted(() => {
       <section class="project-section glass-card">
         <h3>关于本站</h3>
         <p class="project-desc">
-          本站点由 <strong>AoiSpace / 碧蓝空间</strong> 强力驱动 —— 一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite 构建。
+          本站点由 <strong>AoiSpace / 碧蓝空间</strong> 强力驱动 ——
+          一个优雅的二次元风格静态博客框架，基于 Vue 3 + TypeScript + Vite
+          构建。
         </p>
         <p class="project-desc">
           特性包括：磨砂玻璃美学、响应式设计、亮暗主题切换、文章搜索与筛选、瀑布流布局等。
         </p>
         <div class="project-links">
-          <a href="https://github.com/JodexCode/AoiSpace" target="_blank" class="project-link">
+          <a
+            href="https://github.com/JodexCode/AoiSpace"
+            target="_blank"
+            class="project-link"
+          >
             <span class="link-icon">🐙</span>
-            访问项目
+            <span>访问项目</span>
           </a>
         </div>
       </section>
@@ -72,8 +89,14 @@ onMounted(() => {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .glass-card {
@@ -137,8 +160,15 @@ onMounted(() => {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
 }
 
 .avatar {
@@ -172,14 +202,37 @@ onMounted(() => {
   animation: sparkle 2s ease-in-out infinite;
 }
 
-.avatar-sparkle span:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
-.avatar-sparkle span:nth-child(2) { top: 50%; right: 0; animation-delay: 0.5s; }
-.avatar-sparkle span:nth-child(3) { bottom: 0; left: 50%; animation-delay: 1s; }
-.avatar-sparkle span:nth-child(4) { top: 50%; left: 0; animation-delay: 1.5s; }
+.avatar-sparkle span:nth-child(1) {
+  top: 0;
+  left: 50%;
+  animation-delay: 0s;
+}
+.avatar-sparkle span:nth-child(2) {
+  top: 50%;
+  right: 0;
+  animation-delay: 0.5s;
+}
+.avatar-sparkle span:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  animation-delay: 1s;
+}
+.avatar-sparkle span:nth-child(4) {
+  top: 50%;
+  left: 0;
+  animation-delay: 1.5s;
+}
 
 @keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 1; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .author-name {
@@ -281,9 +334,16 @@ onMounted(() => {
 }
 
 @keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-15deg); }
-  75% { transform: rotate(15deg); }
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
 }
 
 .contact-link.has-color {
@@ -418,9 +478,18 @@ onMounted(() => {
   animation: bounce 0.6s ease infinite;
 }
 
+.project-link span {
+  z-index: 999;
+}
+
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 .project-link .link-icon {
