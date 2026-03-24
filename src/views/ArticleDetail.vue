@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, watch } from 'vue'
+import { ref, computed, onMounted, nextTick, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { siteConfig } from '../config'
 import { getPost } from '../posts'
@@ -11,6 +11,7 @@ const post = getPost(id)
 const tocVisible = ref(true)
 const activeHeading = ref('')
 const toc = ref<{ id: string; text: string; level: number }[]>([])
+const tocTop = ref(6)
 
 const meta = computed(() => {
   if (!post) return {}
@@ -21,7 +22,7 @@ const meta = computed(() => {
     tags: (post as any).tags || [],
     description: (post as any).description || '',
     cover: (post as any).cover,
-    readingTime: (post as any).readingTime
+    readingTime: (post as any).readingTime,
   }
 })
 
@@ -30,17 +31,17 @@ function extractToc() {
     toc.value = []
     return
   }
-  
+
   nextTick(() => {
     const contentEl = document.querySelector('.article-content')
     if (!contentEl) {
       toc.value = []
       return
     }
-    
+
     const headings: { id: string; text: string; level: number }[] = []
     const headingElements = contentEl.querySelectorAll('h1, h2, h3')
-    
+
     headingElements.forEach((el, index) => {
       const text = el.textContent?.trim() || ''
       const level = parseInt(el.tagName[1])
@@ -48,7 +49,7 @@ function extractToc() {
       el.id = headingId
       headings.push({ id: headingId, text, level })
     })
-    
+
     toc.value = headings
   })
 }
@@ -65,15 +66,51 @@ function toggleToc() {
   tocVisible.value = !tocVisible.value
 }
 
+function handleScroll() {
+  if (!tocVisible.value || toc.value.length === 0) return
+
+  const scrollTop = window.scrollY
+  const windowHeight = window.innerHeight
+  const documentHeight = document.documentElement.scrollHeight
+
+  const tocElement = document.querySelector('.toc-wrapper') as HTMLElement
+  if (!tocElement) return
+
+  const tocHeight = tocElement.offsetHeight || 450
+  const initialTopPx = 96
+  const maxTop = windowHeight - tocHeight - 32
+  const scrollableHeight = documentHeight - windowHeight
+
+  if (maxTop <= initialTopPx || scrollableHeight <= 0) {
+    tocTop.value = Math.min(maxTop, initialTopPx) / 16
+    return
+  }
+
+  const scrollProgress = scrollTop / scrollableHeight
+  const scaleFactor = Math.min(scrollableHeight / windowHeight, 3)
+  const movement = scrollProgress * (maxTop - initialTopPx) * scaleFactor
+  const targetTopPx = initialTopPx + movement
+
+  tocTop.value = Math.min(targetTopPx, maxTop) / 16
+}
+
 onMounted(() => {
   const title = meta.value?.title || id
   document.title = `${title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
   setTimeout(extractToc, 200)
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
-watch(() => route.params.id, () => {
-  setTimeout(extractToc, 200)
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
+
+watch(
+  () => route.params.id,
+  () => {
+    setTimeout(extractToc, 200)
+  },
+)
 
 function formatDate(date: string) {
   if (!date) return ''
@@ -87,7 +124,10 @@ function formatDate(date: string) {
 
 <template>
   <div class="article-layout">
-    <article class="article-detail">
+    <article
+      class="article-detail"
+      :class="{ 'with-toc': tocVisible && toc.length > 0 }"
+    >
       <div v-if="meta.cover" class="article-cover glass-card">
         <img :src="meta.cover" :alt="meta.title" />
       </div>
@@ -109,7 +149,12 @@ function formatDate(date: string) {
           </span>
         </div>
         <div class="article-tags">
-          <span v-for="tag in meta.tags" :key="tag" class="tag hand-drawn-tag">{{ tag }}</span>
+          <span
+            v-for="tag in meta.tags"
+            :key="tag"
+            class="tag hand-drawn-tag"
+            >{{ tag }}</span
+          >
         </div>
       </header>
 
@@ -121,42 +166,41 @@ function formatDate(date: string) {
         <component :is="post?.default" />
       </div>
     </article>
-
-    <aside
-      v-if="toc.length > 0"
-      class="toc-wrapper"
-    >
-      <button
-        class="toc-toggle glass-card"
-        @click="toggleToc"
-        :title="tocVisible ? '隐藏目录' : '显示目录'"
+    <Teleport to="body">
+      <aside
+        v-if="toc.length > 0"
+        class="toc-wrapper"
+        :style="{ top: `${tocTop}rem` }"
       >
-        <span class="toggle-icon">{{ tocVisible ? '◀' : '▶' }}</span>
-      </button>
-      <div
-        class="article-toc glass-card"
-        :class="{ collapsed: !tocVisible }"
-      >
-        <div class="toc-content">
-          <h3 class="toc-title">目录</h3>
-          <nav class="toc-nav">
-            <a
-              v-for="heading in toc"
-              :key="heading.id"
-              :href="`#${heading.id}`"
-              class="toc-item"
-              :class="[
-                `level-${heading.level}`,
-                { active: activeHeading === heading.id },
-              ]"
-              @click.prevent="scrollToHeading(heading.id)"
-            >
-              {{ heading.text }}
-            </a>
-          </nav>
+        <button
+          class="toc-toggle glass-card"
+          @click="toggleToc"
+          :title="tocVisible ? '隐藏目录' : '显示目录'"
+        >
+          <span class="toggle-icon">{{ tocVisible ? '◀' : '▶' }}</span>
+        </button>
+        <div class="article-toc glass-card" :class="{ collapsed: !tocVisible }">
+          <div class="toc-content">
+            <h3 class="toc-title">目录</h3>
+            <nav class="toc-nav">
+              <a
+                v-for="heading in toc"
+                :key="heading.id"
+                :href="`#${heading.id}`"
+                class="toc-item"
+                :class="[
+                  `level-${heading.level}`,
+                  { active: activeHeading === heading.id },
+                ]"
+                @click.prevent="scrollToHeading(heading.id)"
+              >
+                {{ heading.text }}
+              </a>
+            </nav>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </Teleport>
   </div>
 </template>
 
@@ -178,6 +222,11 @@ function formatDate(date: string) {
 .article-detail {
   flex: 1;
   min-width: 0;
+  transition: margin-right 0.3s ease;
+}
+
+.article-detail.with-toc {
+  margin-right: 260px;
 }
 
 .article-cover {
@@ -238,7 +287,11 @@ function formatDate(date: string) {
 .hand-drawn-tag {
   position: relative;
   padding: 0.2rem 0.6rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15),
+    rgba(236, 72, 153, 0.1)
+  );
   border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 50px;
   font-size: 0.8rem;
@@ -436,8 +489,13 @@ function formatDate(date: string) {
 }
 
 .toc-wrapper {
-  position: relative;
-  flex-shrink: 0;
+  position: fixed;
+  right: 3rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  transition: top 0.1s ease-out;
 }
 
 .toc-toggle {
@@ -454,21 +512,28 @@ function formatDate(date: string) {
 }
 
 .toc-toggle:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px var(--shadow-color);
 }
 
 .toggle-icon {
   font-size: 0.8rem;
   color: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.toc-toggle:hover .toggle-icon {
+  color: var(--accent-color);
 }
 
 .article-toc {
   width: 240px;
   height: fit-content;
-  max-height: 500px;
+  max-height: calc(100vh - 8rem);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
+  opacity: 1;
 }
 
 .article-toc.collapsed {
