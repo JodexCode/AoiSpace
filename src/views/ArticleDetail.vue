@@ -669,6 +669,117 @@ function formatDate(date: string) {
   margin: 1rem 0;
 }
 
+.toc-wrapper {
+  position: fixed;
+  right: 3rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  transition: top 0.1s ease-out;
+}
+
+.toc-toggle {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.toc-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px var(--shadow-color);
+}
+
+.toggle-icon {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.toc-toggle:hover .toggle-icon {
+  color: var(--accent-color);
+}
+
+.article-toc {
+  width: 240px;
+  height: fit-content;
+  max-height: calc(100vh - 8rem);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.article-toc.collapsed {
+  width: 0;
+  height: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.toc-content {
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+.toc-title {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.toc-item {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0;
+  transition: all 0.2s;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+}
+
+.toc-item:hover {
+  color: var(--accent-color);
+  border-left-color: var(--accent-color);
+}
+
+.toc-item.active {
+  color: var(--accent-color);
+  font-weight: 500;
+  border-left-color: var(--accent-color);
+}
+
+.toc-item.level-1 {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.toc-item.level-2 {
+  padding-left: 1rem;
+}
+
+.toc-item.level-3 {
+  padding-left: 1.5rem;
+  font-size: 0.8rem;
+}
+
 .article-content :deep(ul),
 .article-content :deep(ol) {
   padding-left: 1.5rem;
@@ -692,6 +803,15 @@ function formatDate(date: string) {
 
 .article-content :deep(ol) {
   list-style-type: decimal;
+}
+
+.article-content :deep(blockquote) {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--accent-color);
+  background: var(--hover-bg);
+  border-radius: 0 12px 12px 0;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 1024px) {
