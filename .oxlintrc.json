@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "rules": {
+    "no-console": "off",
+    "no-debugger": "warn",
+    "no-unused-vars": "warn"
+  },
+  "settings": {
+    "jsx": true,
+    "vue": true
+  }
+}
