@@ -396,6 +396,7 @@ onMounted(() => {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: var(--accent-gradient);
   opacity: 0;
   transition: opacity 0.3s ease;
