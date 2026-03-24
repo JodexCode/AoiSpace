@@ -342,20 +342,20 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.05));
+  background: rgba(255, 255, 255, 0.5);
   border: 2px solid rgba(139, 92, 246, 0.15);
   border-radius: 50px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-container:hover:not(.focused) {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  background: rgba(255, 255, 255, 0.7);
   border-color: rgba(139, 92, 246, 0.3);
   transform: translateY(-1px);
 }
 
 .search-container.focused {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.15));
+  background: rgba(255, 255, 255, 0.95);
   border-color: var(--accent-color);
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15), 0 4px 20px rgba(139, 92, 246, 0.3);
   transform: translateY(-2px);
@@ -504,7 +504,7 @@ function getRandomDelay(index: number): string {
 }
 
 .search-results :deep(mark) {
-  background: rgba(139, 92, 246, 0.3);
+  background: var(--gradient-start);
   color: var(--accent-color);
   padding: 0 2px;
   border-radius: 2px;
@@ -525,7 +525,7 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.05));
+  background: rgba(255, 255, 255, 0.5);
   border: 2px solid rgba(139, 92, 246, 0.15);
   border-radius: 50px;
   color: var(--text-primary);
@@ -535,7 +535,7 @@ function getRandomDelay(index: number): string {
 }
 
 .dropdown-trigger:hover {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  background: rgba(255, 255, 255, 0.8);
   border-color: rgba(139, 92, 246, 0.35);
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
@@ -563,7 +563,7 @@ function getRandomDelay(index: number): string {
 
 .custom-dropdown.open .dropdown-trigger {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 4px 16px var(--shadow-color);
+  box-shadow: 0 0 0 3px var(--gradient-start), 0 4px 16px var(--shadow-color);
 }
 
 .custom-dropdown.open .trigger-arrow {
@@ -737,7 +737,7 @@ function getRandomDelay(index: number): string {
 
 .article-card:hover .card-title {
   color: var(--accent-color);
-  text-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  text-shadow: 0 0 20px var(--glow-color);
 }
 
 .card-desc {
@@ -770,8 +770,8 @@ function getRandomDelay(index: number): string {
 .hand-drawn-tag {
   position: relative;
   padding: 0.2rem 0.6rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border: 1px solid var(--gradient-start);
   border-radius: 50px;
   font-size: 0.72rem;
   color: var(--accent-color);

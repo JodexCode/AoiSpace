@@ -26,6 +26,11 @@ import MainLayout from './components/MainLayout.vue'
   --heading-h2: #3b82f6;
   --heading-h3: #06b6d4;
   --heading-h4: #64748b;
+  --gradient-purple: #8b5cf6;
+  --gradient-pink: #ec4899;
+  --gradient-start: rgba(139, 92, 246, var(--opacity, 1));
+  --gradient-end: rgba(236, 72, 153, var(--opacity, 1));
+  --glow-color: rgba(139, 92, 246, 0.4);
 }
 
 * {

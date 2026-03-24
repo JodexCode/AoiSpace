@@ -289,10 +289,10 @@ function formatDate(date: string) {
   padding: 0.2rem 0.6rem;
   background: linear-gradient(
     135deg,
-    rgba(139, 92, 246, 0.15),
-    rgba(236, 72, 153, 0.1)
+    var(--gradient-start),
+    var(--gradient-end)
   );
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid var(--gradient-start);
   border-radius: 50px;
   font-size: 0.8rem;
   color: var(--accent-color);

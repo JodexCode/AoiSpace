@@ -104,7 +104,7 @@ function isActive(path: string) {
 .orb-1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--gradient-purple) 0.4 0%, transparent 70%);
   top: -150px;
   left: -100px;
   animation-delay: 0s;
@@ -113,7 +113,7 @@ function isActive(path: string) {
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--gradient-pink) 0.3 0%, transparent 70%);
   top: 30%;
   right: -100px;
   animation-delay: -5s;
@@ -122,7 +122,7 @@ function isActive(path: string) {
 .orb-3 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-secondary) 0.3 0%, transparent 70%);
   bottom: -100px;
   left: 30%;
   animation-delay: -10s;
@@ -131,7 +131,7 @@ function isActive(path: string) {
 .orb-4 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(244, 114, 182, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--gradient-pink) 0.25 0%, transparent 70%);
   top: 50%;
   left: 50%;
   animation-delay: -15s;
@@ -382,7 +382,7 @@ function isActive(path: string) {
   background: var(--accent-gradient);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 20px var(--glow-color);
 }
 
 .nav-item.active::after {
@@ -430,8 +430,8 @@ function isActive(path: string) {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(236, 72, 153, 0.08));
-  border: 2px solid rgba(139, 92, 246, 0.2);
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border: 2px solid var(--gradient-start);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -448,10 +448,10 @@ function isActive(path: string) {
 }
 
 .theme-toggle:hover {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.15));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   border-color: transparent;
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 30px var(--glow-color);
 }
 
 .theme-toggle:hover::before {

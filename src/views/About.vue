@@ -269,7 +269,7 @@ onMounted(() => {
 
 .contact-link:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 24px var(--glow-color);
 }
 
 .contact-link:hover::before {
@@ -405,7 +405,7 @@ onMounted(() => {
   border-color: transparent;
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 24px var(--glow-color);
 }
 
 .project-link:hover::before {

@@ -221,7 +221,7 @@ const intro = introModules['../intro/intro.md']?.default
 
 .badge:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 4px 4px 20px var(--shadow-color), 0 0 30px rgba(139, 92, 246, 0.3);
+  box-shadow: 4px 4px 20px var(--shadow-color), 0 0 30px var(--glow-color);
   border-color: var(--accent-color);
 }
 
@@ -290,7 +290,7 @@ const intro = introModules['../intro/intro.md']?.default
 
 .stat-card:hover .stat-number {
   filter: brightness(1.2);
-  text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  text-shadow: 0 0 30px var(--glow-color);
 }
 
 .stat-label {

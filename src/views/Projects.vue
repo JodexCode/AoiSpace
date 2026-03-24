@@ -206,8 +206,8 @@ function getRandomDelay(index: number): string {
 .hand-drawn-tag {
   position: relative;
   padding: 0.2rem 0.6rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border: 1px solid var(--gradient-start);
   border-radius: 50px;
   font-size: 0.75rem;
   color: var(--accent-color);
@@ -267,7 +267,7 @@ function getRandomDelay(index: number): string {
 
 .preview-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 24px var(--glow-color);
 }
 
 .preview-btn:hover::before {
@@ -302,7 +302,7 @@ function getRandomDelay(index: number): string {
   border-color: transparent;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 16px var(--glow-color);
 }
 
 .source-btn:hover::before {
