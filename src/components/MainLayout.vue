@@ -75,6 +75,27 @@ function isActive(path: string) {
         <RouterView />
       </div>
     </main>
+
+    <nav class="mobile-nav glass-card">
+      <RouterLink
+        v-for="item in navConfig.items"
+        :key="item.path"
+        :to="item.path"
+        class="mobile-nav-item"
+        :class="{ active: isActive(item.path) }"
+      >
+        <span class="mobile-nav-icon">
+          <svg v-if="item.path === '/'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          <svg v-else-if="item.path === '/articles'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <svg v-else-if="item.path === '/projects'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </span>
+        <span class="mobile-nav-text">{{ item.text }}</span>
+      </RouterLink>
+      <button class="mobile-nav-item mobile-theme-btn" @click="toggleTheme">
+        <span class="mobile-nav-icon">{{ mode === 'light' ? '🌙' : '☀️' }}</span>
+      </button>
+    </nav>
   </div>
 </template>
 
@@ -619,6 +640,7 @@ function isActive(path: string) {
   .main-content {
     margin-left: 0;
     padding: 0.75rem;
+    padding-bottom: 100px;
   }
 
   .content-wrapper {
@@ -631,6 +653,105 @@ function isActive(path: string) {
   .bg-layer .orb-2,
   .floating-particles {
     display: none;
+  }
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  height: 60px;
+  border-radius: 20px;
+  padding: 0 0.5rem;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 0.75rem;
+    padding-bottom: 100px;
+  }
+
+  .content-wrapper {
+    border-radius: 16px;
+    padding: 1rem;
+    min-height: calc(100vh - 150px);
+  }
+
+  .bg-layer .gradient-orb,
+  .floating-particles {
+    display: none;
+  }
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex: 1;
+  max-width: 60px;
+}
+
+.mobile-nav-item.active {
+  color: var(--accent-color);
+  background: var(--hover-bg);
+}
+
+.mobile-nav-item:hover {
+  color: var(--accent-color);
+}
+
+.mobile-nav-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-nav-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-nav-text {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.mobile-theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .mobile-nav-text {
+    display: none;
+  }
+
+  .mobile-nav {
+    bottom: 0.5rem;
+    border-radius: 16px;
   }
 }
 </style>

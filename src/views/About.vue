@@ -433,12 +433,21 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
   .page-title {
     font-size: 2rem;
   }
 
+  .page-desc {
+    font-size: 0.9rem;
+  }
+
   .profile-section {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.25rem;
+    border-radius: 20px;
   }
 
   .avatar {
@@ -446,24 +455,64 @@ onMounted(() => {
     height: 100px;
   }
 
+  .avatar-glow {
+    display: none;
+  }
+
+  .avatar-sparkle {
+    display: none;
+  }
+
   .author-name {
     font-size: 1.4rem;
   }
 
+  .author-desc {
+    font-size: 0.95rem;
+  }
+
+  .contact-section {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .contact-section h3 {
+    font-size: 1.1rem;
+  }
+
   .contact-links {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .contact-link {
     justify-content: center;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .project-section {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .project-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
   }
 
   .project-links {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .project-link {
     justify-content: center;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
   }
 }
 

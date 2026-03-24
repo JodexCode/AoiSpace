@@ -827,20 +827,28 @@ function getRandomDelay(index: number): string {
 
 @media (max-width: 768px) {
   .page-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
   }
 
   .filters {
     flex-direction: column;
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
 
   .search-container {
     width: 100%;
     min-width: unset;
+    padding: 0.5rem 0.75rem;
   }
 
   .filter-buttons {
     width: 100%;
+    gap: 0.5rem;
   }
 
   .custom-dropdown {
@@ -850,18 +858,57 @@ function getRandomDelay(index: number): string {
   .dropdown-trigger {
     width: 100%;
     justify-content: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 
   .dropdown-menu {
     width: 100%;
   }
 
+  .clear-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .article-masonry {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .card-cover {
-    height: 180px;
+    height: 160px;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-tags {
+    gap: 0.3rem;
+  }
+
+  .hand-drawn-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .meta-info {
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
 

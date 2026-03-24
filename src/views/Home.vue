@@ -455,6 +455,27 @@ const intro = introModules['../intro/intro.md']?.default
     font-size: 1.6rem;
   }
 
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .hero {
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  .badge {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .section-title {
+    font-size: 1.15rem;
+  }
+
   .stats {
     grid-template-columns: 1fr;
     gap: 0.75rem;

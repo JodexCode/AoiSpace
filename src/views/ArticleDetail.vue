@@ -795,49 +795,126 @@ function formatDate(date: string) {
     flex-direction: column;
   }
 
+  .article-detail.with-toc {
+    margin-right: 0;
+  }
+
   .toc-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .toc-toggle {
     display: none;
-  }
-
-  .article-toc {
-    width: 100%;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .article-toc.collapsed {
-    width: 0;
-    height: 0;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-  }
-
-  .toc-content {
-    padding: 1rem;
-    max-height: none;
   }
 }
 
 @media (max-width: 768px) {
   .article-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .article-cover {
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .article-cover img {
+    max-height: 200px;
   }
 
   .article-info {
     flex-direction: column;
     gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .info-item {
+    font-size: 0.8rem;
+  }
+
+  .article-tags {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .hand-drawn-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .article-description {
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 
   .article-content {
-    padding: 1.25rem;
-    border-radius: 16px;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+  }
+
+  .article-content :deep(h1) {
+    font-size: 1.4rem;
+  }
+
+  .article-content :deep(h2) {
+    font-size: 1.2rem;
+  }
+
+  .article-content :deep(h3) {
+    font-size: 1.05rem;
+  }
+
+  .article-content :deep(p) {
+    line-height: 1.7;
+  }
+
+  .article-content :deep(pre) {
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+
+  .article-content :deep(code) {
+    font-size: 0.85em;
+  }
+
+  .article-content :deep(.code-block-wrapper) {
+    border-radius: 8px;
+    margin: 1rem -0.5rem;
+  }
+
+  .article-content :deep(.code-block-wrapper::before),
+  .article-content :deep(.code-block-wrapper::after) {
+    display: none;
+  }
+
+  .article-content :deep(.mac-window-buttons) {
+    top: 8px;
+    left: 8px;
+  }
+
+  .article-content :deep(.mac-btn) {
+    width: 10px;
+    height: 10px;
+  }
+
+  .article-content :deep(.code-block-wrapper pre.hljs) {
+    padding: 0.75rem;
+    padding-top: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .article-content :deep(.code-copy-btn) {
+    display: none;
+  }
+
+  .article-content :deep(blockquote) {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  .article-content :deep(img) {
+    border-radius: 8px;
+    margin: 0.75rem 0;
   }
 }
 </style>

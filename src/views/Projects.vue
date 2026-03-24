@@ -336,20 +336,57 @@ function getRandomDelay(index: number): string {
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
   .page-title {
     font-size: 2rem;
   }
 
+  .page-desc {
+    font-size: 0.9rem;
+  }
+
   .project-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .project-card {
+    border-radius: 16px;
   }
 
   .card-cover {
-    height: 200px;
+    height: 160px;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.05rem;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-tags {
+    margin-bottom: 0.75rem;
   }
 
   .project-links {
     flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+  }
+
+  .link-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
   }
 }
 
