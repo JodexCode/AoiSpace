@@ -5,7 +5,7 @@ const rawModules = import.meta.glob('./local/*.md', { eager: true, query: '?raw'
 
 function calculateReadingTime(content: unknown): number {
   if (typeof content !== 'string') return 0
-  const text = content.replace(/[#*`\[\]()]/g, '')
+  const text = content.replace(/[#*`[\]()]/g, '')
   const words = text.trim().split(/\s+/).length
   return Math.ceil(words / 200)
 }
@@ -16,7 +16,7 @@ function extractTextContent(markdown: string): string {
     .replace(/```[\s\S]*?```/g, '')
     .replace(/`[^`]*`/g, '')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/[#*`\[\]()_\-~>|]/g, ' ')
+    .replace(/[#*`[\]()_\-~>|]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
