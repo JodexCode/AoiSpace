@@ -8,6 +8,57 @@ import MainLayout from './components/MainLayout.vue'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import 'highlight.js/styles/github.css';
+
+:root:not([data-theme="dark"]) .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background: #f6f8fa;
+  color: #24292e;
+}
+
+:root[data-theme="dark"] .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+:root[data-theme="dark"] .hljs-keyword,
+:root[data-theme="dark"] .hljs-selector-tag,
+:root[data-theme="dark"] .hljs-literal,
+:root[data-theme="dark"] .hljs-section,
+:root[data-theme="dark"] .hljs-link {
+  color: #ff7b72;
+}
+
+:root[data-theme="dark"] .hljs-string,
+:root[data-theme="dark"] .hljs-title,
+:root[data-theme="dark"] .hljs-name,
+:root[data-theme="dark"] .hljs-type,
+:root[data-theme="dark"] .hljs-attribute,
+:root[data-theme="dark"] .hljs-symbol,
+:root[data-theme="dark"] .hljs-bullet,
+:root[data-theme="dark"] .hljs-addition,
+:root[data-theme="dark"] .hljs-variable,
+:root[data-theme="dark"] .hljs-template-tag,
+:root[data-theme="dark"] .hljs-template-variable {
+  color: #a5d6ff;
+}
+
+:root[data-theme="dark"] .hljs-comment,
+:root[data-theme="dark"] .hljs-quote,
+:root[data-theme="dark"] .hljs-deletion,
+:root[data-theme="dark"] .hljs-meta {
+  color: #8b949e;
+}
+
+:root[data-theme="dark"] .hljs-function .hljs-title,
+:root[data-theme="dark"] .hljs-title.function_ {
+  color: #d2a8ff;
+}
 
 :root {
   --bg-primary: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);

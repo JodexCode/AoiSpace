@@ -16,6 +16,7 @@ function applyTheme() {
   Object.entries(theme).forEach(([key, value]) => {
     document.documentElement.style.setProperty(key, value)
   })
+  document.documentElement.setAttribute('data-theme', state.mode)
   localStorage.setItem(STORAGE_KEY, state.mode)
 }
 

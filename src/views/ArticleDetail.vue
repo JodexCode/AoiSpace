@@ -66,6 +66,50 @@ function toggleToc() {
   tocVisible.value = !tocVisible.value
 }
 
+function addCopyButtons() {
+  nextTick(() => {
+    const wrappers = document.querySelectorAll('.code-block-wrapper')
+    wrappers.forEach(wrapper => {
+      if (wrapper.querySelector('.mac-window-buttons')) return
+
+      const macButtons = document.createElement('div')
+      macButtons.className = 'mac-window-buttons'
+      macButtons.innerHTML = `
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      `
+      wrapper.appendChild(macButtons)
+
+      const codeEl = wrapper.querySelector('pre code')
+      if (!codeEl) return
+
+      const codeText = codeEl.textContent || ''
+
+      const btn = document.createElement('button')
+      btn.className = 'code-copy-btn'
+      btn.innerHTML = '📋'
+      btn.title = '复制代码'
+
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(codeText)
+          btn.innerHTML = '✓'
+          btn.classList.add('copied')
+          setTimeout(() => {
+            btn.innerHTML = '📋'
+            btn.classList.remove('copied')
+          }, 2000)
+        } catch (err) {
+          console.error('复制失败:', err)
+        }
+      })
+
+      wrapper.appendChild(btn)
+    })
+  })
+}
+
 function handleScroll() {
   if (!tocVisible.value || toc.value.length === 0) return
 
@@ -97,7 +141,10 @@ function handleScroll() {
 onMounted(() => {
   const title = meta.value?.title || id
   document.title = `${title} - ${siteConfig.author}的${siteConfig.title} - 由 AoiSpace / 碧蓝空间驱动`
-  setTimeout(extractToc, 200)
+  setTimeout(() => {
+    extractToc()
+    addCopyButtons()
+  }, 200)
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
@@ -108,7 +155,10 @@ onUnmounted(() => {
 watch(
   () => route.params.id,
   () => {
-    setTimeout(extractToc, 200)
+    setTimeout(() => {
+      extractToc()
+      addCopyButtons()
+    }, 200)
   },
 )
 
@@ -450,18 +500,159 @@ function formatDate(date: string) {
   font-size: 0.9em;
 }
 
-.article-content :deep(pre) {
+.article-content :deep(.code-block-wrapper) {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.article-content :deep(.code-block-wrapper::before) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15),
+    rgba(236, 72, 153, 0.1)
+  );
+  border-bottom: 1px solid var(--card-border);
+  z-index: 1;
+}
+
+.article-content :deep(.mac-window-buttons) {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.article-content :deep(.mac-btn) {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.article-content :deep(.mac-btn.red) {
+  background: linear-gradient(135deg, #ff5f56, #ff2d2d);
+  box-shadow: 0 0 8px rgba(255, 95, 86, 0.4);
+}
+
+.article-content :deep(.mac-btn.yellow) {
+  background: linear-gradient(135deg, #ffbd2e, #ffb800);
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.4);
+}
+
+.article-content :deep(.mac-btn.green) {
+  background: linear-gradient(135deg, #27c93f, #1aab29);
+  box-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
+}
+
+.article-content :deep(.code-block-wrapper)::after {
+  content: attr(data-language);
+  position: absolute;
+  top: 6px;
+  right: 50px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.6rem;
+  background: var(--accent-gradient);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.article-content :deep(.code-block-wrapper pre.hljs) {
+  margin: 0;
   padding: 1rem;
-  background: var(--code-bg);
-  border-radius: 12px;
+  padding-top: 3rem;
+  background: var(--code-bg) !important;
   overflow-x: auto;
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-color);
+}
+
+.article-content :deep(.code-block-wrapper code) {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.article-content :deep(.code-copy-btn) {
+  position: absolute;
+  top: 6px;
+  right: 15px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-gradient);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 1;
+  transition: all 0.2s ease;
+  z-index: 2;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border: none;
+}
+
+.article-content :deep(.code-copy-btn:hover) {
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.article-content :deep(.code-copy-btn.copied) {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-color: transparent;
+}
+
+.article-content :deep(.code-block-wrapper:hover .code-copy-btn) {
+  opacity: 1;
+}
+
+.article-content :deep(.code-copy-btn:hover) {
+  background: var(--accent-gradient);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.article-content :deep(.code-copy-btn.copied) {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-color: transparent;
+}
+
+.article-content :deep(pre) {
+  border-radius: 0;
+  overflow-x: auto;
+  margin: 0;
 }
 
 .article-content :deep(pre code) {
   padding: 0;
   background: none;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.article-content :deep(.shiki) {
+  background: transparent !important;
 }
 
 .article-content :deep(a) {
