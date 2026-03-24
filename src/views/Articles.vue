@@ -182,6 +182,7 @@ function getRandomDelay(index: number): string {
           class="search-input"
           placeholder="搜索文章..."
           @focus="searchInputFocused = true; handleSearch()"
+          @blur="searchInputFocused = false"
           @input="handleSearch"
         />
         <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''; showSearchResults = false">
@@ -312,10 +313,8 @@ function getRandomDelay(index: number): string {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: var(--card-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 20px;
   margin-bottom: 2rem;
   flex-wrap: wrap;
@@ -343,35 +342,46 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: var(--bg-glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.05));
+  border: 2px solid rgba(139, 92, 246, 0.15);
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-container:hover:not(.focused) {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  border-color: rgba(139, 92, 246, 0.3);
+  transform: translateY(-1px);
 }
 
 .search-container.focused {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.15));
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 0 20px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15), 0 4px 20px rgba(139, 92, 246, 0.3);
+  transform: translateY(-2px);
 }
 
 .search-icon {
   font-size: 1rem;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: all 0.3s ease;
+}
+
+.search-container:hover:not(.focused) .search-icon {
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
 .search-container.focused .search-icon {
   opacity: 1;
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 4px var(--accent-color));
-  animation: pulse 1.5s ease-in-out infinite;
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px var(--accent-color));
+  animation: iconBounce 1s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1.1); }
-  50% { transform: scale(1.2); }
+@keyframes iconBounce {
+  0%, 100% { transform: scale(1.15); }
+  50% { transform: scale(1.25); }
 }
 
 .search-input {
@@ -515,15 +525,20 @@ function getRandomDelay(index: number): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.05));
+  border: 2px solid rgba(139, 92, 246, 0.15);
+  border-radius: 50px;
   color: var(--text-primary);
   font-size: 0.9rem;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dropdown-trigger:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  border-color: rgba(139, 92, 246, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--shadow-color);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
 }
 
 .dropdown-trigger:hover .trigger-icon {
