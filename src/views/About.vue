@@ -381,8 +381,8 @@ onMounted(() => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   text-decoration: none;
   color: var(--text-primary);
@@ -406,6 +406,7 @@ onMounted(() => {
   color: white;
   transform: translateY(-3px);
   box-shadow: 0 8px 24px var(--glow-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .project-link:hover::before {
