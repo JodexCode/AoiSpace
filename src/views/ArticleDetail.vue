@@ -114,7 +114,7 @@ function addCopyButtons() {
 }
 
 function handleScroll() {
-  if (!tocVisible.value || toc.value.length === 0) return
+  if (toc.value.length === 0) return
 
   const scrollTop = window.scrollY
   const windowHeight = window.innerHeight
