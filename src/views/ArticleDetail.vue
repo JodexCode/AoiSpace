@@ -64,6 +64,9 @@ function scrollToHeading(targetId: string) {
 
 function toggleToc() {
   tocVisible.value = !tocVisible.value
+  if (tocVisible.value) {
+    nextTick(() => handleScroll())
+  }
 }
 
 function addCopyButtons() {
